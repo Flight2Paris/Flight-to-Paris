@@ -24,9 +24,6 @@
 
 	<div id="wrapper" class="center pageWidth clear">
 		<content>
-			<?php if ( Flight::get('error') ) : ?>
-			<span class="error"><?= Flight::get('error') ?></span>
-			<?php endif ?>
 			<?= $content ?>
 		</content>
 		<div class="right" id="menu">
@@ -35,6 +32,7 @@
 				<input type="password" name="password" placeholder="*****************" />
 				<input type="submit" value='("\(^o^)/")' />
 			</form>
+			<?php if ( Flight::get('login-error') ) : ?> <span class="red"><?= Flight::get('login-error') ?></span><?php endif ?>
 			<hr />
 			<h4>Markdown</h4>
 			<strong>**strong**</strong>
