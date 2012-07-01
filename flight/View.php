@@ -82,13 +82,14 @@ class View {
         if (!file_exists($file)) {
             throw new Exception("Template file not found: $file.");
         }
-
         include $file;
     }
 
-	public static function markdown($text) {
+	public static function markdown($text, $full = true) {
 		if ( ! self::$mk ) self::$mk = new Markdown_Parser;
-		return self::$mk->transform($text);
+		$text = self::$mk->transform(trim($text));
+		$text = playa::transform($text,$full);
+		return $text;
 	}
 
     /**
@@ -115,7 +116,7 @@ class View {
      * @return string Escaped string
      */
     public function e($str) {
-        echo htmlentities($str);
+        echo htmlentities($str, ENT_QUOTES, "UTF-8");
     }
 
     /**

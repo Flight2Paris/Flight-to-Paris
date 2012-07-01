@@ -62,7 +62,7 @@ class Flight {
     public static function __callStatic($name, $params) {
         // Check if call is mapped to a method
         if (isset(self::$methods[$name]) || method_exists(__CLASS__, '_'.$name)) {
-            $method = self::$methods[$name] ?: array(__CLASS__, '_'.$name);
+            $method = self::$methods[$name] ? null : array(__CLASS__, '_'.$name);
 
             // Run pre-filters
             if (!empty(self::$filters['before'][$name])) {
@@ -383,6 +383,8 @@ class Flight {
      */
     public static function autoload($class) {
         $file = str_replace('\\', '/', str_replace('_', '/', $class)).'.php';
+		require_once($file);
+/*
         $base = (strpos($file, '/') === false) ? __DIR__ : (self::get('flight.lib.path') ?: '.');
 
         if (file_exists($base.'/'.$file)) {
@@ -395,6 +397,7 @@ class Flight {
                 throw new Exception('Unable to load file: '.$base.'/'.$file);
             }
         }
+*/
     }
 
     /**

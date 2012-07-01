@@ -15,28 +15,49 @@ define ( 'APP_PATH', realpath ( dirname ( __FILE__ ) . '/app/' ) );
 define ( 'FLIGHT_PATH', realpath ( dirname ( __FILE__ ) . '/flight/' ) );
 define ( 'PARIS_PATH', realpath ( dirname ( __FILE__ ) . '/paris/' ) );
 define ( 'MARKDOWN_PATH', realpath ( dirname ( __FILE__ ) . '/php-markdown/' ) );
-define ( 'DOMAIN', 'node.esfriki.com' );
+define ( 'PLAYA_PATH', realpath ( dirname ( __FILE__ ) . '/playa/' ) );
+define ( 'DOMAIN', 'esfriki.com' );
 
 require FLIGHT_PATH.'/Flight.php';
 require PARIS_PATH.'/paris.php';
 require MARKDOWN_PATH.'/markdown.php';
+require PLAYA_PATH.'/playa.php';
 
-ORM::configure('mysql:host=localhost;dbname=node');
+set_include_path(get_include_path() . PATH_SEPARATOR . FLIGHT_PATH);
+set_include_path(get_include_path() . PATH_SEPARATOR . APP_PATH);
+set_include_path(get_include_path() . PATH_SEPARATOR . APP_PATH . '/model/');
+
+// Edit here DB credentials
+ORM::configure('mysql:host=localhost;dbname=flight2paris');
 ORM::configure('username', 'root');
 ORM::configure('password', '');
+
+require APP_PATH.'/model/auth.php';
+$auth = new auth;
 
 Flight::set('flight.lib.path', APP_PATH);
 Flight::set('flight.views.path', APP_PATH.'/view');
 
 Flight::route('GET /',array('controller_layout','home'));
 
-Flight::route('POST /new/?$',array('controller_node','create'));
-Flight::route('GET /@id:[a-z0-9_-]+/?$',array('controller_node','get'));
+Flight::route('POST /?$',array('controller_node','create'));
+Flight::route('GET /new/?$',array('controller_node','node_new'));
+Flight::route('GET /search/?',array('controller_node','search'));
+
+Flight::route('GET /score/?',array('controller_score','get'));
+Flight::route('POST /score/?',array('controller_score','post'));
+Flight::route('POST /promote/?',array('controller_score','promote'));
+
 
 Flight::route('GET /u/new/?$',array('controller_user','new_user'));
 Flight::route('POST /u/new/?$',array('controller_user','create'));
 Flight::route('GET /u/@username:[a-z0-9_.-]+/?$',array('controller_user','get'));
 
 Flight::route('POST /auth/login/?$',array('controller_auth','login'));
+Flight::route('GET /auth/logout/?$',array('controller_auth','logout'));
+Flight::route('GET /auth/changepassword/?$',array('controller_auth','change'));
+Flight::route('POST /auth/changepassword/?$',array('controller_auth','dochange'));
+
+Flight::route('GET /@id:[a-z0-9_-]+/?$',array('controller_node','get'));
 
 Flight::start();
