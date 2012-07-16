@@ -36,7 +36,7 @@
 		</content>
 		<div class="right" id="menu">
 			<?php if ( auth::isLoggedIn() ) : ?>
-				<?= htmlentities(auth::getUser()->username) ?> <a href="<?= View::makeUri('/auth/logout') ?>">Logout</a><br />
+				<?= View::e(auth::getUser()->username) ?> <a href="<?= View::makeUri('/auth/logout') ?>">Logout</a><br />
 				<a href="<?= View::makeUri('/auth/changepassword') ?>">Change password</a>
 			<?php else : ?>
 			<form action="<?= View::makeUri('/auth/login') ?>" method="post">
