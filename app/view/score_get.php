@@ -16,6 +16,6 @@
 <table>
 <?php foreach ( model_user::getLeaders(20) as $leader ) : ?>
 <?php $i ++ ?>
-<tr><td>#<?= $i ?></td><td><a href="<?= $leader->uri ?>"><?= htmlentities($leader->username) ?></a></td><td><?= $leader->score ?></td></tr>
+<tr><td>#<?= $i ?></td><td><a href="<?= $leader->uri ?>"><?= View::e($leader->username) ?></a></td><td><?= $leader->score ?></td></tr>
 <?php endforeach ?>
 </table>
