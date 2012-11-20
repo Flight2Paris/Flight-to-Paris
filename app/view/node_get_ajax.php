@@ -1,0 +1,1 @@
+<?= View::markdown($node->content) ?>

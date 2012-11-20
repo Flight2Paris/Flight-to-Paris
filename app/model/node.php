@@ -15,24 +15,27 @@ class model_node {
 	}
 
 	public static function getLatest( ) {
-		$nodes = Model::factory('node')->order_by_desc('created')->limit(50)->find_many();
-		return $nodes;
+		$nodes = ORM::for_table('node')->raw_query('SELECT node.uri FROM node JOIN score ON (score.uri = node.uri) ORDER BY UNIX_TIMESTAMP(node.created) + (score.score*score.score*60) DESC LIMIT 30')->find_many();
+		$res = array();
+		foreach ( $nodes as $val ) {
+			$res[] = self::getByUri($val->uri);
+		}
+		return $res;
 	}
 
 	public static function search($query) { 
-		$nodes = Model::factory('node')->where_like('content','%'.$query.'%')->order_by_desc('created')->limit(50)->find_many();
+		$nodes = Model::factory('node')->where_like('content','%'.$query.'%')->order_by_desc('created')->limit(100)->find_many();
 		return $nodes;
 	}
 
-	public static function get_random_spam() {
-		$nodes = Model::factory('node')->where_like('content','%#spam%')->order_by_desc('created')->limit(50)->find_many();
-		shuffle($nodes);
-		shuffle($nodes); // now it's more random :trollface:
-		return array_pop($nodes);
-	}
 }
 
 class node extends Model {
+	public function getTitle() {
+		$lines = explode("\n",trim($this->content));
+		return array_shift($lines);
+	}
+
 	public function getReplies() {
 		$return = array();
 		$replies = Model::factory('link')->where('to',$this->uri)->where('type',View::makeUri('/reply'))->order_by_asc('created')->limit(50)->find_many();
@@ -40,6 +43,18 @@ class node extends Model {
 			$return[] = model_node::getByUri($reply->from);
 		}
 		return $return;
+	}
+
+	public function isReply() {
+		$return = array();
+		$replyTo = Model::factory('link')->where('from',$this->uri)->where('type','http://esfriki.com/reply')->order_by_asc('created')->find_one();
+		return (bool)$replyTo;
+	}
+
+	public function getReplyTo() {
+		$return = array();
+		$replyTo = Model::factory('link')->where('from',$this->uri)->where('type','http://esfriki.com/reply')->order_by_asc('created')->find_one();
+		return model_node::getByUri($replyTo->to);
 	}
 
 	public function getAuthor() {

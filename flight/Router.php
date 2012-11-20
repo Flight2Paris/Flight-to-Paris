@@ -104,5 +104,23 @@ class Router {
     public function clear() {
         $this->routes = array();
     }
+
+	public static function getFormat($uri)  {
+		$ext = pathinfo(parse_url($uri,PHP_URL_PATH),PATHINFO_EXTENSION);
+		$allowed = array('json','rss');
+		if ( in_array($ext,$allowed) ) {
+			return $ext;
+		}
+		else return null;
+	}
+
+	public static function removeFormat($uri) {
+		$ext = pathinfo(parse_url($uri,PHP_URL_PATH),PATHINFO_EXTENSION);
+		$allowed = array('json','rss');
+		if ( in_array($ext,$allowed) ) {
+			return pathinfo(parse_url($uri,PHP_URL_PATH),PATHINFO_FILENAME);
+		}
+		else return $uri;
+	}
 }
 ?>

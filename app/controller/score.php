@@ -15,8 +15,11 @@ class controller_score {
 
 	public function get() {
 		if ( auth::isLoggedIn() ) {
+			$view = Flight::View();
+			$view->set('new',Flight::request()->query['new']);
+
 			$user = auth::getUser();
-			Flight::set('user',$user);
+			$view->set('user',$user);
 			if ( strtotime($user->win_last) < time()-60*60*12 ) {
 				$user->fibo = 0;
 				$user->save();
@@ -26,13 +29,16 @@ class controller_score {
 	}
 
 	public function post() {
+
 		if ( auth::isLoggedIn() ) {
 			$data = Flight::request()->data;
 			$user = auth::getUser();
 			require_once('captcha/captcha.php');
-			Flight::set('user',$user);
+			Flight::View()->set('user',$user);
+
 			if ( isset($data['reload-captcha_x']) ) {
 				Flight::render('score_get',null,'layout');
+
 			} else if ( check() ) {
 				if ( $user->fibo <= 7 ) {
 					$user->score += fibonacci($user->fibo);
@@ -72,8 +78,14 @@ class controller_score {
 				$score->score = $score->score + $data['promote'];
 				$score->save();
 			}
+			if ( Flight::request()->ajax ) {
+				exit;
+			} else {
+				Flight::redirect('/');
+			}
+		} else {
+			Flight::redirect('/u/new');
 		}
-		Flight::redirect('/');
 	}
 
 }

@@ -1,17 +1,21 @@
-<h1>Score</h1>
-<p><strong>Every point has a corresponding blackhole somewhere in the universe.</strong> By games, earning badges and random fluctuations some of this blackholes are assigned to you, and you can use them for giving mass to a node or reassigning them to other users.</p>
+<?php if ( $new ) { ?>
+<h1>Bienvenido/a <?= View::e($user->username) ?></h1>
+<p>Antes de podes publicar vas a necesitar ganas algunos puntos.</p>
+<?php } ?>
+
+<h1>Puntos</h1>
+<p><strong>Cada punto tiene un agujero negro correspondiente en algun lugar del universo.</strong> Mediante juegos, ganando badges y fluctuaciones al azar algunos de estos agujeros negros son asignados a vos y podes usarlos para darle peso a un nodo o darselos a otros usuarios.</p>
 <?php if ( auth::isLoggedIn() ) : ?>
-	<?php if ( Flight::get('user')->fibo > 7 ) : ?>
-		<p><strong>Get back later</strong></p>
+	<?php if ( $user->fibo > 7 ) : ?>
+		<p><strong>Volvé más tarde.</strong></p>
 	<?php else : ?>
 		<form action="<?= View::makeUri('/score/') ?>" method="post" >
-		<p>Where is the meme? <input name="reload-captcha" alt="reload captcha" src="http://esfriki.com/images/reload.png" id="reload-captcha" class="inline-button" type="image"></p>
-		<input name="captcha" src="http://esfriki.com/captcha/" alt="captcha" type="image">
+		<?php include('captcha.php') ?>
 		</form>
 	<?php endif ?>
 <?php endif ?>
 
-<h1>Leaders</h1>
+<h1>Puntajes más altos</h1>
 <?php $i = 0 ?>
 <table>
 <?php foreach ( model_user::getLeaders(20) as $leader ) : ?>

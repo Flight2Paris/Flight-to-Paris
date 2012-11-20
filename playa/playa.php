@@ -7,10 +7,10 @@ public static function clear() {
 	self::$urls = array();
 }
 
-public static function playa_url($url, $w = 580, $h = NULL) {
+public static function playa_url($url, $w = 680, $h = NULL) {
 
 	// Magic, you are not doing it enough
-	$h = is_null($h) ? (int)$w * 9 / 16 : $h;
+	$h = is_null($h) ? (int)$w / 1.618 : $h;
 
 	// image files
 	if ( preg_match('/.*\.(jpg|gif|png|jpeg|svg|bmp)$/',$url)) {
@@ -18,10 +18,15 @@ public static function playa_url($url, $w = 580, $h = NULL) {
 		return '<a href="'.$url.'" target="_blank"><img style="max-width:'.$w.'px" src="'.$url.'" alt="'.$url.'" /></a>';
 	}
 
-	// image files
+	// video files
 	if ( preg_match('/.*\.(mpg)$/',$url)) {
 		$url = htmlspecialchars($url);
 		return '<iframe src="'.$url.'" width="'.$w.'" height="'.$h.'"></iframe>';
+	}
+
+	// feeds
+	if ( preg_match('/.*\.(rss)$/',$url)) {
+		return ' <a title="Seguir" href="http://'.DOMAIN.'/u/follow/'.htmlspecialchars(urlencode($url)).'">'.htmlspecialchars($url).' <img src="/images/rss.png" alt="Seguir" /></a> ';
 	}
 
 	// youtube
@@ -29,6 +34,12 @@ public static function playa_url($url, $w = 580, $h = NULL) {
 		parse_str(parse_url($url, PHP_URL_QUERY), $qstring);
 		if ( $qstring['v'] ) {
 			return '<iframe title="YouTube video player" width="'.$w.'" height="'.$h.'" src="http://www.youtube.com/embed/'.htmlspecialchars($qstring['v']).'" frameborder="0" allowfullscreen></iframe>';
+		}
+	}
+	if ( strtolower(str_ireplace('www.', '', parse_url($url, PHP_URL_HOST))) == 'youtu.be' ) {
+		$path = parse_url($url, PHP_URL_PATH);
+		if ( $path ) {
+			return '<iframe title="YouTube video player" width="'.$w.'" height="'.$h.'" src="http://www.youtube.com/embed/'.htmlspecialchars($path).'" frameborder="0" allowfullscreen></iframe>';
 		}
 	}
 
@@ -60,6 +71,12 @@ public static function playa_url($url, $w = 580, $h = NULL) {
 			return '<iframe src="http://player.vimeo.com/video/'.htmlspecialchars($code).'" width="'.$w.'" height="'.$h.'" frameborder="0"></iframe>';
 		}
 	}
+
+	// putlocker
+	if ( strtolower(str_ireplace('www.', '', parse_url($url, PHP_URL_HOST))) == 'putlocker.com' ) {
+		$code = pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_FILENAME);
+		return '<iframe src="http://www.putlocker.com/embed/'.htmlspecialchars($code).'" width="'.$w.'" height="'.$h.'" frameborder="0" scrolling="no"></iframe>';
+	}
 }
 
 public static function transform($text, $full = true) {
@@ -77,7 +94,7 @@ public static function transform($text, $full = true) {
 }
 
 public static function _playa($matches) {
-	$url = $matches[0];
+	$url = trim($matches[0]);
 	$html = self::playa_url(html_entity_decode($url));
 	if ( $html ) {
 		self::$urls[] = $html;
