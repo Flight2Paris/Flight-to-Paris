@@ -14,7 +14,7 @@ class model_node {
 		return $node;
 	}
 
-	public static function getLatest( ) {
+	public static function getFeatureds( ) {
 		$nodes = ORM::for_table('node')->raw_query('SELECT node.uri FROM node JOIN score ON (score.uri = node.uri) ORDER BY UNIX_TIMESTAMP(node.created) + (score.score*score.score*60) DESC LIMIT 30')->find_many();
 		$res = array();
 		foreach ( $nodes as $val ) {
@@ -22,6 +22,26 @@ class model_node {
 		}
 		return $res;
 	}
+
+    public static function getLatest() {
+        $nodes = ORM::for_table('node')->raw_query('
+        SELECT  
+            node.uri
+        FROM
+            node
+        JOIN score
+            ON (score.uri = node.uri)
+        ORDER BY
+            node.created DESC
+        LIMIT 30
+        ')->find_many();
+        
+        $res = array();
+		foreach ( $nodes as $val ) {
+			$res[] = self::getByUri($val->uri);
+		}
+		return $res;
+    }
 
 	public static function search($query) { 
 		$nodes = Model::factory('node')->where_like('content','%'.$query.'%')->order_by_desc('created')->limit(100)->find_many();
