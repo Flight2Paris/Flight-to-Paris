@@ -592,6 +592,7 @@ class Flight {
             ->write(json_encode($data))
             ->send();
     }
+
 }
 
 // Initialize framework on include

@@ -1,2 +1,2 @@
-<h1>You are logged out*</h1>
-<small><em>*maybe</em></small>
+<h1>Saliste con exito*</h1>
+<small><em>*talvez</em></small>

@@ -27,8 +27,8 @@ set_include_path(get_include_path() . PATH_SEPARATOR . FLIGHT_PATH);
 set_include_path(get_include_path() . PATH_SEPARATOR . APP_PATH);
 set_include_path(get_include_path() . PATH_SEPARATOR . APP_PATH . '/model/');
 
-// Edit here DB credentials
-ORM::configure('mysql:host=localhost;dbname=flight2paris');
+
+ORM::configure('mysql:host=db.esfriki.com;dbname=flight2paris');
 ORM::configure('username', 'root');
 ORM::configure('password', '');
 
@@ -51,14 +51,18 @@ Flight::route('POST /promote/?',array('controller_score','promote'));
 
 Flight::route('GET /u/new/?$',array('controller_user','new_user'));
 Flight::route('POST /u/new/?$',array('controller_user','create'));
-Flight::route('GET /u/@username:[a-z0-9_.-]+/?$',array('controller_user','get'));
+Flight::route('GET /u/follow/@url$',array('controller_user','follow'));
+Flight::route('GET /u/@username/?$',array('controller_user','get'));
+Flight::route('GET /u/@username/pubkey/?$',array('controller_user','pubkey'));
 
 Flight::route('POST /auth/login/?$',array('controller_auth','login'));
 Flight::route('GET /auth/logout/?$',array('controller_auth','logout'));
 Flight::route('GET /auth/changepassword/?$',array('controller_auth','change'));
 Flight::route('POST /auth/changepassword/?$',array('controller_auth','dochange'));
+Flight::route('GET /auth/pubkey/?.*$',array('controller_auth','pubkey'));
+Flight::route('POST /auth/addkey/?$',array('controller_auth','addkey'));
 
-Flight::route('GET /@id:[a-z0-9_-]+/?$',array('controller_node','get'));
+Flight::route('GET /@id:[a-z0-9_-]+(\.(json|rss))?/?$',array('controller_node','get'));
 
 /**
  * Feeds

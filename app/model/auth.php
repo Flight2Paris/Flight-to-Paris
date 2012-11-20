@@ -70,6 +70,8 @@ class auth extends Model {
 	public function login() {
 		$_SESSION['logged'] = true;
 		$_SESSION['user_id'] = $this->user_id;
+		$this->last_login = date('Y-m-d H:i:s');
+		$this->save();
 	}
 
 	public static function isLoggedIn() {

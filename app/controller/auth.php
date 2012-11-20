@@ -12,11 +12,11 @@ class controller_auth {
 				model_auth::clearFailed($user->id);
 				Flight::redirect(View::makeUri('/'));
 			} else {
-				Flight::set('login-error','@#$%^&*!');
+				Flight::set('error','@#$%^&*!');
 				model_auth::increaseFailed($user->id);
 			}
 		} else {
-			Flight::set('login-error','@#$%^&*!');
+			Flight::set('error','@#$%^&*!');
 		}
 
 		Flight::render('home_get',null,'layout');
@@ -44,6 +44,33 @@ class controller_auth {
 		} else {
 			Flight::set('error','You did something wrong');
 			Flight::render('auth_change',null,'layout');
+		}
+	}
+
+	public function pubkey() {
+		$view = Flight::View();
+		$auth = model_auth::getCurrent();
+		$view->set('auth',$auth);
+		Flight::render('auth_pubkey',null,'layout');
+	}
+
+	public function addkey() {
+		$data = Flight::request()->data;
+
+		if ( auth::isLoggedIn() ) {
+
+			$auth = model_auth::getCurrent();
+
+			if ( $auth->checkPassword($data['password']) ) {
+				$auth->public_key = $data['public_key'];
+				$auth->save();
+				Flight::redirect( View::makeUri('/auth/pubkey/?ok=1') );
+			} else {
+				Flight::set('error','@#$%^&*!');
+				Flight::render('auth_pubkey',null,'layout');
+			}
+		} else {
+			Flight::redirect( View::makeUri('/u/new') );
 		}
 	}
 }

@@ -1,8 +1,7 @@
 <h1><?= View::e($user->username) ?></h1>
-<?= View::markdown("## Subtitulo de prueba
+<?php if ( trim($user->getAuth()->public_key) ) : ?>
+<p><a href="<?= View::makeURI('/u/'.$user->username.'/pubkey') ?>">PUBLIC KEY</a></p>
+<?php endif ?>
+<p>Puntos: <?= $user->score ?></p>
+<p>Puntos del ultimo mes: <?= $user->getMonthlyScore() ?> / Gana x hora <?= round(sqrt($user->getMonthlyScore())/30,4) ?></p>
 
-### testing testing
-
-#### testing testing testing
-
-Y al **final** tipo para _cerrar_ un parrafo") ?>

@@ -3,10 +3,10 @@
 	<h1><?= View::e($uri) ?></h1>
 	<?php endif ?>
 	<span class="clear right">
-	<input type="image" alt="Save" title="Save" src="<?= View::makeUri('/images/save.png') ?>" />
+	<input type="image" alt="Guardar" title="Guardar" src="<?= View::makeUri('/images/save.png') ?>" />
 	</span><br />
 	<?php if ( $uri ) : ?>
 	<input type="hidden" value="<?= View::e($uri) ?>" name="uri" />
 	<?php endif ?>
-	<textarea class="bigmarkdown" name="content" placeholder="<?= View::e($random->content) ?>"></textarea>
+	<textarea class="bigmarkdown" name="content" placeholder="Compartí algo"></textarea>
 </form>
