@@ -1,95 +1,76 @@
 <!doctype html>
-<html>
+<html land="es">
 <head>
 	<meta charset="UTF-8" />
 	<title><?= $title?$title.' - ':'' ?>esfriki</title>
-	<meta name="description" content="Publica enlaces, mensajes o articulos sin entregar datos personales. Red social para el cambio de conciencia." />
-	<meta name="keywords" content="red social, horizontalidad, desarrollo sostenible, tierra, libertad, privacidad, ecologia" />
-	<link rel="shortcut icon" type="image/x-icon" href="<?= View::makeUri('/favicon.ico') ?>" />
-	<link rel="stylesheet" href="<?= View::makeUri('/css/normalize.css') ?>" charset="utf-8" />
-	<link rel="stylesheet" href="<?= View::makeUri('/css/main.css') ?>" charset="utf-8" />
-	<script src="<?= View::makeUri('/js/jquery.js') ?>"></script>
-	<script type="text/javascript" src="<?= View::makeUri('/js/pagedown/Markdown.Converter.js') ?>"></script>
-	<script type="text/javascript" src="<?= View::makeUri('/js/pagedown/Markdown.Sanitizer.js') ?>"></script>
-	<script type="text/javascript" src="<?= View::makeUri('/js/pagedown/Markdown.Editor.js') ?>"></script>
-	<script>
-		$(document).ready(function(){
-			$('#login-dropdown').hide();
-			$('#login-link').toggle(function(){
-				$('#login-dropdown').show();
-				$('#input-username').focus();
-			}, function(){
-				$('#login-dropdown').hide();
-			});
-			$('#user-dropdown').hide();
-			$('#user-link').toggle(function(){
-				$('#user-dropdown').show();
-			}, function(){
-				$('#user-dropdown').hide();
-			});
-		});
-	</script>
+	<meta name="description" content="Ciencia, tecnologia, documentales, noticias y cosas frikis. Comparte informacion, archivos y enlaces. Crea posts con enlaces cortos." />
+
+	<link rel="stylesheet" href="<?= View::makeUri('/assets/css/bootstrap.min.css') ?>" />
+	<link rel="stylesheet" href="<?= View::makeUri('/assets/css/font-awesome.css') ?>" />
+	<link rel="stylesheet" href="<?= View::makeUri('/assets/css/main.css') ?>" />
 </head>
 <body>
 	<header class="clear">
 		<div class="pageWidth center clear">
-			<a id="logo" href="<?= View::makeUri('/') ?>">esfriki</a>
-			<?php if ( auth::isLoggedIn() ) : ?>
-			<a href="javascript:void()" id="user-link"><?= View::e(auth::getUser()->username) ?></a> 
-			<a title="Click aqui para ver más detalles" href="<?= View::makeUri('/score') ?>"><span id="score"><?= auth::getUser()->score ?></span></a>
-			<?php else : ?>
-			<a href="javascript:void()" id="login-link">entrar</a>
-			<?php endif ?>
+			<a id="logo" class="white" href="<?= View::makeUri('/') ?>">esfriki</a>
 
-			<form action="/search/" action="post" id="search" class="right">
-				<input type="search" name="q" id="searchField" placeholder="buscar..." />
-				<input type="image" id="searchButton" src="<?= View::makeUri('/images/search.png') ?>" alt="search" />
+			<form action="<?= View::makeUri('/') ?>" action="post" id="search" class="form-search inline">
+				<div class="input-append">
+				<input type="search" name="q" id="searchField" class="input-large search-query" placeholder="Que estas buscando?" />
+				<button type="submit" class="btn" id="searchButton"><i class="icon-search"></i> Buscar</a>
+				</div>
 			</form>
-		</div>
-		<div class="pageWidth center clear">
-		<?php if ( auth::isLoggedIn() ) : ?>
-		<div id="user-dropdown">
-				<a href="<?= View::makeUri('/auth/changepassword') ?>">Cambiar contraseña</a><br />
-				<a href="<?= View::makeUri('/auth/pubkey') ?>">Agregar llave pública</a><br />
-				<a href="<?= View::makeUri('/auth/logout') ?>">Salir</a><br />
-		</div>
-		<?php else : ?>
-		<div id="login-dropdown">
-			<form action="<?= View::makeUri('/auth/login') ?>" method="post">
-				<input id="input-username" type="text" name="username" placeholder="Usuario" class="block" title="Usuario" />
-				<input type="password" name="password" placeholder="*****************" title="Password" class="block" />
-				<input type="submit" value='("\(^o^)/")' class="blocl"/>
-			</form>
-			<a href="<?= View::makeUri('/u/new') ?>" class="small">registrate</a>
-		</div>
-		<?php endif ?>
+
+			<?php if ( auth::isLoggedIn() ) : ?>
+			<a href="<?= View::makeUri('/score') ?>" id="score" class="white"><?= auth::getUser()->score ?></a>
+
+			<div class="btn-group inline right">
+				<a class="btn btn-success" href="<?= View::e(auth::getUser()->uri) ?>"><i class="icon-user"></i> <?= View::e(auth::getUser()->username) ?></a>
+				<a class="btn btn-success dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-caret-down"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="<?= View::makeUri('/auth/changepassword') ?>"><i class="icon-lock"></i> Cambiar contraseña</a></li>
+					<li><a href="<?= View::makeUri('/auth/pubkey') ?>"><i class="icon-key"></i> Agregar llave</a></li>
+					<li class="divider"></li>
+					<li><a href="<?= View::makeUri('/auth/logout') ?>"><i class="icon-signout"></i> Salir</a></li>
+				</ul>
+			</div>
+			<?php else : ?>
+			<div class="btn-group inline right">
+				<a class="btn btn-danger" href="/u/new"><i class="icon-signin"></i> Entrar</a>
+				<a class="btn btn-danger dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-caret-down"></span></a>
+				<ul class="dropdown-menu" style="padding: 10px">
+					<form action="<?= View::makeUri('/auth/login') ?>" method="post">
+					<div class="input-prepend"><span class="add-on"><i class="icon-user"></i></span> <input id="input-username" type="text" name="username" placeholder="Usuario" /></div>
+					<div class="input-prepend"><span class="add-on"><i class="icon-lock"></i></span> <input type="password" name="password" placeholder="*****************" /></div>
+					<button type="submit" class="btn">("\(^o^)/")</button>
+					</form>
+					<li class="divider"></>
+					<li><a href="<?= View::makeUri('/u/new') ?>"><i class="icon-plus-sign"></i> Registrate</a></li>
+				</ul>
+			</div>
+			<?php endif ?>
 		</div>
 	</header>
 
 
 	<div id="wrapper" class="center pageWidth clear">
-
-		<noscript><img id="noscript" src="<?= View::makeUri('/images/noscript.png') ?>" alt="Habilita JavaScript para chucherias :)" title="Habilita JavaScript para chucherias :)" onload="$('#noscript').hide();" /></noscript>
-
 		<content>
-			<?php if ( Flight::get('login-error') ) : ?> <span class="red"><?= Flight::get('login-error') ?></span><?php endif ?>
-			<?php if ( Flight::get('error') ) : ?><span class="red"><?= Flight::get('error') ?></span><?php endif ?>
-			<?php if ( Flight::get('notice') ) : ?><span><?= Flight::get('notice') ?></span><?php endif ?>
+			<?php if ( Flight::get('error') ) : ?><span class="red"><i class="icon-exclamation-sign"></i> <?= Flight::get('error') ?></span><?php endif ?>
+			<?php if ( Flight::get('notice') ) : ?><span><i class="icon-exclamation-sign"></i> <?= Flight::get('notice') ?></span><?php endif ?>
 			<?= $content ?>
 		</content>
 		<span class="clear"></span>
 	</div>
-	<footer class="center pageWidth clear">
-		<a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="nofollow"><img src="<?= View::makeUri('/images/cc-by-sa.png') ?>" alt="Creative Commons Attribution-ShareAlike 3.0" title="Creative Commons Attribution-ShareAlike 3.0"/></a>
-		<a href="https://github.com/rata0071/Flight-to-Paris" target="_blank" title="Flight to Paris - github" ><img src="<?= View::makeUri('/images/github.png') ?>" alt="Github" /></a>
-	</footer>
-        <script type="text/javascript">
-            (function () {
-                var converter = Markdown.getSanitizingConverter();
-                var editor = new Markdown.Editor(converter);
-        //        editor.run();
-			})();
 
-        </script>
+	<footer class="center pageWidth clear">
+		<a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="nofollow"><img src="<?= View::makeUri('/assets/img/cc-by-sa.png') ?>" alt="Creative Commons Attribution-ShareAlike 3.0" title="Creative Commons Attribution-ShareAlike 3.0"/></a>
+		<a href="https://github.com/rata0071/Flight-to-Paris" target="_blank" title="Flight to Paris - github" ><img src="<?= View::makeUri('/assets/img/github.png') ?>" alt="Github" /></a>
+	</footer>
+
+	<script src="<?= View::makeUri('/assets/js/jquery.js') ?>"></script>
+	<script>$(document).ready(function(){$('.dropdown-menu').find('form').click(function(e){e.stopPropagation();});});</script>
+	<script src="<?= View::makeUri('/assets/js/bootstrap.min.js') ?>"></script>
+	<script>var logged = <?= auth::isLoggedIn() ? 'true' : 'false' ?>, skip=<?= (int)$skip ?>, pagesize=<?= PAGESIZE ?>, query='<?= View::e($query) ?>', before=<?= (int)$before ?>, after=<?= (int)$after ?>, domain='<?= View::e(DOMAIN) ?>';</script>
+	<script src="<?= View::makeUri('/assets/js/main.js') ?>"></script>
 </body>
 </html>

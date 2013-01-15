@@ -14,18 +14,33 @@ class model_node {
 		return $node;
 	}
 
-	public static function getLatest( ) {
-		$nodes = ORM::for_table('node')->raw_query('SELECT node.uri FROM node JOIN score ON (score.uri = node.uri) ORDER BY UNIX_TIMESTAMP(node.created) + (score.score*score.score*60) DESC LIMIT 30')->find_many();
+	public static function search($query=null,$before=0,$after=0,$skip=0) {
+		$before = (int)$before;
+		$after = (int)$after;
+		$skip = (int)$skip;
+		$query = trim($query);
+		$q = 'SELECT node.uri FROM node JOIN score ON (score.uri = node.uri) WHERE 1';
+
+		if ( $before > 0 ) {
+			$q .= ' AND UNIX_TIMESTAMP(node.created) < '.$before;
+		}
+		if ( $after > 0 ) {
+			$q .= ' AND UNIX_TIMESTAMP(node.created) > '.$after;
+		}
+
+		if ( $query ) {
+			$q .= ' AND content LIKE '.ORM::get_db()->quote('%'.$query.'%');
+		}
+
+		$q .= ' ORDER BY UNIX_TIMESTAMP(node.created) + sqrt(score.score-1)*3600 DESC';
+		$q .= ' LIMIT '.$skip.','.PAGESIZE;
+
+		$nodes = ORM::for_table('node')->raw_query($q)->find_many();
 		$res = array();
 		foreach ( $nodes as $val ) {
 			$res[] = self::getByUri($val->uri);
 		}
 		return $res;
-	}
-
-	public static function search($query) { 
-		$nodes = Model::factory('node')->where_like('content','%'.$query.'%')->order_by_desc('created')->limit(100)->find_many();
-		return $nodes;
 	}
 
 }

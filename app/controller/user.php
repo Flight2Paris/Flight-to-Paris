@@ -17,7 +17,7 @@ class controller_user {
 
 	public function create() {
 		$data = Flight::request()->data;
-		require_once('captcha/captcha.php');
+		require_once('lib/captcha/captcha.php');
 
 		if ( isset($data['reload-captcha_x']) ) {
 			Flight::render('user_new', null, 'layout');
@@ -27,7 +27,7 @@ class controller_user {
 				Flight::render('user_new', null, 'layout');
 
 		} else if ( model_user::canRegister( $data['username'] ) ) {
-				$this->register_user($data);
+				controller_user::register_user($data);
 
 		} else {
 
@@ -45,7 +45,7 @@ class controller_user {
 	}
 
 
-	private function register_user($data) {
+	public static function register_user($data) {
 			$user = Model::factory('user')->create();
 			$user->username = $data['username'];
 			$user->uri = View::makeUri('/u/'.urlencode($data['username']));

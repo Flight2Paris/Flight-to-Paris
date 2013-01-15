@@ -3,14 +3,20 @@ RewriteEngine On
 
 # Installation directory
 RewriteBase /
-
-# Protect hidden files from being viewed
-<Files .*>
-	Order Deny,Allow
-	Deny From All
-</Files>
-
-# Allow any files or directories that exist to be displayed directly
-RewriteCond %{REQUEST_FILENAME} !-f
+                                                                                                                                                                 
+# Protect hidden files from being viewed                                                                                                                         
+<Files .*>                                                                                                                                                       
+        Order Deny,Allow                                                                                                                                         
+        Deny From All                                                                                                                                            
+</Files>                                                                                                                                                         
+                                                                                                                                                                 
+# If file exists in the files dir show it 
+RewriteCond %{DOCUMENT_ROOT}/files/$0 -f                                                                                                                         
+RewriteRule ^(.*)$ files/$1 [QSA,L]                                                                                                                              
+                                                                                                                                                                 
+                                                                                                                                                                 
+# Allow any files or directories that exist to be displayed directly                                                                                             
+RewriteCond %{REQUEST_FILENAME} !-f                                                                                                                              
 RewriteCond %{REQUEST_FILENAME}/index.php !-f
 RewriteRule ^(.*)$ index.php [QSA,L]
+

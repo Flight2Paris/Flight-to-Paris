@@ -33,7 +33,7 @@ class controller_score {
 		if ( auth::isLoggedIn() ) {
 			$data = Flight::request()->data;
 			$user = auth::getUser();
-			require_once('captcha/captcha.php');
+			require_once('lib/captcha/captcha.php');
 			Flight::View()->set('user',$user);
 
 			if ( isset($data['reload-captcha_x']) ) {

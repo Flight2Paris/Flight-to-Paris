@@ -10,8 +10,8 @@ $replyTo = $node->getReplyTo(); ?>
 	<?php $author = $node->getAuthor() ?>
 	<?php if ( $author ) : ?><a href="<?= View::e($author->uri) ?>" class="author"><?= View::e($author->username) ?></a><?php endif ?>
 	<?= View::markdown($node->content) ?>
+	<?php include('actions.php') ?>
 </div>
-<?php include('actions.php') ?>
 <?php foreach ( $node->getReplies() as $comment ) : ?>
 <div class="comment">
 	<?php $author = $comment->getAuthor() ?>
