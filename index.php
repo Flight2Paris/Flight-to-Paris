@@ -35,9 +35,9 @@ Flight::set('flight.views.path', APP_PATH.'/view');
 /****  CONFIGURE YOUR DOMAIN AND DB HERE  ****/ 
 define ( 'DOMAIN', 'aza.com' );
 
-ORM::configure('mysql:host=localhost;dbname=esfriki');
+ORM::configure('mysql:host=localhost;dbname=flight2paris');
 ORM::configure('username', 'root');
-ORM::configure('password', 'rootlaspelotas');
+ORM::configure('password', '');
 
 /****  AND DOWN THE RABBIT HOLE  ****/
 
