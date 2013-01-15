@@ -20,7 +20,7 @@ $(document).ready(function(){
 				node_link = $(this).children('.node-actions').children('a.uri');
 				uri = node_link.attr('href');
 
-				if ( node_link.hostname == domain ) {
+				if ( node_link[0].hostname == domain ) {
 					$(this).children('.node-short').after('<div class="node-full right"><img src="/assets/img/loading.gif" alt="Cargando..." /></div>');
 					$(this).children('.node-short').hide();
 					$(this).children('.node-full').load(uri);
