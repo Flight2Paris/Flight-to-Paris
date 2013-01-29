@@ -19,7 +19,7 @@ class controller_auth {
 			Flight::set('error','@#$%^&*!');
 		}
 
-		Flight::render('home_get',null,'layout');
+		Flight::render('node_search',null,'layout');
 	}
 
 	public function logout() {
