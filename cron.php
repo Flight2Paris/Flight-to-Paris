@@ -33,9 +33,9 @@ set_include_path(get_include_path() . PATH_SEPARATOR . APP_PATH);
 set_include_path(get_include_path() . PATH_SEPARATOR . APP_PATH . '/model/');
 
 
-ORM::configure('mysql:host=db.esfriki.com;dbname=flight2paris');
-ORM::configure('username', 'esfriki');
-ORM::configure('password', 'esFRIkipaSS1234');
+ORM::configure('mysql:host=;dbname=');
+ORM::configure('username', '');
+ORM::configure('password', '');
 
 
 Flight::set('flight.lib.path', APP_PATH);
