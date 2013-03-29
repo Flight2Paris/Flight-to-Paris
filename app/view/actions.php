@@ -1,6 +1,8 @@
-<div class="node-actions right">
+<div class="row-fluid node-actions">
+	<div class="span2">
 	<a href="<?= View::e($node->uri) ?>" class="uri" ><?= View::e($node->uri) ?></a>
-	<form action="<?= View::makeUri('/promote/') ?>" method="POST" class="inline score-form">
+	</div>
+	<form action="<?= View::makeUri('/promote/') ?>" method="POST" class="span8 score-form">
 	<input type="hidden" value="<?= View::e($node->uri) ?>" name="uri" />
 	<div class="btn-group">
 	<input type="submit" name="promote" value="1" class="promote btn" />
@@ -10,5 +12,5 @@
 	<input type="submit" name="promote" value="8" class="promote btn" />
 	</div>
 	</form>
-	<span class="node-score"><?= $node->getScore()->score ?></span>
+	<div class="span2 node-score"><i class="icon-star"></i> <?= $node->getScore()->score ?></div>
 </div>

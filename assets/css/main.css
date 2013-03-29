@@ -1,5 +1,5 @@
 /* copy this copy that but copy */
-html, body { background: #F0EFD1;  font-family: proxima-nova, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 14px; }
+html, body { background: #F8f7D9;  font-family: proxima-nova, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 14px; }
 
 content a,content a:link,content a:active,content a:visited,content a:hover { text-decoration:none; color: #BF3211 }
 content a:hover { text-decoration:underline }
@@ -10,51 +10,35 @@ h2, h2 * { font-size:28px; text-shadow: 0 1px 1px white; line-height: 25px }
 h3, h3 * { font-size:20px }
 h4, h4 * { font-size:16px}
 h1, h2, h3, h4, h5, h6 { margin:0; margin-bottom:14px; margin-top:7px; word-wrap: break-word; font-family: museo-slab, "Helvetica Neue", Helvetica, Arial, sans-serif; } 
-hr { width: 80%; border-color: #edd2c1; margin: 14px auto }
 
 
 header, content, footer { display:block }
-header { background-color: #191919; height:35px; padding-top:7px; font-size:18px; font-family: museo-slab, "Helvetica Neue", Helvetica, Arial, sans-serif; position:fixed; width:100%;}
-
-#search * { font-family: proxima-nova, "Helvetica Neue", Helvetica, Arial, sans-serif; }
-#search { margin: 0 20px; }
-
-#post-content { height:26px; width:650px; margin-bottom:5px }
-#noscript { display:block; float:right; margin-top:5px }
-#wrapper { min-height: 400px }
-
+content { margin-top:60px }
 footer { padding-top: 30px }
 
 .center { margin:0 auto }
 .centerContent { text-align: center }
-.pageWidth { width:800px }
 .clear { clear:both }
-.right { float:right }
-.left { float:left }
-.block { display:block }
 .red {  color: #BF3211; } 
-.small { font-size:10px; }
 
-
-a.white, .white, a:hover.white { color:white}
+#post-content { height:28px; } 
 
 #score { margin-right:14px; font-size: 20px; }
-content { width: 780px; float: left; padding-top:20px; margin-top:42px; }
-
-.inline, .inline-button { display:inline!important; vertical-align:middle!important }
 
 
-.node-short, .node-full, .node-actions { width: 690px; }
-.node { margin-bottom: 5px; padding:5px; padding-top:0; cursor:pointer; }
+
+.node { cursor:pointer; padding:0 2% }
+.node-hover { cursor:pointer; background-color: #f9f8eb;}
+.node-full { margin-left:0!important; }
+
 .node .score-form { opacity:0 }
-.node-hover { margin-bottom: 5px; padding-bottom:5px; cursor:pointer; background-color: #f9f8eb;}
 .node-hover .score-form { opacity:1 }
 
 .node-actions { text-align:right  }
 .node-actions a { font-size:10px }
-.author { font-size:12px }
-.node-author { width: 75px; }
+
 .node-score { font-size:20px }
+
 .uri { float:left }
 
 .comment { margin-bottom: 5px; padding-bottom:5px }

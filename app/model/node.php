@@ -17,7 +17,7 @@ class model_node {
 	public static function search($query=null,$before=0,$after=0,$skip=0) {
 		$before = (int)$before;
 		$after = (int)$after;
-		$skip = (int)$skip;
+		$skip = abs((int)$skip);
 		$query = trim($query);
 		$q = 'SELECT node.uri FROM node JOIN score ON (score.uri = node.uri) WHERE 1';
 

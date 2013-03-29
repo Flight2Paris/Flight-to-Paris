@@ -6,6 +6,7 @@ $replyTo = $node->getReplyTo(); ?>
 	<?= View::markdown($replyTo->content) ?>
 </div>
 <?php endif ?>
+
 <div class="node">
 	<?php $author = $node->getAuthor() ?>
 	<?php if ( $author ) : ?><a href="<?= View::e($author->uri) ?>" class="author"><?= View::e($author->username) ?></a><?php endif ?>
@@ -19,15 +20,16 @@ $replyTo = $node->getReplyTo(); ?>
 	<?= View::markdown($comment->content) ?>
 </div>
 <?php endforeach ?>
+
 <?php if ( auth::isLoggedIn() ) : ?>
 <span class="red">Comentar:</span>
 <form id="reply" action="/" method="POST" >
 	<input type="hidden" name="type" value="<?= View::makeUri('/reply') ?>" />
 	<input type="hidden" name="to" value="<?= View::e($node->uri) ?>" />
-	<textarea name="content" id="post-content" placeholder="Responde algo" ></textarea>
-	<span class="clear right block">
-		<input type="image" alt="Save" title="Save" src="<?= View::makeUri('/images/save.png') ?>" />
-	</span>
-	<span class="block clear"></span>
+	<div class="row-fluid">
+	<div class="span10"><textarea name="content" class="input-block-level" id="post-content" placeholder="Comenta o agrega información." ></textarea></div>
+	<div class="span2"><button class="btn submit pull-right">
+		<i class="icon-save"></i> Guardar
+	</button></div>
 </form>
 <?php endif ?>

@@ -593,6 +593,24 @@ class Flight {
             ->send();
     }
 
+	public static function flash($name, $data = null) {
+		if ( ! isset($_SESSION['flash']) || ! is_array($_SESSION['flash']) ) {
+			$_SESSION['flash'] = array();
+		}
+
+		if ( is_null($data) ) {
+			return $_SESSION['flash'][$name];
+		} else {
+			if ( ! is_array($_SESSION['flash'][$name]) ) {
+				$_SESSION['flash'][$name] = array();
+			}
+			$_SESSION['flash'][$name][] = $data;
+		}
+	}
+
+	public static function clearFlash($name) {
+		unset($_SESSION['flash'][$name]);
+	}
 }
 
 // Initialize framework on include

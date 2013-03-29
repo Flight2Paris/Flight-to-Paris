@@ -15,7 +15,7 @@ public static function playa_url($url, $w = 680, $h = NULL) {
 	// image files
 	if ( preg_match('/.*\.(jpg|gif|png|jpeg|svg|bmp)$/',$url)) {
 		$url = htmlspecialchars($url);
-		return '<a href="'.$url.'" target="_blank"><img style="max-width:'.$w.'px" src="'.$url.'" alt="'.$url.'" /></a>';
+		return '<a href="'.$url.'" target="_blank"><img style="max-width:98%" src="'.$url.'" alt="'.$url.'" /></a>';
 	}
 
 	// video files

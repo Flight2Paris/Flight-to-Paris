@@ -1,29 +1,26 @@
 $(document).ready(function(){
-	var loadmore = $('#load-more'), loadtext='';
-
-	// Show the score when hovering the node
+	// .node hover
 	$('.node').live("mouseenter", function() {
 		$(this).addClass("node-hover"); 
 	}).live("mouseleave", function() {
 		$(this).removeClass("node-hover"); 
 	});
 
-	// If a node is clicked load it's content and show it.
+	// .node click
 	$('.node').live('click',function(e){
 		if ( ['A','SUBMIT','INPUT','IMG'].indexOf(e.target.nodeName) != '-1' ) {
 		} else {
 			e.preventDefault();
-			if ( $(this).children('.node-full').length > 0 ) { 
-				$(this).children('.node-short').toggle();
-				$(this).children('.node-full').toggle();
+			if ( $(this).find('.node-full').length > 0 ) { 
+				$(this).find('.node-short').toggle();
+				$(this).find('.node-full').toggle();
 			} else {
-				node_link = $(this).children('.node-actions').children('a.uri');
+				node_link = $(this).find('a.uri');
 				uri = node_link.attr('href');
-
 				if ( node_link[0].hostname == domain ) {
-					$(this).children('.node-short').after('<div class="node-full right"><img src="/assets/img/loading.gif" alt="Cargando..." /></div>');
-					$(this).children('.node-short').hide();
-					$(this).children('.node-full').load(uri);
+					$(this).find('.node-short').after('<div class="node-full span12"><img src="/assets/img/loading.gif" alt="Cargando..." /></div>');
+					$(this).find('.node-short').hide();
+					$(this).find('.node-full').load(uri);
 				} else {
 					window.location.href=uri;
 				}
@@ -31,11 +28,12 @@ $(document).ready(function(){
 		}
 	});
 
+	// load new nodes
+	var loadmore = $('#load-more'), loadtext='';
 	var refresh = 60;
-
 	loadNew = function() {
+		if ( loadmore.is(':visible') ) {
 		$.get('/?q='+query+'&after='+after, function(data,code,xhr) {
-			console.log(xhr);
 			if ( xhr.status == '200' ) {
 				$('content').children(':first.node').before(data);
 				after += refresh;
@@ -43,13 +41,18 @@ $(document).ready(function(){
 				after += refresh;
 			}
 		});
+		}
 	}
 
 	setInterval(loadNew, refresh*1000);
 
 	// Ajax scroll
+
 	$(window).scroll(function() {
-		if( $(window).scrollTop() + $(window).height() > $(document).height() - 300 & !loadmore.hasClass('loading')) {
+		if( ($(window).scrollTop() + $(window).height()) > ($(document).height() - 300) &&
+			loadmore.is(':visible')  &&
+			!loadmore.hasClass('loading') ) {
+
 			loadmore.addClass('loading');
 			loadtext=loadmore.html();
 			loadmore.html('<img src="/assets/img/loading.gif" />');
@@ -72,7 +75,7 @@ $(document).ready(function(){
 			form = $(this).closest('form');
 			val = $(this).val();
 			uri = form.children('input[name="uri"]').val();
-			score = form.closest('.node').children('.node-actions').children('.node-score');
+			score = form.closest('.node').find('.node-score');
 			score.text(parseInt(score.text()) + parseInt(val));
 			$('#score').text(parseFloat($('#score').text()) - parseFloat(val));
 			$.post(form.attr('action'),{"uri": uri, "promote": val},function(data){});
@@ -111,5 +114,34 @@ $(document).ready(function(){
 	$('#post-content').keyup(function(event){ 
 		postanimate($(event.target));
 	});
+
+	// Reload captcha
+	var captcha = $('#captcha');
+	if ( captcha.length > 0 ) {
+
+	$('#refresh-captcha').on('click',function(e){
+		if ( ! captcha.hasClass('loading') ) {
+			e.preventDefault();
+			captcha.addClass('loading');
+			captcha.attr('src','/assets/img/loading.gif');
+		}
+	});
+
+	captcha.on('load',function(){
+		if ( captcha.hasClass('loading') ) {
+			d = new Date();
+			captcha.removeClass('loading');
+			captcha.attr('src','/lib/captcha/?' + d.getTime());
+		}
+	});
+
+	$('input').keydown(function(event){
+		if(event.keyCode == 13) {
+			event.preventDefault();
+			return false;
+		}
+	});
+
+	}
 });
 

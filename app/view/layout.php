@@ -10,62 +10,85 @@
 	<link rel="stylesheet" href="<?= View::makeUri('/assets/css/main.css') ?>" />
 </head>
 <body>
-	<header class="clear">
-		<div class="pageWidth center clear">
-			<a id="logo" class="white" href="<?= View::makeUri('/') ?>">esfriki</a>
 
-			<form action="<?= View::makeUri('/') ?>" action="post" id="search" class="form-search inline">
-				<div class="input-append">
-				<input type="search" name="q" id="searchField" class="input-large search-query" placeholder="Que estas buscando?" />
-				<button type="submit" class="btn" id="searchButton"><i class="icon-search"></i> Buscar</a>
-				</div>
-			</form>
+<header>
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
 
-			<?php if ( auth::isLoggedIn() ) : ?>
-			<a href="<?= View::makeUri('/score') ?>" id="score" class="white"><?= auth::getUser()->score ?></a>
+		<div class="pull-left span7">
+		<a class="brand" href="<?= View::makeUri('/') ?>">esfriki</a>
 
-			<div class="btn-group inline right">
-				<a class="btn btn-success" href="<?= View::e(auth::getUser()->uri) ?>"><i class="icon-user"></i> <?= View::e(auth::getUser()->username) ?></a>
-				<a class="btn btn-success dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-caret-down"></span></a>
-				<ul class="dropdown-menu">
-					<li><a href="<?= View::makeUri('/auth/changepassword') ?>"><i class="icon-lock"></i> Cambiar contraseña</a></li>
-					<li><a href="<?= View::makeUri('/auth/pubkey') ?>"><i class="icon-key"></i> Agregar llave</a></li>
-					<li class="divider"></li>
-					<li><a href="<?= View::makeUri('/auth/logout') ?>"><i class="icon-signout"></i> Salir</a></li>
-				</ul>
+		<form action="<?= View::makeUri('/') ?>" action="post" id="search" class="form-search navbar-form">
+			<div class="input-append">
+			<input type="search" name="q" class="input-largei search-query" placeholder="Que estas buscando?" />
+			<button type="submit" class="btn"><i class="icon-search"></i> Buscar</button>
 			</div>
-			<?php else : ?>
-			<div class="btn-group inline right">
-				<a class="btn btn-danger" href="/u/new"><i class="icon-signin"></i> Entrar</a>
-				<a class="btn btn-danger dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-caret-down"></span></a>
+		</form>
+		</div>
+
+		<div class="pull-right span3">
+		<ul class="nav pull-right">
+		<?php if ( auth::isLoggedIn() ) : ?>
+			<li><a href="<?= View::makeUri('/score') ?>"><i class="icon-star"></i><?= auth::getUser()->score ?></a></li>
+			<li>
+				<div class="btn-group">
+					<a class="btn btn-success" href="<?= View::e(auth::getUser()->uri) ?>"><i class="icon-user"></i> <?= View::e(auth::getUser()->username) ?></a>
+					<a class="btn btn-success dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-caret-down"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="<?= View::makeUri('/auth/changepassword') ?>"><i class="icon-lock"></i> Cambiar contraseña</a></li>
+						<li><a href="<?= View::makeUri('/auth/pubkey') ?>"><i class="icon-key"></i> Agregar llave</a></li>
+						<li class="divider"></li>
+						<li><a href="<?= View::makeUri('/auth/logout') ?>"><i class="icon-signout"></i> Salir</a></li>
+					</ul>
+				</div>
+			</li>
+		<?php else : ?>
+		<li>
+			<div class="btn-group">
+				<a class="btn btn-danger dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-signin"></i> Entrar</a>
+				<a class="btn btn-danger dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-caret-down"></i></a>
 				<ul class="dropdown-menu" style="padding: 10px">
 					<form action="<?= View::makeUri('/auth/login') ?>" method="post">
-					<div class="input-prepend"><span class="add-on"><i class="icon-user"></i></span> <input id="input-username" type="text" name="username" placeholder="Usuario" /></div>
-					<div class="input-prepend"><span class="add-on"><i class="icon-lock"></i></span> <input type="password" name="password" placeholder="*****************" /></div>
+					<div class="input-prepend"><span class="add-on"><i class="icon-user"></i></span> <input id="input-username" type="text" name="username" placeholder="Usuario" /></div> <br />
+					<div class="input-prepend"><span class="add-on"><i class="icon-lock"></i></span> <input type="password" name="password" placeholder="*****************" /></div> <br />
 					<button type="submit" class="btn">("\(^o^)/")</button>
 					</form>
 					<li class="divider"></>
 					<li><a href="<?= View::makeUri('/u/new') ?>"><i class="icon-plus-sign"></i> Registrate</a></li>
 				</ul>
 			</div>
-			<?php endif ?>
+		</li>
+		<?php endif ?>
+		</ul>
 		</div>
-	</header>
+    </div>
+  </div>
+</div>
+</header>
 
 
-	<div id="wrapper" class="center pageWidth clear">
+	<div class="container">
 		<content>
-			<?php if ( Flight::get('error') ) : ?><span class="red"><i class="icon-exclamation-sign"></i> <?= Flight::get('error') ?></span><?php endif ?>
-			<?php if ( Flight::get('notice') ) : ?><span><i class="icon-exclamation-sign"></i> <?= Flight::get('notice') ?></span><?php endif ?>
+			<?php foreach ( Flight::flash('message') as $message ) : ?>
+				<div class="alert alert-<?= View::e($message['type']) ?>">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					<i class="<?= isset($message['icon']) ? View::e('icon-'.$message['icon']) : 'icon-exclamation-sign' ?>"></i> <?= View::e($message['text']) ?>
+				</div>
+			<?php endforeach ?>
+			<?php Flight::clearFlash('message') ?>
 			<?= $content ?>
 		</content>
 		<span class="clear"></span>
 	</div>
 
-	<footer class="center pageWidth clear">
+
+	<div class="container">
+	<footer>
 		<a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="nofollow"><img src="<?= View::makeUri('/assets/img/cc-by-sa.png') ?>" alt="Creative Commons Attribution-ShareAlike 3.0" title="Creative Commons Attribution-ShareAlike 3.0"/></a>
 		<a href="https://github.com/rata0071/Flight-to-Paris" target="_blank" title="Flight to Paris - github" ><img src="<?= View::makeUri('/assets/img/github.png') ?>" alt="Github" /></a>
 	</footer>
+	</div>
 
 	<script src="<?= View::makeUri('/assets/js/jquery.js') ?>"></script>
 	<script>$(document).ready(function(){$('.dropdown-menu').find('form').click(function(e){e.stopPropagation();});});</script>

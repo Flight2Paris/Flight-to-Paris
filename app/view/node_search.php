@@ -1,21 +1,7 @@
 <?php require('postform.php') ?>
 
 <?php foreach ( $nodes as $node ) : ?>
-	<div class="node">
-		<div class="node-author left">
-		<?php $author = $node->getAuthor() ?>
-		<?php if ( $author ) : ?><a href="<?= View::e($author->uri) ?>" class="author"><?= View::e($author->username) ?></a><?php endif ?>
-		</div>
-
-		<div class="right node-short">
-		<?php if ( mb_strlen($node->content) > 140 ) : ?>
-		<?= View::markdown(trim(mb_substr($node->content,0,140)).'...',false) ?>
-		<?php else : ?>
-		<?= View::markdown($node->content,false) ?>
-		<?php endif ?>
-		</div>
-<?php include('actions.php') ?> 
-		<div class="clear"></div>
-	</div>
+	<?php include('single_node.php') ?>
 <?php endforeach ?>
-<span class="block center centerContent"><a href="<?= View::makeUri('/') . '?skip='.($skip+PAGESIZE) ?>" class="btn" id="load-more"><i class="icon-plus-sign"></i> Más</a></span>
+
+<div class="centerContent"><a href="<?= View::makeUri('/') . '?skip='.($skip+PAGESIZE) ?>" class="btn" id="load-more"><i class="icon-plus-sign"></i> Más</a></div>

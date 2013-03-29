@@ -132,7 +132,7 @@ class controller_node {
 			$nodes = model_node::search($query,$before,$after,$skip);
 			$view->set('nodes',$nodes);
 		} else {
-			$view->set('error','You are doing it wrong');
+			Flight::flash('message',array('type'=>'error','text'=>'You are doing it wrong.'));
 		}
 
 		if ( Flight::request()->ajax ) {
