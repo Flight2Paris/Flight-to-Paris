@@ -23,7 +23,7 @@ footer { padding-top: 30px }
 
 #post-content { height:28px; } 
 
-#score { margin-right:14px; font-size: 20px; }
+#score { font-size: 20px; }
 
 
 
@@ -36,6 +36,7 @@ footer { padding-top: 30px }
 
 .node-actions { text-align:right  }
 .node-actions a { font-size:10px }
+a.label { color: white!important }
 
 .node-score { font-size:20px }
 

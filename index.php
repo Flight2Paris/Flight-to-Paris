@@ -33,10 +33,10 @@ Flight::set('flight.views.path', APP_PATH.'/view');
 
 
 /****  CONFIGURE YOUR DOMAIN AND DB HERE  ****/ 
-define ( 'DOMAIN', 'aza.com' );
+define ( 'DOMAIN', 'esfriki.com' );
 
-ORM::configure('mysql:host=localhost;dbname=flight2paris');
-ORM::configure('username', 'root');
+ORM::configure('mysql:host=db.esfriki.com;dbname=flight2paris');
+ORM::configure('username', 'esfriki');
 ORM::configure('password', '');
 
 /****  AND DOWN THE RABBIT HOLE  ****/
@@ -74,6 +74,6 @@ Flight::route('POST /auth/changepassword/?$',array('controller_auth','dochange')
 Flight::route('GET /auth/pubkey/?.*$',array('controller_auth','pubkey'));
 Flight::route('POST /auth/addkey/?$',array('controller_auth','addkey'));
 
-Flight::route('GET /@id:[a-z0-9_-]+(\.(json|rss))?/?$',array('controller_node','get'));
+Flight::route('GET /@id:[a-z0-9_-]+(\.(json|rss|md))?/?$',array('controller_node','get'));
 
 Flight::start();

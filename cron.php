@@ -16,29 +16,35 @@ if ( PHP_SAPI != 'cli' ) {
 	echo 'esfriki, ahora a prueba de exos!';
 	exit;
 }
+define ( 'APP_PATH', realpath ( dirname ( __FILE__ ) . '/app' ) );
+define ( 'LIB_PATH', realpath ( dirname ( __FILE__ ) . '/lib' ) );
 
-define ( 'APP_PATH', realpath ( dirname ( __FILE__ ) . '/app/' ) );
-define ( 'FLIGHT_PATH', realpath ( dirname ( __FILE__ ) . '/flight/' ) );
-define ( 'PARIS_PATH', realpath ( dirname ( __FILE__ ) . '/paris/' ) );
-define ( 'MARKDOWN_PATH', realpath ( dirname ( __FILE__ ) . '/php-markdown/' ) );
-define ( 'PLAYA_PATH', realpath ( dirname ( __FILE__ ) . '/playa/' ) );
-define ( 'DOMAIN', 'esfriki.com' );
+define ( 'FLIGHT_PATH', LIB_PATH . '/flight' );
+define ( 'PARIS_PATH', LIB_PATH . '/paris' );
+define ( 'MARKDOWN_PATH', LIB_PATH. '/php-markdown' );
+define ( 'PLAYA_PATH', LIB_PATH . '/playa' );
 
 require FLIGHT_PATH.'/Flight.php';
 require PARIS_PATH.'/paris.php';
 require MARKDOWN_PATH.'/markdown.php';
+require PLAYA_PATH.'/playa.php';
 
 set_include_path(get_include_path() . PATH_SEPARATOR . FLIGHT_PATH);
 set_include_path(get_include_path() . PATH_SEPARATOR . APP_PATH);
-set_include_path(get_include_path() . PATH_SEPARATOR . APP_PATH . '/model/');
-
-
-ORM::configure('mysql:host=;dbname=');
-ORM::configure('username', '');
-ORM::configure('password', '');
-
+set_include_path(get_include_path() . PATH_SEPARATOR . APP_PATH . '/model');
 
 Flight::set('flight.lib.path', APP_PATH);
+Flight::set('flight.views.path', APP_PATH.'/view');
+
+
+/****  CONFIGURE YOUR DOMAIN AND DB HERE  ****/ 
+define ( 'DOMAIN', 'esfriki.com' );
+
+ORM::configure('mysql:host=db.esfriki.com;dbname=flight2paris');
+ORM::configure('username', 'esfriki');
+ORM::configure('password', '');
+
+/****  AND DOWN THE RABBIT HOLE  ****/
 
 Flight::route('.*',array('controller_cron','cron'));
 

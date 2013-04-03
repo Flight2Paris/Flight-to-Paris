@@ -24,7 +24,10 @@ class controller_node {
 			$template = 'node_404';
 		}
 
-		if ( Flight::request()->ajax ) {
+		if ( trim($format) ) {
+			$template = $template.'_'.$format;
+			$layout = null;
+		} else if ( Flight::request()->ajax ) {
 			$template = $template.'_ajax';
 			$layout = null;
 		}

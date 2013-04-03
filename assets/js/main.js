@@ -8,6 +8,7 @@ $(document).ready(function(){
 
 	// .node click
 	$('.node').live('click',function(e){
+		console.log(e);
 		if ( ['A','SUBMIT','INPUT','IMG'].indexOf(e.target.nodeName) != '-1' ) {
 		} else {
 			e.preventDefault();

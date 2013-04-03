@@ -107,7 +107,7 @@ class Router {
 
 	public static function getFormat($uri)  {
 		$ext = pathinfo(parse_url($uri,PHP_URL_PATH),PATHINFO_EXTENSION);
-		$allowed = array('json','rss');
+		$allowed = array('json','rss','md');
 		if ( in_array($ext,$allowed) ) {
 			return $ext;
 		}
@@ -116,7 +116,7 @@ class Router {
 
 	public static function removeFormat($uri) {
 		$ext = pathinfo(parse_url($uri,PHP_URL_PATH),PATHINFO_EXTENSION);
-		$allowed = array('json','rss');
+		$allowed = array('json','rss','md');
 		if ( in_array($ext,$allowed) ) {
 			return pathinfo(parse_url($uri,PHP_URL_PATH),PATHINFO_FILENAME);
 		}

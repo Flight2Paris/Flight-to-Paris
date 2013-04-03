@@ -1,8 +1,10 @@
 <div class="row-fluid node-actions">
-	<div class="span2">
+	<div class="span4">
 	<a href="<?= View::e($node->uri) ?>" class="uri" ><?= View::e($node->uri) ?></a>
+	<a href="<?= View::e($node->uri.'.json') ?>" class="label label-info">json</a>
+	<a href="<?= View::e($node->uri.'.md') ?>" class="label label-info">markdown</a>
 	</div>
-	<form action="<?= View::makeUri('/promote/') ?>" method="POST" class="span8 score-form">
+	<form action="<?= View::makeUri('/promote/') ?>" method="POST" class="span6 score-form">
 	<input type="hidden" value="<?= View::e($node->uri) ?>" name="uri" />
 	<div class="btn-group">
 	<input type="submit" name="promote" value="1" class="promote btn" />
