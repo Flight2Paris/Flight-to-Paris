@@ -11,42 +11,7 @@
  Flight to Paris - Aza // http://esfriki.com GPLv3
 
 */
-define ( 'APP_PATH', realpath ( dirname ( __FILE__ ) . '/app' ) );
-define ( 'LIB_PATH', realpath ( dirname ( __FILE__ ) . '/lib' ) );
-
-define ( 'FLIGHT_PATH', LIB_PATH . '/flight' );
-define ( 'PARIS_PATH', LIB_PATH . '/paris' );
-define ( 'MARKDOWN_PATH', LIB_PATH. '/php-markdown' );
-define ( 'PLAYA_PATH', LIB_PATH . '/playa' );
-
-require FLIGHT_PATH.'/Flight.php';
-require PARIS_PATH.'/paris.php';
-require MARKDOWN_PATH.'/markdown.php';
-require PLAYA_PATH.'/playa.php';
-
-set_include_path(get_include_path() . PATH_SEPARATOR . FLIGHT_PATH);
-set_include_path(get_include_path() . PATH_SEPARATOR . APP_PATH);
-set_include_path(get_include_path() . PATH_SEPARATOR . APP_PATH . '/model');
-
-Flight::set('flight.lib.path', APP_PATH);
-Flight::set('flight.views.path', APP_PATH.'/view');
-
-
-/****  CONFIGURE YOUR DOMAIN AND DB HERE  ****/ 
-define ( 'DOMAIN', 'esfriki.com' );
-
-ORM::configure('mysql:host=db.esfriki.com;dbname=flight2paris');
-ORM::configure('username', 'esfriki');
-ORM::configure('password', '');
-
-/****  AND DOWN THE RABBIT HOLE  ****/
-
-
-define ( 'PAGESIZE', 30 );
-
-## LINK TYPES DON'T CHANGE IF YOU WANT TO SINC RELATIONS ##
-define ( 'REPLY_TYPE', 'http://esfriki.com/reply');
-
+include 'config.php';
 
 require APP_PATH.'/model/auth.php';
 $auth = new auth;
@@ -74,6 +39,6 @@ Flight::route('POST /auth/changepassword/?$',array('controller_auth','dochange')
 Flight::route('GET /auth/pubkey/?.*$',array('controller_auth','pubkey'));
 Flight::route('POST /auth/addkey/?$',array('controller_auth','addkey'));
 
-Flight::route('GET /@id:[a-z0-9_-]+(\.(json|rss|md))?/?$',array('controller_node','get'));
+Flight::route('GET /@id:[a-z0-9_-]+(\.(json|rss|md|html|rdf))?/?$',array('controller_node','get'));
 
 Flight::start();

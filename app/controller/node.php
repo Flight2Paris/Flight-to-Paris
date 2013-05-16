@@ -11,7 +11,7 @@ class controller_node {
 		$format = Router::getFormat($uri);
 		$uri = Router::removeFormat($uri);
 		$uri = View::makeUri($uri);
-
+exit;
 		$node = model_node::getByUri($uri);
 
 		if ( $node ) {
