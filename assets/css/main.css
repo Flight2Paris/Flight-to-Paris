@@ -25,14 +25,16 @@ footer { padding-top: 30px }
 
 #score { font-size: 20px; }
 
-
+form { margin:0 }
 
 .node { cursor:pointer; padding:0 2% }
 .node-hover { cursor:pointer; background-color: #f9f8eb;}
 .node-full { margin-left:0!important; }
 
 .node .score-form { opacity:0 }
+.node .label { opacity:0 }
 .node-hover .score-form { opacity:1 }
+.node-hover .label { opacity:1 }
 
 .node-actions { text-align:right  }
 .node-actions a { font-size:10px }

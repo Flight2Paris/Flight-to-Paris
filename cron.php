@@ -42,7 +42,7 @@ define ( 'DOMAIN', 'esfriki.com' );
 
 ORM::configure('mysql:host=db.esfriki.com;dbname=flight2paris');
 ORM::configure('username', 'esfriki');
-ORM::configure('password', '');
+ORM::configure('password', 'esFRIkipaNOTAGAIN');
 
 /****  AND DOWN THE RABBIT HOLE  ****/
 
