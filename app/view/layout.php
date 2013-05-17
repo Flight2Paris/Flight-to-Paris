@@ -1,9 +1,17 @@
 <!doctype html>
-<html land="es">
+<html lang="es" prefix="og: http://ogp.me/ns#">
 <head>
 	<meta charset="UTF-8" />
 	<title><?= $title?$title.' - ':'' ?>esfriki</title>
 	<meta name="description" content="Ciencia, tecnologia, documentales, noticias y cosas frikis. Comparte informacion, archivos y enlaces. Crea posts con enlaces cortos." />
+
+<?php if ( $node ) : ?>
+	<meta property="og:title" content="<?= View::e(trim($node->getTitle())) ?>" />
+	<meta property="og:type" content="article" />
+	<meta property="og:url" content="<?= View::e($node->uri) ?>" />
+	<meta property="og:image" content="" />
+	<meta property="og:site_name" content="esfriki" />
+<?php endif ?>
 
 	<link rel="stylesheet" href="<?= View::makeUri('/assets/css/bootstrap.min.css') ?>" />
 	<link rel="stylesheet" href="<?= View::makeUri('/assets/css/font-awesome.css') ?>" />

@@ -105,22 +105,34 @@ class Router {
         $this->routes = array();
     }
 
-	public static function getFormat($uri)  {
-		$ext = pathinfo(parse_url($uri,PHP_URL_PATH),PATHINFO_EXTENSION);
+
+	public static function getExtensionFromUri($uri) {
+		return pathinfo(parse_url($uri,PHP_URL_PATH),PATHINFO_EXTENSION);
+	}
+
+	public static function isExtensionAllowed($ext) {
 		global $allowed_formats;
-		if ( in_array($ext,$allowed_formats) ) {
+		return in_array($ext,$allowed_formats);
+	}
+
+	public static function getFilenameFromUri($uri) {
+		return pathinfo(parse_url($uri,PHP_URL_PATH),PATHINFO_FILENAME);
+	}
+
+	public static function getFormat($uri)  {
+		$ext = self::getExtensionFromUri($uri);
+
+		if ( self::isExtensionAllowed($ext) ) {
 			return $ext;
 		}
 		else return null;
 	}
 
 	public static function removeFormat($uri) {
-		global $allowed_formats;
+		$ext = self::getExtensionFromUri($uri);
 
-		$ext = pathinfo(parse_url($uri,PHP_URL_PATH),PATHINFO_EXTENSION);
-
-		if ( in_array($ext,$allowed_formats) ) {
-			return pathinfo(parse_url($uri,PHP_URL_PATH),PATHINFO_FILENAME);
+		if ( self::isExtensionAllowed($ext) ) {
+			return self::getFilenameFromUri($uri);
 		}
 		else return $uri;
 	}

@@ -16,7 +16,7 @@ include 'config.php';
 require APP_PATH.'/model/auth.php';
 $auth = new auth;
 
-Flight::route('GET /',array('controller_node','search'));
+Flight::route('GET /(search/?)?',array('controller_node','search'));
 
 Flight::route('POST /?$',array('controller_node','create'));
 
@@ -39,6 +39,8 @@ Flight::route('POST /auth/changepassword/?$',array('controller_auth','dochange')
 Flight::route('GET /auth/pubkey/?.*$',array('controller_auth','pubkey'));
 Flight::route('POST /auth/addkey/?$',array('controller_auth','addkey'));
 
-Flight::route('GET /@id:[a-z0-9_-]+(\.(json|rss|md|html|rdf))?/?$',array('controller_node','get'));
+Flight::route('GET /@id:[a-z0-9_-]+'.
+			'(\.('. implode('|',$allowed_formats) .'))?'.
+			'/?$',array('controller_node','get'));
 
 Flight::start();

@@ -9,6 +9,8 @@ class controller_node {
 
 		// Get the requested format and URI
 		$format = Router::getFormat($uri);
+		$format = trim($format) ? trim($format) : 'html';
+
 		$uri = Router::removeFormat($uri);
 		$uri = View::makeUri($uri);
 		$node = model_node::getByUri($uri);
@@ -23,12 +25,14 @@ class controller_node {
 			$template = 'node_404';
 		}
 
-		if ( trim($format) ) {
-			$template = $template.'_'.$format;
-			$layout = null;
-		} else if ( Flight::request()->ajax ) {
+		if ( Flight::request()->ajax ) {
 			$template = $template.'_ajax';
 			$layout = null;
+		} else {
+			$template = $template.'_'.$format;
+			if ( $format != 'html' ) {
+				$layout = null;
+			}
 		}
 
 		Flight::render($template, null, $layout);
