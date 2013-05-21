@@ -383,13 +383,10 @@ class Flight {
      */
     public static function autoload($class) {
 
-
         $paths = explode(PATH_SEPARATOR, get_include_path());
 
         foreach ($paths as $path) {
             $file = $path."/". str_replace('\\', '/', str_replace('_', '/', $class)).'.php';
-
-            echo "$file;;;";
 
             if (file_exists($file)) {
                 require_once($file);
