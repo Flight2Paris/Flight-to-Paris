@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
 	// .node hover
 	$('.node').live("mouseenter", function() {
 		$(this).addClass("node-hover"); 
@@ -8,7 +9,6 @@ $(document).ready(function(){
 
 	// .node click
 	$('.node').live('click',function(e){
-		console.log(e);
 		if ( ['A','SUBMIT','INPUT','IMG'].indexOf(e.target.nodeName) != '-1' ) {
 		} else {
 			e.preventDefault();
@@ -48,7 +48,6 @@ $(document).ready(function(){
 	setInterval(loadNew, refresh*1000);
 
 	// Ajax scroll
-
 	$(window).scroll(function() {
 		if( ($(window).scrollTop() + $(window).height()) > ($(document).height() - 300) &&
 			loadmore.is(':visible')  &&
@@ -89,31 +88,43 @@ $(document).ready(function(){
 
 
 	// Enlarge post textarea as needed
+	var lastanimate = new Date().getTime(); 
 	var postanimate = function(target) {
 		l = target.val().length;
-		if ( l > 60 && l <= 240 ) {
-			if ( parseInt(target.css('height')) != 200 ) {
-				target.animate( {'height':'200px'},300 ); 
-			}
-		} else if ( l > 240 ) {
-			if ( parseInt(target.css('height')) != 560 ) {
-				target.animate( {'height':'560px'},300 ); 
-			}
+		h = parseInt(target.data('height'));
+
+		if ( isNaN(h) ) {
+			h = 0;
+		}
+
+		if ( l < 60 ) {
+			newh = 84;
+		} else if ( l < 120 ) {
+			newh = 150;
+		} else if ( l < 240 ) {
+			newh = 280;
 		} else {
-			if ( parseInt(target.css('height')) != 84 ) {
-				target.animate( {'height':'84px'},300 ); 
-			}
+			newh = 560
+		}
+
+		if ( newh > h ) {
+			newh = newh + 'px';
+			target.data('height',newh);
+			target.animate( {'height':newh}, 300);
 		}
 	}
 
 	$('#post-content').focus(function(event){ 
-		postanimate($(event.target));
+		postanimate($(event.target).data('height',0));
 	});
 	$('#post-content').blur(function(event){ 
 		$(event.target).animate( {'height':'28px'},300 ); 
 	});
-	$('#post-content').keyup(function(event){ 
-		postanimate($(event.target));
+	$('#post-content').keyup(function(event){
+		if ( new Date().getTime() > lastanimate + 500 ) {
+			lastanimate = new Date().getTime();
+			postanimate($(event.target));
+		}
 	});
 
 	// Reload captcha
