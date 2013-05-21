@@ -12,6 +12,7 @@ require FLIGHT_PATH.'/Flight.php';
 require PARIS_PATH.'/paris.php';
 require MARKDOWN_PATH.'/markdown.php';
 require PLAYA_PATH.'/playa.php';
+require LIB_PATH.'/HybridCache/vendor/lib/init.php';
 
 set_include_path(get_include_path() . PATH_SEPARATOR . FLIGHT_PATH);
 set_include_path(get_include_path() . PATH_SEPARATOR . APP_PATH);
@@ -46,3 +47,16 @@ define ( 'REPLY_URI', 'http://esfriki.com/reply');
 define ( 'AUTHOR_URI', 'dc:creator' );
 
 $allowed_formats = array('html','rss','json','rdf','md');
+
+## Cache configuration
+
+define ( 'CACHE_ENABLED', true );
+define ( 'CACHE_EXPIRE_TIME', 3600*2 ); // 2 Hours
+define ( 'CACHE_EXPIRE_WAITING', 1 ); // 1 second
+
+## Configure Cache meadias:
+
+use Hybrid\Cache as HybridCache;
+use Hybrid\Storages\Disk as DiskSorage;
+
+HybridCache::addStorageMedia(new DiskSorage(dirname(__FILE__).'/cache'));
