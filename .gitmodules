@@ -1,0 +1,3 @@
+[submodule "lib/HybridCache/vendor"]
+	path = lib/HybridCache/vendor
+	url = https://github.com/exos/HybridCache.git
