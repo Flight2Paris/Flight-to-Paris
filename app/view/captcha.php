@@ -1,3 +1,3 @@
-		<p>Donde esta la meme? <input name="reload-captcha" alt="Nuevo Captcha" title="Nuevo Captcha" src="http://esfriki.com/images/reload.png" id="reload-captcha" class="inline-button" type="image"></p>
-		<input name="captcha" src="http://esfriki.com/captcha/" alt="El captcha no cargo..." type="image">
-
+<h2 class="inline">¿Donde esta la meme?</h2>
+<button id="refresh-captcha" name="refresh-captcha"><i class="icon-refresh"></i> Otra</button>
+<input name="captcha" src="<?= View::makeUri('/lib/captcha/').'?'.time() ?>" alt="El captcha no cargo..." type="image" id="captcha">

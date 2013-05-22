@@ -33,11 +33,11 @@ class controller_score {
 		if ( auth::isLoggedIn() ) {
 			$data = Flight::request()->data;
 			$user = auth::getUser();
-			require_once('captcha/captcha.php');
+			require_once('lib/captcha/captcha.php');
 			Flight::View()->set('user',$user);
 
-			if ( isset($data['reload-captcha_x']) ) {
-				Flight::render('score_get',null,'layout');
+			if ( isset($data['reload-captcha']) ) {
+				Flight::redirect( View::makeUri('/score') );
 
 			} else if ( check() ) {
 				if ( $user->fibo <= 7 ) {
@@ -46,26 +46,29 @@ class controller_score {
 					$user->win_last = date('Y-m-d H:i:s');
 					$user->save();
 				}
-				Flight::render('score_get',null,'layout');
+
+				Flight::redirect( View::makeUri('/score') );
 			} else {
 				if ( $user->fibo <= 7 ) {
 					$user->score -= fibonacci($user->fibo);
 					$user->fibo++;
 					$user->save();
 				}
-				Flight::set('error','Y U NO CLICK MEME!');
-				Flight::render('score_get',null,'layout');
+
+				Flight::flash('message',array('type'=>'error','text'=>'Y U NO CLICK MEME!'));
+				Flight::redirect( View::makeUri('/score') );
 			}
 		}
 	}
 
 	public function promote() {
+		$data = Flight::request()->data;
+
 		if ( auth::isLoggedIn() ) {
-			$data = Flight::request()->data;
 			$user = auth::getUser();
 			$node = model_node::getByUri($data['uri']);
 
-			$data['promote'] = intval($data['promote']);
+			$data['promote'] = abs( (int)$data['promote'] );
 
 			if ( $data['promote'] > $user->score ) {
 				$data['promote'] = $user->score;
@@ -78,13 +81,15 @@ class controller_score {
 				$score->score = $score->score + $data['promote'];
 				$score->save();
 			}
+
 			if ( Flight::request()->ajax ) {
 				exit;
 			} else {
 				Flight::redirect('/');
 			}
+
 		} else {
-			Flight::redirect('/u/new');
+			Flight::redirect( View::makeUri('/u/new') );
 		}
 	}
 

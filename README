@@ -11,3 +11,10 @@
             Playa - Aza // http://playa.esfriki.com GPLv3
 Chuck Not Captcha - Aza // http://cnc.esfriki.com GPLv3
 
+## Dependencies
+
+* PHP (5 maybe 4 who knows)
+* GD (for the captcha)
+* MySQL (also others but not testested!)
+* Apache (for the .htaccess rules sorry nginxers)
+

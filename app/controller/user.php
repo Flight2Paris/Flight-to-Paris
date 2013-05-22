@@ -17,42 +17,32 @@ class controller_user {
 
 	public function create() {
 		$data = Flight::request()->data;
-		require_once('captcha/captcha.php');
+		require_once('lib/captcha/captcha.php');
 
-		if ( isset($data['reload-captcha_x']) ) {
-			Flight::render('user_new', null, 'layout');
+		if ( isset($data['reload-captcha']) ) {
+			Flight::redirect( View::makeUri('/u/new') );
 
 		} else if ( ! check() ) {
-				Flight::set('error','Y U NO CLICK MEME!');
-				Flight::render('user_new', null, 'layout');
+			Flight::flash('message',array('type'=>'error','text'=>'Y U NO CLICK MEME!'));
+			Flight::redirect( View::makeUri('/u/new') );
 
-		} else if ( model_user::canRegister( $data['username'] ) ) {
-				$this->register_user($data);
+		} else if ( ! model_user::canRegister( $data['username'] ) ) {
+			Flight::flash('message',array('type'=>'error','text'=>'El usuario ya existe o no puede registrarse!'));
+			Flight::redirect( View::makeUri('/u/new') );
 
 		} else {
-
-			$user = model_user::getByUsername($data['username']);
-			if ( $user ) {
-				$auth = model_auth::getByUserId($user->id);
-				if ( $auth->checkPassword($data['password']) ) {
-					controller_auth::login();
-				} else {
-					Flight::set('error','El usuario ya existe!');
-				}
-			}
-			Flight::render('user_new', null, 'layout');
+			controller_user::register_user($data);
 		}
 	}
 
 
-	private function register_user($data) {
+	public static function register_user($data) {
 			$user = Model::factory('user')->create();
 			$user->username = $data['username'];
 			$user->uri = View::makeUri('/u/'.urlencode($data['username']));
 			$user->save();
 
 			if ( $user->id ) {
-
 				$salt = auth::genSalt();
 				$auth = Model::factory('auth')->create();
 				$auth->password = $salt.auth::hash($salt, $data['password']);
@@ -60,12 +50,14 @@ class controller_user {
 				$auth->save();
 
 				$auth->login();
-				Flight::redirect('/score?new=1');
+
+				Flight::flash('message',array('type'=>'success','text'=>'Te registraste con éxito, ahora gana algunos puntos!'));
+				Flight::redirect( View::makeUri('/score') );
 
 			} else {
 
-				Flight::set('error','Algo no anduvo culpa tuya!!');
-				Flight::render('user_new', null, 'layout');
+				Flight::flash('message',array('type'=>'error','text'=>'Algo no andubo. oops!'));
+				Flight::redirect( View::makeUri('/u/new') );
 			}
 	}
 

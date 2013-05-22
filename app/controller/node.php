@@ -1,14 +1,18 @@
 <?php
 
 class controller_node {
+
+	// Show a single node
 	public function get($uri) {
 		$view = Flight::View();
-		$format = Router::getFormat($uri);
-		$uri = Router::removeFormat($uri);
-
-		$uri = View::makeUri($uri);
 		$layout = 'layout';
 
+		// Get the requested format and URI
+		$format = Router::getFormat($uri);
+		$format = trim($format) ? trim($format) : 'html';
+
+		$uri = Router::removeFormat($uri);
+		$uri = View::makeUri($uri);
 		$node = model_node::getByUri($uri);
 
 		if ( $node ) {
@@ -17,22 +21,24 @@ class controller_node {
 			$template = 'node_get';
 		} else {
 			$view->set('uri',$uri);
-			$template = 'node_new';
+			Flight::Response()->status(404);
+			$template = 'node_404';
 		}
 
 		if ( Flight::request()->ajax ) {
 			$template = $template.'_ajax';
 			$layout = null;
+		} else {
+			$template = $template.'_'.$format;
+			if ( $format != 'html' ) {
+				$layout = null;
+			}
 		}
 
 		Flight::render($template, null, $layout);
 	}
 
-	public function node_new() {
-		$view = Flight::View();
-		Flight::render('node_new', null, 'layout');
-	}
-
+	// Create a new node
 	public function create() {
 		$data = Flight::request()->data;
 		$uri = $data['uri'];
@@ -58,6 +64,7 @@ class controller_node {
 
 				if ( $uri ) $node->uri = $uri;
 
+
 				$node->content = $data['content'];
 				$node->save();
 
@@ -67,33 +74,23 @@ class controller_node {
 					$node->save();
 				}
 
-				// Save authorship
-				$link = Model::factory('link')->create();
-
-				$link->from = $author->uri;
-				$link->type = 'http://esfriki.com/author';
-				$link->to = $node->uri;
-				$link->save();
-
+				self::saveAuthorship($node,$author->uri);
 
 				// Update author score;
 				$author->score -= 1;
 				$author->save();
+				$score = $node->getScore();
+				$score->score += 1;
+				$score->save();
 
-				if ( $data['type'] == 'http://esfriki.com/reply' ) {
+				if ( $data['type'] == REPLY_TYPE ) {
 					self::saveResponse($node, $data['to']);
 					$to = model_node::getByUri($data['to']);
 				}
 
 				if ($to) {
-					$score = $to->getScore();
-					$score->score += 1;
-					$score->save();
 					Flight::redirect($to->uri);
 				} else {
-					$score = $node->getScore();
-					$score->score += 1;
-					$score->save();
 					Flight::redirect($node->uri);
 				}
 
@@ -107,29 +104,63 @@ class controller_node {
 
 	private function saveResponse($node,$toURI) {
 		$response = Model::factory('link')->create();
-		$response->type = 'http://esfriki.com/reply';
+		// Don't change
+		$response->type = REPLY_URI;
 		$response->to = $toURI;
 		$response->from = $node->uri;
 		$response->save();
 	}
 
+	private function saveAuthorship($node,$authorURI) {
+		$link = Model::factory('link')->create();
+		// Don't change
+		$link->type = EPLY_URI;
+		$link->to = $node->uri;
+		$link->from = $authorURI;
+		$link->save();
+	}
+
 	public function search() {
-		$query = Flight::request()->query['q'];
 		$view = Flight::View();
 
-		if ( self::canSearch($query) ) {
+		$query = Flight::request()->query['q'];
+		$after = Flight::request()->query['after'];
+		$before = Flight::request()->query['before'];
+		$skip = Flight::request()->query['skip'];
 
-			$nodes = model_node::search($query);
+		$template = 'node_search';
+		$layout = 'layout';
+
+		if ( empty($query) ) {
+			$nodes = model_node::search($query,$before,$after,$skip);
+			$view->set('nodes',$nodes);		
+		} else if ( self::canSearch($query) ) {
+			$nodes = model_node::search($query,$before,$after,$skip);
 			$view->set('nodes',$nodes);
-
 		} else {
-			$view->set('error','You are doing it wrong');
+			Flight::flash('message',array('type'=>'error','text'=>'You are doing it wrong.'));
 		}
 
-		Flight::render('home_get',null,'layout');
+		if ( Flight::request()->ajax ) {
+			$template = $template.'_ajax';
+			$layout = null;
+
+			if ( ! count($nodes) ) {
+				Flight::halt(204);
+			}
+		}
+
+		$time = ORM::for_table('node')->raw_query('select unix_timestamp() as timestamp')->find_one();
+		$view->set('before',$time->timestamp);
+		$view->set('after',$time->timestamp);
+		$view->set('skip',$skip);
+		$view->set('query',$query);
+
+		Flight::render($template,null,$layout);
 	}
 
 	private static function canSearch($query) {
+		$query = trim($query);
 		return ($query && mb_strlen($query) > 2);
 	}
 

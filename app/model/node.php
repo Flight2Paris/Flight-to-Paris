@@ -2,50 +2,70 @@
 
 require_once('score.php');
 
+use Hybrid\Cache as HybridCache;
+
 class model_node {
 
-	public static function getByUri( $uri ) {
-		$node = Model::factory('node')->where('uri', $uri)->find_one();
+    public static function getByUri( $uri ) {
+
+        $cache = new HybridCache(__METHOD__, $uri);
+
+        $node = $cache->getCacheOr(function ($cache) USE ($uri) {
+    		return Model::factory('node')->where('uri', $uri)->find_one();
+        });
+
 		return $node;
 	}
 
-	public static function getByContent( $content ) {
-		$node = Model::factory('node')->where('content',$content)->find_one();
-		return $node;
+    public static function getByContent( $content ) {
+
+        $cache = new HybridCache(__METHOD__,$content);
+
+        $node = $cache->getCacheOr(function ($cache) USE ($content) {
+    		return Model::factory('node')->where('content',$content)->find_one();
+        });
+
+        return $node;
+
 	}
 
-	public static function getFeatureds( ) {
-		$nodes = ORM::for_table('node')->raw_query('SELECT node.uri FROM node JOIN score ON (score.uri = node.uri) ORDER BY UNIX_TIMESTAMP(node.created) + (score.score*score.score*60) DESC LIMIT 30')->find_many();
-		$res = array();
-		foreach ( $nodes as $val ) {
-			$res[] = self::getByUri($val->uri);
-		}
-		return $res;
-	}
+	public static function search($query=null,$before=0,$after=0,$skip=0) {
+		$before = (int)$before;
+		$after = (int)$after;
+		$skip = abs((int)$skip);
+		$query = trim($query);
 
-    public static function getLatest() {
-        $nodes = ORM::for_table('node')->raw_query('
-        SELECT  
-            node.uri
-        FROM
-            node
-        JOIN score
-            ON (score.uri = node.uri)
-        ORDER BY
-            node.created DESC
-        LIMIT 30
-        ')->find_many();
+        $cache = new HybridCache(__METHOD__,func_get_args());
         
-        $res = array();
-		foreach ( $nodes as $val ) {
-			$res[] = self::getByUri($val->uri);
-		}
-		return $res;
-    }
+        $res = $cache->getCacheOr(function ($cache) use ($before, $after, $skip, $query) {
 
-	public static function search($query) { 
-		$nodes = Model::factory('node')->where_like('content','%'.$query.'%')->order_by_desc('created')->limit(100)->find_many();
-		return $nodes;
+            $q = 'SELECT node.uri FROM node JOIN score ON (score.uri = node.uri) WHERE 1';
+
+            if ( $before > 0 ) {
+                $q .= ' AND UNIX_TIMESTAMP(node.created) < '.$before;
+            }
+            if ( $after > 0 ) {
+                $q .= ' AND UNIX_TIMESTAMP(node.created) > '.$after;
+            }
+
+            if ( $query ) {
+                $q .= ' AND content LIKE '.ORM::get_db()->quote('%'.$query.'%');
+            }
+
+            $q .= ' ORDER BY UNIX_TIMESTAMP(node.created) + sqrt(score.score-1)*3600 DESC';
+            $q .= ' LIMIT '.$skip.','.PAGESIZE;
+
+            $nodes = ORM::for_table('node')->raw_query($q)->find_many();
+            $res = array();
+            foreach ( $nodes as $val ) {
+                $res[] = self::getByUri($val->uri);
+            }
+            return $res;
+
+        });
+
+        return $res;
+
 	}
 
 }
@@ -67,13 +87,13 @@ class node extends Model {
 
 	public function isReply() {
 		$return = array();
-		$replyTo = Model::factory('link')->where('from',$this->uri)->where('type','http://esfriki.com/reply')->order_by_asc('created')->find_one();
+		$replyTo = Model::factory('link')->where('from',$this->uri)->where('type',REPLY_URI)->order_by_asc('created')->find_one();
 		return (bool)$replyTo;
 	}
 
 	public function getReplyTo() {
 		$return = array();
-		$replyTo = Model::factory('link')->where('from',$this->uri)->where('type','http://esfriki.com/reply')->order_by_asc('created')->find_one();
+		$replyTo = Model::factory('link')->where('from',$this->uri)->where('type',REPLY_URI)->order_by_asc('created')->find_one();
 		return model_node::getByUri($replyTo->to);
 	}
 

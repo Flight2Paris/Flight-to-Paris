@@ -1,0 +1,69 @@
+/* copy this copy that but copy */
+html, body { background: #F8f7D9;  font-family: proxima-nova, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 14px; }
+
+content a,content a:link,content a:active,content a:visited,content a:hover { text-decoration:none; color: #BF3211 }
+content a:hover { text-decoration:underline }
+
+em { font-style:italic }
+h1, h1 * { font-size:35px; text-shadow: 0 1px 2px white; line-height: 30px }
+h2, h2 * { font-size:28px; text-shadow: 0 1px 1px white; line-height: 25px }
+h3, h3 * { font-size:20px }
+h4, h4 * { font-size:16px}
+h1, h2, h3, h4, h5, h6 { margin:0; margin-bottom:14px; margin-top:7px; word-wrap: break-word; font-family: museo-slab, "Helvetica Neue", Helvetica, Arial, sans-serif; } 
+
+
+header, content, footer { display:block }
+content { margin-top:60px }
+footer { padding-top: 30px }
+
+.center { margin:0 auto }
+.centerContent { text-align: center }
+.clear { clear:both }
+.red {  color: #BF3211; } 
+
+#post-content { height:28px; } 
+
+#score { font-size: 20px; }
+
+form { margin:0 }
+
+.node { cursor:pointer; padding:0 2% }
+.node-hover { cursor:pointer; background-color: #f9f8eb;}
+.node-full { margin-left:0!important; }
+
+.node .score-form { opacity:0 }
+.node .label { opacity:0 }
+.node-hover .score-form { opacity:1 }
+.node-hover .label { opacity:1 }
+
+.node-actions { text-align:right  }
+.node-actions a { font-size:10px }
+a.label { color: white!important }
+
+.node-score { font-size:20px }
+
+.uri { float:left }
+
+.comment { margin-bottom: 5px; padding-bottom:5px }
+
+@font-face {
+  font-family: 'museo-slab';
+  src: url('../font/museo_slab_300-webfont.eot');
+  src: url('../font/museo_slab_300-webfont.eot?#iefix') format('embedded-opentype'), url('../font/museo_slab_300-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'museo-slab';
+  src: url('../font/museo_slab_500-webfont.eot');
+  src: url('../font/museo_slab_500-webfont.eot?#iefix') format('embedded-opentype'), url('../font/museo_slab_500-webfont.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'proxima-nova';
+  src: url('../font/proximanova-webfont.eot');
+  src: url('../font/proximanova-webfont.eot?#iefix') format('embedded-opentype'), url('../font/proximanova-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

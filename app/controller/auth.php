@@ -10,16 +10,15 @@ class controller_auth {
 			if ( $auth->checkPassword($data['password']) ) {
 				$auth->login();
 				model_auth::clearFailed($user->id);
-				Flight::redirect(View::makeUri('/'));
 			} else {
-				Flight::set('error','@#$%^&*!');
+				Flight::flash('message',array('type'=>'error','text'=>'@#$%^&*!'));
 				model_auth::increaseFailed($user->id);
 			}
 		} else {
-			Flight::set('error','@#$%^&*!');
+			Flight::flash('message',array('type'=>'error','text'=>'@#$%^&*!'));
 		}
 
-		Flight::render('home_get',null,'layout');
+		Flight::redirect(View::makeUri('/'));
 	}
 
 	public function logout() {
@@ -38,12 +37,18 @@ class controller_auth {
 	public function dochange() {
 		$data = Flight::request()->data;
 		$auth = model_auth::getCurrent();
-		if ( $auth->checkPassword($data['password']) && $data['newpassword'] == $data['repeatpassword'] ) {
-			$auth->changePassword($data['newpassword']);
-			Flight::redirect(View::makeUri('/'));
+		if ( $auth->checkPassword($data['password']) ) {
+			if ( $data['newpassword'] == $data['repeatpassword'] ) {
+				$auth->changePassword($data['newpassword']);
+				Flight::flash('message',array('type'=>'success','text'=>'Cambiaste la contraseña con éxito.'));
+				Flight::redirect(View::makeUri('/'));
+			} else {
+				Flight::flash('message',array('type'=>'error','text'=>'La nueva contraseña es distinta a la repetida.'));
+				Flight::redirect(View::makeUri('/auth/changepassword'));
+			}
 		} else {
-			Flight::set('error','You did something wrong');
-			Flight::render('auth_change',null,'layout');
+			Flight::flash('message',array('type'=>'error','text'=>'El password es incorrecto.'));
+			Flight::redirect(View::makeUri('/auth/changepassword'));
 		}
 	}
 
@@ -58,17 +63,18 @@ class controller_auth {
 		$data = Flight::request()->data;
 
 		if ( auth::isLoggedIn() ) {
-
 			$auth = model_auth::getCurrent();
 
 			if ( $auth->checkPassword($data['password']) ) {
 				$auth->public_key = $data['public_key'];
 				$auth->save();
-				Flight::redirect( View::makeUri('/auth/pubkey/?ok=1') );
+				Flight::flash('message',array('type'=>'success','text'=>'Guardaste tu llave con éxito.'));
+
 			} else {
-				Flight::set('error','@#$%^&*!');
-				Flight::render('auth_pubkey',null,'layout');
+				Flight::flash('message',array('type'=>'error','text'=>'@#$%^&*!'));
 			}
+
+			Flight::redirect( View::makeUri('/auth/pubkey') );
 		} else {
 			Flight::redirect( View::makeUri('/u/new') );
 		}
