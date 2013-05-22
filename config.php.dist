@@ -7,7 +7,7 @@ define ( 'FLIGHT_PATH', LIB_PATH . '/flight' );
 define ( 'PARIS_PATH', LIB_PATH . '/paris' );
 define ( 'MARKDOWN_PATH', LIB_PATH. '/php-markdown' );
 define ( 'PLAYA_PATH', LIB_PATH . '/playa' );
-define ( 'HYBRIDCACHE_PATH', LIB_PATH .'/HybridCache/vendor' );
+define ( 'HYBRIDCACHE_PATH', LIB_PATH .'/HybridCache' );
 
 require FLIGHT_PATH.'/Flight.php';
 require PARIS_PATH.'/paris.php';
@@ -55,7 +55,7 @@ $allowed_formats = array('html','rss','json','rdf','md');
 ## Cache configuration
 
 define ( 'CACHE_ENABLED', true );
-define ( 'CACHE_EXPIRE_TIME', 3600*2 ); // 2 Hours
+define ( 'CACHE_EXPIRE_TIME', 60*15 ); // 15 minutes
 define ( 'CACHE_EXPIRE_WAITING', 1 ); // 1 second
 
 ## Configure Cache meadias:
