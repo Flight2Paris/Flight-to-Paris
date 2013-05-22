@@ -27,9 +27,11 @@ Flight::set('flight.views.path', APP_PATH.'/view');
 /****  CONFIGURE YOUR DOMAIN AND DB HERE  ****/ 
 
 
-define ( 'DOMAIN', 'example.com' );
+define ( 'SITE_TITLE', 'My F2P node' );
+define ( 'SITE:DESCRIPTION', 'Another Flight to Paris node' );
+define ( 'DOMAIN', 'localhost' );
 
-ORM::configure('mysql:host=localhost;dbname=ftp');
+ORM::configure('mysql:host=localhost;dbname=f2p');
 ORM::configure('username', 'root');
 ORM::configure('password', '');
 
@@ -44,7 +46,8 @@ define ( 'PAGESIZE', 30 );
 
 ## LINK TYPES DON'T CHANGE IF YOU WANT TO SINC RELATIONS ##
 
-define ( 'REPLY_URI', 'http://'. DOMAIN .'/reply');
+define ( 'SITE_URI', 'http://'.DOMAIN );
+define ( 'REPLY_URI', SITE_URI.'/reply');
 define ( 'AUTHOR_URI', 'dc:creator' );
 
 $allowed_formats = array('html','rss','json','rdf','md');

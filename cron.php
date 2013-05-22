@@ -38,11 +38,11 @@ Flight::set('flight.views.path', APP_PATH.'/view');
 
 
 /****  CONFIGURE YOUR DOMAIN AND DB HERE  ****/ 
-define ( 'DOMAIN', 'esfriki.com' );
+define ( 'DOMAIN', 'localhost' );
 
-ORM::configure('mysql:host=db.esfriki.com;dbname=flight2paris');
-ORM::configure('username', 'esfriki');
-ORM::configure('password', 'esFRIkipaNOTAGAIN');
+ORM::configure('mysql:host=localhost;dbname=f2p');
+ORM::configure('username', 'root');
+ORM::configure('password', '');
 
 /****  AND DOWN THE RABBIT HOLE  ****/
 

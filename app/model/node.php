@@ -62,13 +62,13 @@ class node extends Model {
 
 	public function isReply() {
 		$return = array();
-		$replyTo = Model::factory('link')->where('from',$this->uri)->where('type','http://esfriki.com/reply')->order_by_asc('created')->find_one();
+		$replyTo = Model::factory('link')->where('from',$this->uri)->where('type',REPLY_URI)->order_by_asc('created')->find_one();
 		return (bool)$replyTo;
 	}
 
 	public function getReplyTo() {
 		$return = array();
-		$replyTo = Model::factory('link')->where('from',$this->uri)->where('type','http://esfriki.com/reply')->order_by_asc('created')->find_one();
+		$replyTo = Model::factory('link')->where('from',$this->uri)->where('type',REPLY_URI)->order_by_asc('created')->find_one();
 		return model_node::getByUri($replyTo->to);
 	}
 
