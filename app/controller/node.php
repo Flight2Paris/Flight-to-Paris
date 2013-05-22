@@ -105,7 +105,7 @@ class controller_node {
 	private function saveResponse($node,$toURI) {
 		$response = Model::factory('link')->create();
 		// Don't change
-		$response->type = 'http://esfriki.com/reply';
+		$response->type = REPLY_URI;
 		$response->to = $toURI;
 		$response->from = $node->uri;
 		$response->save();
@@ -114,7 +114,7 @@ class controller_node {
 	private function saveAuthorship($node,$authorURI) {
 		$link = Model::factory('link')->create();
 		// Don't change
-		$link->type = 'http://esfriki.com/author';
+		$link->type = EPLY_URI;
 		$link->to = $node->uri;
 		$link->from = $authorURI;
 		$link->save();

@@ -1,0 +1,6 @@
+/config.php
+*.swap
+*.swp
+*.~
+cache/*
+!cache/readme.md
