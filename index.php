@@ -43,4 +43,11 @@ Flight::route('GET /@id:[a-z0-9_-]+'.
 			'(\.('. implode('|',$allowed_formats) .'))?'.
 			'/?$',array('controller_node','get'));
 
+/**
+ * Feeds
+ */
+
+Flight::route('GET /rss'. array('controller_feed','all_rss'));
+Flight::route('GET /rss/u/@username:[a-z0-9_.-]+/?$', array('controller_feed','user_rss'))
+
 Flight::start();
