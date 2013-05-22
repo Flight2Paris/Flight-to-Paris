@@ -382,8 +382,18 @@ class Flight {
      * @param string $class Class name
      */
     public static function autoload($class) {
-        $file = str_replace('\\', '/', str_replace('_', '/', $class)).'.php';
-		require_once($file);
+
+        $paths = explode(PATH_SEPARATOR, get_include_path());
+
+        foreach ($paths as $path) {
+            $file = $path."/". str_replace('\\', '/', str_replace('_', '/', $class)).'.php';
+
+            if (file_exists($file)) {
+                require_once($file);
+            }
+
+        }
+
 /*
         $base = (strpos($file, '/') === false) ? __DIR__ : (self::get('flight.lib.path') ?: '.');
 

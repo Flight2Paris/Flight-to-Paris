@@ -2,15 +2,15 @@
 <html lang="es" prefix="og: http://ogp.me/ns#">
 <head>
 	<meta charset="UTF-8" />
-	<title><?= $title?$title.' - ':'' ?>esfriki</title>
-	<meta name="description" content="Ciencia, tecnologia, documentales, noticias y cosas frikis. Comparte informacion, archivos y enlaces. Crea posts con enlaces cortos." />
+    <title><?= $title? htmlentities($title).' - ':'' ?><?= htmlentities(SITE_TITLE) ?></title>
+    <meta name="description" content="<?= htmlspecialchars(SITE_DESCRIPTION) ?>" />
 
 <?php if ( $node ) : ?>
 	<meta property="og:title" content="<?= View::e(trim($node->getTitle())) ?>" />
 	<meta property="og:type" content="article" />
 	<meta property="og:url" content="<?= View::e($node->uri) ?>" />
 	<meta property="og:image" content="" />
-	<meta property="og:site_name" content="esfriki" />
+    <meta property="og:site_name" content="<?= htmlspecialchars(SITE_TITLE)  ?>" />
 <?php endif ?>
 
 	<link rel="stylesheet" href="<?= View::makeUri('/assets/css/bootstrap.min.css') ?>" />
@@ -25,7 +25,7 @@
     <div class="container">
 
 		<div class="pull-left span7">
-		<a class="brand" href="<?= View::makeUri('/') ?>">esfriki</a>
+        <a class="brand" href="<?= View::makeUri('/') ?>"><?= htmlentities(SITE_TITLE) ?></a>
 
 		<form action="<?= View::makeUri('/') ?>" action="post" id="search" class="form-search navbar-form">
 			<div class="input-append">
