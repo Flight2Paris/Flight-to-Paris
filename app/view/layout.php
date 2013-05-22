@@ -2,7 +2,7 @@
 <html lang="es" prefix="og: http://ogp.me/ns#">
 <head>
 	<meta charset="UTF-8" />
-    <title><?= $title?$title.' - ':'' ?><?= htmlentities(SITE_TITLE) ?></title>
+    <title><?= $title? htmlentities($title).' - ':'' ?><?= htmlentities(SITE_TITLE) ?></title>
     <meta name="description" content="<?= htmlspecialchars(SITE_DESCRIPTION) ?>" />
 
 <?php if ( $node ) : ?>
