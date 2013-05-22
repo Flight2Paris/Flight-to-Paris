@@ -2,3 +2,5 @@
 *.swap
 *.swp
 *.~
+cache/*
+!cache/readme.md

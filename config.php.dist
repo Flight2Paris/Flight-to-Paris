@@ -28,7 +28,7 @@ Flight::set('flight.views.path', APP_PATH.'/view');
 
 
 define ( 'SITE_TITLE', 'My F2P node' );
-define ( 'SITE:DESCRIPTION', 'Another Flight to Paris node' );
+define ( 'SITE_DESCRIPTION', 'Another Flight to Paris node' );
 define ( 'DOMAIN', 'localhost' );
 
 ORM::configure('mysql:host=localhost;dbname=f2p');
