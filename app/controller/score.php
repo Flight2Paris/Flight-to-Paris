@@ -11,6 +11,9 @@ function fibonacci($n){
   return $b;
 }
 
+define( 'FIBOLO', 7 );
+define( 'FIBOHI', 17 );
+
 class controller_score {
 
 	public function get() {
@@ -21,7 +24,7 @@ class controller_score {
 			$user = auth::getUser();
 			$view->set('user',$user);
 			if ( strtotime($user->win_last) < time()-60*60*12 ) {
-				$user->fibo = 0;
+				$user->fibo = FIBOLO;
 				$user->save();
 			}
 		}
@@ -40,16 +43,18 @@ class controller_score {
 				Flight::redirect( View::makeUri('/score') );
 
 			} else if ( check() ) {
-				if ( $user->fibo <= 7 ) {
-					$user->score += fibonacci($user->fibo);
+				if ( $user->fibo <= FIBOHI ) {
+					$won = fibonacci($user->fibo);
+					$user->score += $won;
 					$user->fibo++;
 					$user->win_last = date('Y-m-d H:i:s');
 					$user->save();
+					Flight::flash('message',array('type'=>'success','icon'=>'plus-sign','text'=>' '.$won.' !!!'));
 				}
 
 				Flight::redirect( View::makeUri('/score') );
 			} else {
-				if ( $user->fibo <= 7 ) {
+				if ( $user->fibo <= FIBOHI ) {
 					$user->score -= fibonacci($user->fibo);
 					$user->fibo++;
 					$user->save();

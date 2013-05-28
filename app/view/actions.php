@@ -15,5 +15,5 @@
 	<input type="submit" name="promote" value="8" class="promote btn" />
 	</div>
 	</form>
-	<div class="span2 node-score"><i class="icon-star"></i> <?= $node->getScore()->score ?></div>
+	<div class="span2 node-score"><i class="icon-star"></i> <?= $node->getScore() ?></div>
 </div>

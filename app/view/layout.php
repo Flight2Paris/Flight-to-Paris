@@ -38,7 +38,7 @@
 		<div class="pull-right span3">
 		<ul class="nav pull-right">
 		<?php if ( auth::isLoggedIn() ) : ?>
-			<li><a href="<?= View::makeUri('/score') ?>"><i class="icon-star"></i><?= auth::getUser()->score ?></a></li>
+			<li><a href="<?= View::makeUri('/score') ?>"><i class="icon-star"></i><?= score::format(auth::getUser()->score) ?></a></li>
 			<li>
 				<div class="btn-group">
 					<a class="btn btn-success" href="<?= View::e(auth::getUser()->uri) ?>"><i class="icon-user"></i> <?= View::e(auth::getUser()->username) ?></a>

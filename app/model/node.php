@@ -58,7 +58,7 @@ class model_node {
             $nodes = ORM::for_table('node')->raw_query($q)->find_many();
             $res = array();
             foreach ( $nodes as $val ) {
-                $res[] = self::getByUri($val->uri);
+                $res[] = model_node::getByUri($val->uri);
             }
             return $res;
 
