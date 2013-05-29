@@ -98,7 +98,7 @@ class node extends Model {
 	}
 
 	public function getAuthor() {
-		$link = Model::factory('link')->where('to',$this->uri)->where('type',View::makeUri('/author'))->find_one();
+		$link = Model::factory('link')->where('to',$this->uri)->where('type', AUTHOR_URI)->find_one();
 		return model_user::getByUri($link->from);
 	}
 

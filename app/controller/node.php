@@ -114,7 +114,7 @@ class controller_node {
 	private function saveAuthorship($node,$authorURI) {
 		$link = Model::factory('link')->create();
 		// Don't change
-		$link->type = EPLY_URI;
+		$link->type = AUTHOR_URI;
 		$link->to = $node->uri;
 		$link->from = $authorURI;
 		$link->save();
