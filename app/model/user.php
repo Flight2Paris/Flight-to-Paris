@@ -68,4 +68,8 @@ class user extends Model {
 	public function getAuth() {
 		return Model::factory('auth')->where('user_id',$this->id)->find_one();
 	}
+
+	public function getNodes() {
+		return model_node::getByAuthor($this);
+	}
 }

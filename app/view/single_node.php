@@ -1,7 +1,8 @@
+<?php if ( is_a($node,'node') ) : ?>
 	<div class="row-fluid node">
 		<div class="span2">
 		<?php $author = $node->getAuthor() ?>
-		<?php if ( $author ) : ?><a href="<?= View::e($author->uri) ?>" class="author"><?= View::e($author->username) ?></a><?php endif ?>
+		<?php if ( is_a($author,'user') ) : ?><a href="<?= View::e($author->uri) ?>" class="author"><?= View::e($author->username) ?></a><?php endif ?>
 		</div>
 
 		<div class="span10 node-short">
@@ -14,3 +15,4 @@
 <?php include('actions.php') ?> 
 		<div class="clear"></div>
 	</div>
+<?php endif ?>
