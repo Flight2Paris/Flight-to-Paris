@@ -2,3 +2,6 @@
 	path = lib/HybridCache
 	url = https://github.com/exos/HybridCache.git
 	branch = devel
+[submodule "lib/mqtt"]
+	path = lib/mqtt
+	url = git://github.com/bluerhinos/phpMQTT.git

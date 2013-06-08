@@ -8,12 +8,14 @@ define ( 'PARIS_PATH', LIB_PATH . '/paris' );
 define ( 'MARKDOWN_PATH', LIB_PATH. '/php-markdown' );
 define ( 'PLAYA_PATH', LIB_PATH . '/playa' );
 define ( 'HYBRIDCACHE_PATH', LIB_PATH .'/HybridCache' );
+define ( 'MQTT_PATH', LIB_PATH .'/mqtt' );
 
 require FLIGHT_PATH.'/Flight.php';
 require PARIS_PATH.'/paris.php';
 require MARKDOWN_PATH.'/markdown.php';
 require PLAYA_PATH.'/playa.php';
 require HYBRIDCACHE_PATH.'/lib/init.php';
+require MQTT_PATH.'/phpMQTT.php';
 
 set_include_path(get_include_path() . PATH_SEPARATOR . FLIGHT_PATH);
 set_include_path(get_include_path() . PATH_SEPARATOR . APP_PATH);
@@ -23,6 +25,8 @@ Flight::set('flight.lib.path', APP_PATH);
 Flight::set('flight.views.path', APP_PATH.'/view');
 
 
+# uncomment and config for federation
+# define ( 'MQTT_SERVER', 'localhost' );
 
 /****  CONFIGURE YOUR DOMAIN AND DB HERE  ****/ 
 
