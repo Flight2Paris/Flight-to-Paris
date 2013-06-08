@@ -88,6 +88,9 @@ class controller_node {
 					$to = model_node::getByUri($data['to']);
 				}
 
+# TODO si va a haber más formas de publicar buscar un lugar mejor
+        $node->publishMQTT();
+
 				if ($to) {
 					Flight::redirect($to->uri);
 				} else {

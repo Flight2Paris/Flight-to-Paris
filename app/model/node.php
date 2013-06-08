@@ -1,6 +1,7 @@
 <?php
 
 require_once('score.php');
+require_once(APP_PATH . '/publisher/mqtt.php');
 
 use Hybrid\Cache as HybridCache;
 
@@ -118,7 +119,23 @@ class node extends Model {
 			$score = model_score::newScoreForUri($this->uri);
 		}
 		return $score;
-	}
+	} 
+
+  public function publishMQTT() {
+    # Publicar por autor /esfriki.com/u/autor
+    # y por nodo /esfriki.com/n/+
+    # hay que convertir los nodos a /n
+    $topics = array(
+      $this->getAuthor()->uri,
+      preg_replace('/(\/[^\/]+)$/', '/n$1', $this->uri)
+    );
+    
+    # TODO aza dice que obtener la vista en el modelo está mal
+    $message = Flight::view()->fetch('node_get_json', array('node' => $this));
+
+    publisher_mqtt::send($topics, $message);
+
+  }
 }
 
 /* 
