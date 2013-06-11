@@ -39,6 +39,10 @@ Flight::route('POST /auth/changepassword/?$',array('controller_auth','dochange')
 Flight::route('GET /auth/pubkey/?.*$',array('controller_auth','pubkey'));
 Flight::route('POST /auth/addkey/?$',array('controller_auth','addkey'));
 
+Flight::route('GET /f/$', array('controller_file','new_file') );
+Flight::route('POST /f/$', array('controller_file','upload') );
+#Flight::route('GET /f/@id:[a-z0-9_-]+(/.*)?$', array('controller_file','get') );
+
 Flight::route('GET /@id:[a-z0-9_-]+'.
 			'(\.('. implode('|',$allowed_formats) .'))?'.
 			'/?$',array('controller_node','get'));

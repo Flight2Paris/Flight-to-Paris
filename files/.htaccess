@@ -1,0 +1,6 @@
+RemoveHandler .php .php3 .phtml .phtm .pl .py .jsp .asp .sh .shtml
+RemoveType .php .php3 .phtml .phtm .pl .py .jsp .asp .sh .shtml
+
+<FilesMatch "\.(php|php3|phtml|phtm|pl|py|jsp|asp|html|htm|sh|shtml|cgi.+)$">
+    ForceType text/plain
+</FilesMatch>

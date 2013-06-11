@@ -24,7 +24,7 @@ $replyTo = $node->getReplyTo(); ?>
 <?php if ( auth::isLoggedIn() ) : ?>
 <span class="red">Comentar:</span>
 <form id="reply" action="/" method="POST" >
-	<input type="hidden" name="type" value="<?= View::makeUri('/reply') ?>" />
+	<input type="hidden" name="type" value="<?= REPLY_URI ?>" />
 	<input type="hidden" name="to" value="<?= View::e($node->uri) ?>" />
 	<div class="row-fluid">
 	<div class="span10"><textarea name="content" class="input-block-level" id="post-content" placeholder="Comenta o agrega información." ></textarea></div>

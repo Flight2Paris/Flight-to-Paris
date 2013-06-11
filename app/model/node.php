@@ -52,7 +52,7 @@ class model_node {
                 $q .= ' AND content LIKE '.ORM::get_db()->quote('%'.$query.'%');
             }
 
-            $q .= ' ORDER BY UNIX_TIMESTAMP(node.created) + sqrt(score.score-1)*3600 DESC';
+            $q .= ' ORDER BY UNIX_TIMESTAMP(node.created) + LOG(score.score) * 60 * 60 * 24 DESC';
             $q .= ' LIMIT '.$skip.','.PAGESIZE;
 
             $nodes = ORM::for_table('node')->raw_query($q)->find_many();

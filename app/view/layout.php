@@ -33,11 +33,13 @@
 			<button type="submit" class="btn"><i class="icon-search"></i> Buscar</button>
 			</div>
 		</form>
+
 		</div>
 
-		<div class="pull-right span3">
+		<div class="pull-right span4">
 		<ul class="nav pull-right">
 		<?php if ( auth::isLoggedIn() ) : ?>
+			<li><a href="<?= View::makeUri('/f/') ?>"><i class="icon-upload-alt"></i>upload</a></li>
 			<li><a href="<?= View::makeUri('/score') ?>"><i class="icon-star"></i><?= score::format(auth::getUser()->score) ?></a></li>
 			<li>
 				<div class="btn-group">

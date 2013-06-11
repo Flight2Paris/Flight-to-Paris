@@ -83,7 +83,7 @@ class controller_node {
 				$score->score += 1;
 				$score->save();
 
-				if ( $data['type'] == REPLY_TYPE ) {
+				if ( $data['type'] == REPLY_URI ) {
 					self::saveResponse($node, $data['to']);
 					$to = model_node::getByUri($data['to']);
 				}
