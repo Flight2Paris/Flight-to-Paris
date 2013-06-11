@@ -23,6 +23,7 @@ Flight::set('flight.lib.path', APP_PATH);
 Flight::set('flight.views.path', APP_PATH.'/view');
 
 
+ini_set('display_errors',false);
 
 /****  CONFIGURE YOUR DOMAIN AND DB HERE  ****/ 
 
