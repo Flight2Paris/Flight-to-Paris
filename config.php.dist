@@ -22,6 +22,7 @@ set_include_path(get_include_path() . PATH_SEPARATOR . APP_PATH . '/model');
 Flight::set('flight.lib.path', APP_PATH);
 Flight::set('flight.views.path', APP_PATH.'/view');
 
+// blablabla
 
 ini_set('display_errors',false);
 
