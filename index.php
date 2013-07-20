@@ -23,7 +23,8 @@ Flight::route('POST /?$',array('controller_node','create'));
 Flight::route('GET /score/?',array('controller_score','get'));
 Flight::route('POST /score/?',array('controller_score','post'));
 Flight::route('POST /promote/?',array('controller_score','promote'));
-
+Flight::route('GET /score/exchange/?',array('controller_score','exchange'));
+Flight::route('POST /score/send/?',array('controller_score','send'));
 
 Flight::route('GET /u/new/?$',array('controller_user','new_user'));
 Flight::route('POST /u/new/?$',array('controller_user','create'));

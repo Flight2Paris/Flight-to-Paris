@@ -1,5 +1,5 @@
 <?php if ( is_a($node,'node') ) : ?>
-	<div class="row-fluid node">
+	<div class="row-fluid node" data-uri="<?= View::e( $node->uri ) ?>" data-score="<?= $node->getScore()->raw() ?>">
 		<div class="span2">
 		<?php $author = $node->getAuthor() ?>
 		<?php if ( is_a($author,'user') ) : ?><a href="<?= View::e($author->uri) ?>" class="author"><?= View::e($author->username) ?></a><?php endif ?>

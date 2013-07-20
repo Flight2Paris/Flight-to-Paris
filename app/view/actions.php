@@ -13,6 +13,10 @@
 	<input type="submit" name="promote" value="3" class="promote btn" />
 	<input type="submit" name="promote" value="5" class="promote btn" />
 	<input type="submit" name="promote" value="8" class="promote btn" />
+
+	<input type="text" name="promote" value="1000" class="input-small" style="margin-bottom:0"/>
+
+	<button class="btn submit"><i class="icon-plus-sign"></i></button>
 	</div>
 	</form>
 	<div class="span2 node-score"><i class="icon-star"></i> <?= $node->getScore() ?></div>

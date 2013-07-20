@@ -32,5 +32,9 @@ class score extends Model {
 		}
 		return number_format($score,$decimals).$sufix; 
 	}
+
+	public function raw() {
+		return $this->score;
+	}
 }
 

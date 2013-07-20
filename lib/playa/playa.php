@@ -19,7 +19,7 @@ public static function playa_url($url, $w = 680, $h = NULL) {
 	}
 
 	// video files
-	if ( preg_match('/.*\.(mpg)$/',$url)) {
+	if ( preg_match('/.*\.(mpg|ogg|ogv)$/',$url)) {
 		$url = htmlspecialchars($url);
 		return '<iframe src="'.$url.'" width="'.$w.'" height="'.$h.'"></iframe>';
 	}

@@ -24,7 +24,7 @@
   <div class="navbar-inner">
     <div class="container">
 
-		<div class="pull-left span7">
+		<div class="pull-left span6">
         <a class="brand" href="<?= View::makeUri('/') ?>"><?= htmlentities(SITE_TITLE) ?></a>
 
 		<form action="<?= View::makeUri('/') ?>" action="post" id="search" class="form-search navbar-form">
@@ -36,11 +36,12 @@
 
 		</div>
 
-		<div class="pull-right span4">
+		<div class="pull-right span5">
 		<ul class="nav pull-right">
 		<?php if ( auth::isLoggedIn() ) : ?>
-			<li><a href="<?= View::makeUri('/f/') ?>"><i class="icon-upload-alt"></i>upload</a></li>
-			<li><a href="<?= View::makeUri('/score') ?>"><i class="icon-star"></i><?= score::format(auth::getUser()->score) ?></a></li>
+			<li><a href="<?= View::makeUri('/score/exchange') ?>"><i class="icon-exchange"></i> exchange</a></li>
+			<li><a href="<?= View::makeUri('/f/') ?>"><i class="icon-upload-alt"></i> upload</a></li>
+			<li><a href="<?= View::makeUri('/score') ?>"><i class="icon-star"></i> <?= score::format(auth::getUser()->score) ?></a></li>
 			<li>
 				<div class="btn-group">
 					<a class="btn btn-success" href="<?= View::e(auth::getUser()->uri) ?>"><i class="icon-user"></i> <?= View::e(auth::getUser()->username) ?></a>
@@ -79,6 +80,7 @@
 
 
 	<div class="container">
+		
 		<content>
 			<?php foreach ( Flight::flash('message') as $message ) : ?>
 				<div class="alert alert-<?= View::e($message['type']) ?>">
@@ -87,6 +89,9 @@
 				</div>
 			<?php endforeach ?>
 			<?php Flight::clearFlash('message') ?>
+
+			<p><strong><i class="icon-bitcoin"></i>  1C4GqbGnQ6aVUJvPBfYVmiWhNaJqRH83yU</strong></p>
+
 			<?= $content ?>
 		</content>
 		<span class="clear"></span>
@@ -97,6 +102,7 @@
 	<footer>
 		<a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="nofollow"><img src="<?= View::makeUri('/assets/img/cc-by-sa.png') ?>" alt="Creative Commons Attribution-ShareAlike 3.0" title="Creative Commons Attribution-ShareAlike 3.0"/></a>
 		<a href="https://github.com/rata0071/Flight-to-Paris" target="_blank" title="Flight to Paris - github" ><img src="<?= View::makeUri('/assets/img/github.png') ?>" alt="Github" /></a>
+		
 	</footer>
 	</div>
 

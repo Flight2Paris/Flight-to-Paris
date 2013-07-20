@@ -9,7 +9,7 @@ $(document).ready(function(){
 
 	// .node click
 	$('.node').live('click',function(e){
-		if ( ['A','SUBMIT','INPUT','IMG'].indexOf(e.target.nodeName) != '-1' ) {
+		if ( ['A','SUBMIT','INPUT','IMG','BUTTON'].indexOf(e.target.nodeName) != '-1' ) {
 		} else {
 			e.preventDefault();
 			if ( $(this).find('.node-full').length > 0 ) { 
@@ -66,27 +66,45 @@ $(document).ready(function(){
 	});
 
 
-	// If user promotes a node
-	$('.promote').live('click',function(e){
-		e.preventDefault();
-		e.stopPropagation();
+	var promote = function ( node, amount) {
+
 		if ( logged ) {
-			// Do promote
-			form = $(this).closest('form');
-			val = $(this).val();
-			uri = form.children('input[name="uri"]').val();
-			score = form.closest('.node').find('.node-score');
-			score.text(parseInt(score.text()) + parseInt(val));
-			$('#score').text(parseFloat($('#score').text()) - parseFloat(val));
-			$.post(form.attr('action'),{"uri": uri, "promote": val},function(data){});
+
+			newScore = parseInt( node.data('score') ) + parseInt(amount);
+			node.data('score', newScore);
+
+			score = node.find('.node-score');
+			score.html( '<i class="icon-star"></i> ' + newScore );
+
+			$.post( node.find('.score-form').attr('action'), {"uri": node.data('uri') , "promote": amount}, function(data){} );
 
 		} else {
 			// Show login form
 			$('.dropdown-toggle').parent().addClass('open');
 		}
+	}
+
+	// If user promotes a node
+	$('.promote').live('click',function(e){
+		e.preventDefault();
+		e.stopPropagation();
+		
+		node = $(this).closest('.node');
+		amount = $(this).val();
+
+		promote(node,amount);
 	});
 
+	$('.score-form').live('submit',function(e){
+		e.preventDefault();
+		e.stopPropagation();
 
+		node = $(this).closest('.node');
+		amount = $(this).find('input[type="text"]').val();
+
+		promote(node,amount);
+	});
+	
 	// Enlarge post textarea as needed
 	var lastanimate = new Date().getTime(); 
 	var postanimate = function(target) {

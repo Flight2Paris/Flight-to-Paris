@@ -82,9 +82,17 @@ class controller_score {
 			if ( $data['promote'] && $node ) {
 				$user->score = $user->score - $data['promote'];
 				$user->save();
+
 				$score = $node->getScore();
 				$score->score = $score->score + $data['promote'];
 				$score->save();
+
+				$author = $node->getAuthor();
+
+				if ( $author->id != $user->id ) {
+					$author->score += $data['promote'] - $data['promote'] * 0.1 * log($score->score+$data['promote']);
+					$author->save();
+				}
 			}
 
 			if ( Flight::request()->ajax ) {
@@ -98,4 +106,38 @@ class controller_score {
 		}
 	}
 
+	public function exchange() {
+		Flight::render('score_exchange',null,'layout');
+	}
+
+	public function send() {
+		$data = Flight::request()->data;
+
+		if ( auth::isLoggedIn() ) {
+
+			$user = auth::getUser();
+			$dest = model_user::getByUri( $data['user_uri'] );
+
+			if ( ! $dest ) {
+				Flight::flash('message',array('type'=>'error','text'=>'No existe el destinatario'));
+			} else if ( $data['amount'] < 0.0001 ) {
+				Flight::flash('message',array('type'=>'error','text'=>'No existe el destinatario'));
+			} else if ( $user->score < $data['amount'] ) {
+				Flight::flash('message',array('type'=>'error','text'=>'No tenes suficientes puntos'));
+			} else {
+				$user->score -= $data['amount'];
+				$user->save();
+
+				$dest->score += $data['amount'];
+				$dest->save();
+
+				Flight::flash('message',array('type'=>'success','text'=>'Puntos enviados'));
+			}
+
+			Flight::redirect( View::makeUri('/score/exchange') );
+
+		} else {
+			Flight::redirect( View::makeUri('/') );
+		}
+	}
 }
