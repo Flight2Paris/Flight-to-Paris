@@ -1,25 +1,20 @@
-<?php if ( $node->isReply() ) : 
-$replyTo = $node->getReplyTo(); ?>
-<div class="node">
-	<?php $author = $replyTo->getAuthor() ?>
-	<?php if ( $author ) : ?><a href="<?= View::e($author->uri) ?>" class="author"><?= View::e($author->username) ?></a><?php endif ?>
-	<?= View::markdown($replyTo->content) ?>
-</div>
-<?php endif ?>
+<?php $n = $node; ?>
 
-<div class="node">
-	<?php $author = $node->getAuthor() ?>
-	<?php if ( $author ) : ?><a href="<?= View::e($author->uri) ?>" class="author"><?= View::e($author->username) ?></a><?php endif ?>
-	<?= View::markdown($node->content) ?>
-	<?php include('actions.php') ?>
-</div>
-<?php foreach ( $node->getReplies() as $comment ) : ?>
-<div class="comment">
-	<?php $author = $comment->getAuthor() ?>
-	<?php if ( $author ) : ?><a href="<?= View::e($author->uri) ?>" class="author"><?= View::e($author->username) ?></a><?php endif ?>
-	<?= View::markdown($comment->content) ?>
-</div>
-<?php endforeach ?>
+<?php 
+if ( $node->isReply() ) : 
+	$node = $n->getReplyTo();
+	include('singlenode.php');
+endif 
+?>
+
+<?php $node = $n ?>
+<?php 
+include('singlenode.php');
+foreach ( $n->getReplies() as $node ) :
+	$class = 'comment';
+	include('singlenode.php');
+endforeach 
+?>
 
 <?php if ( auth::isLoggedIn() ) : ?>
 <span class="red">Comentar:</span>
