@@ -121,10 +121,10 @@ class controller_score {
 			if ( ! $dest ) {
 				Flight::flash('message',array('type'=>'error','text'=>'No existe el destinatario'));
 			} else if ( $data['amount'] < 0.0001 ) {
-				Flight::flash('message',array('type'=>'error','text'=>'No existe el destinatario'));
+				Flight::flash('message',array('type'=>'error','text'=>'Tenes que enviar más puntos.'));
 			} else if ( $user->score < $data['amount'] ) {
 				Flight::flash('message',array('type'=>'error','text'=>'No tenes suficientes puntos'));
-			} else {
+			} else if ( $user->uri != $dest->uri ) {
 				$user->score -= $data['amount'];
 				$user->save();
 
@@ -132,6 +132,8 @@ class controller_score {
 				$dest->save();
 
 				Flight::flash('message',array('type'=>'success','text'=>'Puntos enviados'));
+			} else {
+				Flight::flash('message',array('type'=>'success','text'=>'esfriki.com ahora a prueba de Zak'));
 			}
 
 			Flight::redirect( View::makeUri('/score/exchange') );

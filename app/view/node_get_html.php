@@ -1,10 +1,13 @@
-<?php $n = $node; ?>
-
 <?php 
+
+$n = $node; 
+$open = 1;
+
 if ( $node->isReply() ) : 
 	$node = $n->getReplyTo();
 	include('singlenode.php');
 endif 
+
 ?>
 
 <?php $node = $n ?>

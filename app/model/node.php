@@ -83,7 +83,11 @@ class model_node {
 class node extends Model {
 	public function getTitle() {
 		$lines = explode("\n",trim($this->content));
-		return array_shift($lines);
+		$title = trim(array_shift($lines));
+		if ( mb_strlen($title) < 100 ) { 
+			$title .= ' - '.trim(array_shift($lines));
+		}
+		return $title;
 	}
 
 	public function getReplies() {
