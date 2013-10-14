@@ -4,6 +4,11 @@
 <?php endif ?>
 <p>Puntos: <?= $user->score ?></p>
 <p>Puntos del ultimo mes: <?= $user->getMonthlyScore() ?></p>
-<?php foreach ( $user->getNodes() as $node ) : ?>
-	<?php include('single_node.php') ?>
-<?php endforeach ?>
+<?php
+
+
+$nodes = $user->getNodes(); 
+
+foreach ( $nodes as $node ) :
+	include('singlenode.php');
+endforeach;
