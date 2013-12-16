@@ -16,7 +16,7 @@ include 'config.php';
 require APP_PATH.'/model/auth.php';
 $auth = new auth;
 
-Flight::route('GET /(search/?)?' . '(\.('. implode('|',$allowed_formats) .'))?',array('controller_node','search'));
+Flight::route('GET /(search/|all?)?' . '(\.('. implode('|',$allowed_formats) .'))?',array('controller_node','search'));
 
 Flight::route('POST /?$',array('controller_node','create'));
 
