@@ -35,6 +35,14 @@ class controller_node {
 			}
 		}
 
+        $view->set('feeds',Array((object) Array(
+            'title' => "Node feed",
+            'uri'   => $node->uri . ".rss"
+        ), (object) Array(
+            'title' => "Author feed",
+            'uri'   => $node->getAuthor()->uri . "/feed"
+        )));
+
 		Flight::render($template, null, $layout);
 	}
 
@@ -120,26 +128,51 @@ class controller_node {
 		$link->save();
 	}
 
-	public function search() {
+	public function search($uri) {
 		$view = Flight::View();
+        $layout = 'layout';
 
 		$query = Flight::request()->query['q'];
 		$after = Flight::request()->query['after'];
 		$before = Flight::request()->query['before'];
 		$skip = Flight::request()->query['skip'];
+		$cant = Flight::request()->query['count'];
 
 		$template = 'node_search';
-		$layout = 'layout';
 
-		if ( empty($query) ) {
-			$nodes = model_node::search($query,$before,$after,$skip);
-			$view->set('nodes',$nodes);		
+        $format = Router::getFormat($uri);
+		$format = trim($format) ? trim($format) : 'html';
+        
+        $template = $template.'_'.$format;
+		if ( $format != 'html' ) {
+    		$layout = null;
+		}
+
+        if ( empty($query) ) {
+            $nodes = model_node::search($query,$before,$after,$skip, $cant);
+            $view->set('title',SITE_TITLE);
 		} else if ( self::canSearch($query) ) {
-			$nodes = model_node::search($query,$before,$after,$skip);
-			$view->set('nodes',$nodes);
+			$nodes = model_node::search($query,$before,$after,$skip, $cant);
+
+            $params = Array(
+                'q' => $query,
+                'after' => $after,
+                'before' => $before,
+                'skip' => $skip,
+                'cant' => $cant
+            );
+
+            $view->set('feeds',Array((object) Array(
+                'title' => "Search feed",
+                'uri'   => View::makeUri("/search.rss?" . http_build_query($params)) 
+            )));
+
+           $view->set('title', "$query | ".  SITE_TITLE);
 		} else {
 			Flight::flash('message',array('type'=>'error','text'=>'You are doing it wrong.'));
 		}
+
+		$view->set('nodes',$nodes);		
 
 		if ( Flight::request()->ajax ) {
 			$template = $template.'_ajax';

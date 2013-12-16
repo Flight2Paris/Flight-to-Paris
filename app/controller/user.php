@@ -11,6 +11,19 @@ class controller_user {
 		Flight::render('user_get', null, 'layout');
 	}
 
+    public function feed($username) {
+
+        $view = Flight::View();
+		$user = model_user::getByUsername(urldecode($username));
+		Flight::notFoundUnless($user);
+
+		$view->set('user',$user);
+        $view->set('nodes', $user->getNodes());
+
+		Flight::render('user_get_rss', null, null);
+
+    }
+
 	public function new_user() {
 		Flight::render('user_new', null, 'layout');
 	}

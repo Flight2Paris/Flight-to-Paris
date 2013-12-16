@@ -13,6 +13,10 @@
     <meta property="og:site_name" content="<?= htmlspecialchars(SITE_TITLE)  ?>" />
 <?php endif ?>
 
+    <link rel="alternate" type="application/rss+xml"  href="<?= View::makeUri('/all.rss') ?>" title="Nodes RSS Feed">
+<?php if (isset($feeds)) foreach ($feeds as $feed) : ?>
+    <link rel="alternate" type="application/rss+xml"  href="<?=$feed->uri?>"  title="<?=htmlspecialchars($feed->title)?>">
+<?php endforeach; ?>
 	<link rel="stylesheet" href="<?= View::makeUri('/assets/css/bootstrap.min.css') ?>" />
 	<link rel="stylesheet" href="<?= View::makeUri('/assets/css/font-awesome.css') ?>" />
 	<link rel="stylesheet" href="<?= View::makeUri('/assets/css/main.css') ?>" />
