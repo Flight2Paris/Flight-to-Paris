@@ -16,6 +16,12 @@ include 'config.php';
 require APP_PATH.'/model/auth.php';
 $auth = new auth;
 
+if (php_sapi_name() == 'cli-server') {
+    if (preg_match('/\.(?:png|jpg|jpeg|gif|css|js)$/i', $_SERVER["REQUEST_URI"])) {
+        return false; 
+    }
+}
+
 Flight::route('GET /(search/?)?',array('controller_node','search'));
 
 Flight::route('POST /?$',array('controller_node','create'));

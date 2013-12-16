@@ -66,5 +66,5 @@ $ mysql -uroot -p  < flight2paris.sql
 You can test it with build-in PHP http server (you need define 'DOMAIN' with the port, example: _'localhost:8000'_)
 
 ```
-$ php -S localhost:8000
+$ php -S localhost:8000 index.php
 ```
