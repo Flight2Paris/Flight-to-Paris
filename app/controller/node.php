@@ -128,6 +128,7 @@ class controller_node {
 		$after = Flight::request()->query['after'];
 		$before = Flight::request()->query['before'];
 		$skip = Flight::request()->query['skip'];
+		$cant = Flight::request()->query['count'];
 
 		$template = 'node_search';
 
@@ -140,14 +141,16 @@ class controller_node {
 		}
 
         if ( empty($query) ) {
-            $nodes = model_node::search($query,$before,$after,$skip);
-			$view->set('nodes',$nodes);		
+            $nodes = model_node::search($query,$before,$after,$skip, $cant);
+            $view->set('title',SITE_TITLE);
 		} else if ( self::canSearch($query) ) {
-			$nodes = model_node::search($query,$before,$after,$skip);
-			$view->set('nodes',$nodes);
+			$nodes = model_node::search($query,$before,$after,$skip, $cant);
+            $view->set('title', "$q | "+  SITE_TITLE);
 		} else {
 			Flight::flash('message',array('type'=>'error','text'=>'You are doing it wrong.'));
 		}
+
+		$view->set('nodes',$nodes);		
 
 		if ( Flight::request()->ajax ) {
 			$template = $template.'_ajax';
