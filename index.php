@@ -22,7 +22,7 @@ if (php_sapi_name() == 'cli-server') {
     }
 }
 
-Flight::route('GET /@uri:((search/|all?)?' . '(\.('. implode('|',$allowed_formats) .'))?)',array('controller_node','search'));
+Flight::route('GET /@uri:((search/?|all)?' . '(\.('. implode('|',$allowed_formats) .'))?)',array('controller_node','search'));
 
 Flight::route('POST /?$',array('controller_node','create'));
 

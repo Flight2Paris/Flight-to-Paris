@@ -35,6 +35,14 @@ class controller_node {
 			}
 		}
 
+        $view->set('feeds',Array((object) Array(
+            'title' => "Node feed",
+            'uri'   => $node->uri . ".rss"
+        ), (object) Array(
+            'title' => "Author feed",
+            'uri'   => $node->getAuthor()->uri . "/feed"
+        )));
+
 		Flight::render($template, null, $layout);
 	}
 
@@ -145,7 +153,21 @@ class controller_node {
             $view->set('title',SITE_TITLE);
 		} else if ( self::canSearch($query) ) {
 			$nodes = model_node::search($query,$before,$after,$skip, $cant);
-            $view->set('title', "$q | "+  SITE_TITLE);
+
+            $params = Array(
+                'q' => $query,
+                'after' => $after,
+                'before' => $before,
+                'skip' => $skip,
+                'cant' => $cant
+            );
+
+            $view->set('feeds',Array((object) Array(
+                'title' => "Search feed",
+                'uri'   => View::makeUri("/search.rss?" . http_build_query($params)) 
+            )));
+
+           $view->set('title', "$query | ".  SITE_TITLE);
 		} else {
 			Flight::flash('message',array('type'=>'error','text'=>'You are doing it wrong.'));
 		}
