@@ -28,11 +28,11 @@ foreach ( $nodes as $node ) {
     $item->setDescription(View::markdown($node->content));
     $item->setAuthor($author->username, $author->uri);
 
-    $feed->addElement($item);
+    $feed->addItem($item);
 
 }
 
-$feed = generateFeed();
+$feed = $feed->generateFeed();
 
 header('Content-type: text/xml');
 
