@@ -120,8 +120,9 @@ class controller_node {
 		$link->save();
 	}
 
-	public function search() {
+	public function search($uri) {
 		$view = Flight::View();
+        $layout = 'layout';
 
 		$query = Flight::request()->query['q'];
 		$after = Flight::request()->query['after'];
@@ -129,10 +130,17 @@ class controller_node {
 		$skip = Flight::request()->query['skip'];
 
 		$template = 'node_search';
-		$layout = 'layout';
 
-		if ( empty($query) ) {
-			$nodes = model_node::search($query,$before,$after,$skip);
+        $format = Router::getFormat($uri);
+		$format = trim($format) ? trim($format) : 'html';
+        
+        $template = $template.'_'.$format;
+		if ( $format != 'html' ) {
+    		$layout = null;
+		}
+
+        if ( empty($query) ) {
+            $nodes = model_node::search($query,$before,$after,$skip);
 			$view->set('nodes',$nodes);		
 		} else if ( self::canSearch($query) ) {
 			$nodes = model_node::search($query,$before,$after,$skip);
