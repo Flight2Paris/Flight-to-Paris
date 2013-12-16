@@ -27,7 +27,7 @@ foreach ( $nodes as $node ) {
     $item->setLink($node->uri);
     $item->setDescription(View::markdown($node->content));
     $item->setAuthor($author->username, $author->uri);
-
+    $item->setDate($node->created);
     $feed->addItem($item);
 
 }
