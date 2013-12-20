@@ -38,7 +38,7 @@ Flight::route('POST /u/new/?$',array('controller_user','create'));
 //Flight::route('GET /u/follow/@url$',array('controller_user','follow'));
 Flight::route('GET /u/@username/?$',array('controller_user','get'));
 Flight::route('GET /u/@username/pubkey/?$',array('controller_user','pubkey'));
-Flight::route('GET /u/@username/feed/?$',array('controller_user','feed'));
+Flight::route('GET /u/@username/feed/@format/?$',array('controller_user','feed'));
 
 Flight::route('POST /auth/login/?$',array('controller_auth','login'));
 Flight::route('GET /auth/logout/?$',array('controller_auth','logout'));

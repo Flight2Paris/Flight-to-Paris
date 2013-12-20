@@ -36,11 +36,17 @@ class controller_node {
 		}
 
         $view->set('feeds',Array((object) Array(
-            'title' => "Node feed",
+            'title' => "Node feed (RSS)",
             'uri'   => $node->uri . ".rss"
         ), (object) Array(
-            'title' => "Author feed",
-            'uri'   => $node->getAuthor()->uri . "/feed"
+            'title' => "Author feed (RSS)",
+            'uri'   => $node->getAuthor()->uri . "/feed/rss"
+        ), (object) Array(
+            'title' => "Node feed (ATOM)",
+            'uri'   => $node->uri . ".atom"    
+        ), (object) Array(
+            'title' => "Author feed (ATOM)",
+            'uri'   => $node->getAuthor()->uri . "/feed/atom"
         )));
 
 		Flight::render($template, null, $layout);
@@ -162,10 +168,15 @@ class controller_node {
                 'cant' => $cant
             );
 
-            $view->set('feeds',Array((object) Array(
-                'title' => "Search feed",
-                'uri'   => View::makeUri("/search.rss?" . http_build_query($params)) 
-            )));
+            $view->set('feeds',Array(
+                (object) Array(
+                    'title' => "Search feed (RSS)",
+                    'uri'   => View::makeUri("/search.rss?" . http_build_query($params)) 
+                ), (object) Array(
+                    'title' => "Search feed (ATOM)",
+                    'uri'   => View::makeUri("/search.atom?" . http_build_query($params)) 
+                )
+            ));
 
            $view->set('title', "$query | ".  SITE_TITLE);
 		} else {
