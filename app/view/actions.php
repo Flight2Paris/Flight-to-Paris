@@ -5,6 +5,7 @@
 	<a href="<?= View::e($node->uri.'.md') ?>" class="label label-info">markdown</a>
 	<a href="<?= View::e($node->uri.'.rdf') ?>" class="label label-info">rdf</a>
 	<a href="<?= View::e($node->uri.'.rss') ?>" class="label label-info">rss</a>
+	<a href="<?= View::e($node->uri.'.atom') ?>" class="label label-info">atom</a>
 	</div>
 	<form action="<?= View::makeUri('/promote/') ?>" method="POST" class="span6 score-form">
 	<input type="hidden" value="<?= View::e($node->uri) ?>" name="uri" />
