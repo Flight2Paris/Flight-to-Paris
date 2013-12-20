@@ -54,7 +54,7 @@ define ( 'SITE_URI', 'http://'.DOMAIN );
 define ( 'REPLY_URI', SITE_URI.'/reply');
 define ( 'AUTHOR_URI', 'dc:creator' );
 
-$allowed_formats = array('html','rss','json','rdf','md');
+$allowed_formats = array('html','rss','atom','json','rdf','md');
 
 ## Cache configuration
 
