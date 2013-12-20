@@ -13,7 +13,8 @@
     <meta property="og:site_name" content="<?= htmlspecialchars(SITE_TITLE)  ?>" />
 <?php endif ?>
 
-    <link rel="alternate" type="application/rss+xml"  href="<?= View::makeUri('/all.rss') ?>" title="Nodes RSS Feed">
+    <link rel="alternate" type="application/rss+xml"  href="<?= View::makeUri('/all.rss') ?>" title="Nodes Feed (RSS)">
+    <link rel="alternate" type="application/rss+xml"  href="<?= View::makeUri('/all.atom') ?>" title="Nodes Feed (ATOM)">
 <?php if (isset($feeds)) foreach ($feeds as $feed) : ?>
     <link rel="alternate" type="application/rss+xml"  href="<?=$feed->uri?>"  title="<?=htmlspecialchars($feed->title)?>">
 <?php endforeach; ?>
