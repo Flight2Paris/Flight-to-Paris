@@ -7,9 +7,30 @@ class controller_user {
 		Flight::notFoundUnless($user);
 
 		$view->set('user',$user);
+       
+        $view->set('feeds',Array((object) Array(
+            'title' => "Author feed (RSS)",
+            'uri'   => $user->uri . "/feed/rss"    
+        ), (object) Array(
+            'title' => "Author feed (ATOM)",
+            'uri'   => $user->uri . "/feed/atom"
+        )));
 
 		Flight::render('user_get', null, 'layout');
 	}
+
+    public function feed($username,$format) {
+
+        $view = Flight::View();
+		$user = model_user::getByUsername(urldecode($username));
+		Flight::notFoundUnless($user);
+
+		$view->set('user',$user);
+        $view->set('nodes', $user->getNodes());
+
+		Flight::render('user_get_' . $format, null, null);
+
+    }
 
 	public function new_user() {
 		Flight::render('user_new', null, 'layout');
