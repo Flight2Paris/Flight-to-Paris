@@ -24,7 +24,7 @@ if (php_sapi_name() == 'cli-server') {
     }
 }
 
-Flight::route('GET /(search/?)?',array('controller_node','search'));
+Flight::route('GET /@uri:((search/?|all)?' . '(\.('. implode('|',$allowed_formats) .'))?)',array('controller_node','search'));
 
 Flight::route('POST /?$',array('controller_node','create'));
 
@@ -40,6 +40,7 @@ Flight::route('POST /u/new/?$',array('controller_user','create'));
 //Flight::route('GET /u/follow/@url$',array('controller_user','follow'));
 Flight::route('GET /u/@username/?$',array('controller_user','get'));
 Flight::route('GET /u/@username/pubkey/?$',array('controller_user','pubkey'));
+Flight::route('GET /u/@username/feed/@format/?$',array('controller_user','feed'));
 
 Flight::route('POST /auth/login/?$',array('controller_auth','login'));
 Flight::route('GET /auth/logout/?$',array('controller_auth','logout'));
