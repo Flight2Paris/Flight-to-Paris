@@ -175,9 +175,10 @@ $(document).ready(function(){
 		}
 	});
 
-	$('input').keydown(function(event){
-		if(event.keyCode == 13) {
-			event.preventDefault();
+	$('.nosubmit').keydown(function(e){
+		if(e.keyCode == 13 ) {
+			e.preventDefault();
+			e.stopPropagation();
 			return false;
 		}
 	});
