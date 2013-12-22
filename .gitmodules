@@ -2,3 +2,7 @@
 	path = lib/HybridCache
 	url = https://github.com/exos/HybridCache.git
 	branch = devel
+[submodule "FeedWriter"]
+	path = lib/FeedWriter
+	url = https://github.com/mibe/FeedWriter.git
+	branch = master

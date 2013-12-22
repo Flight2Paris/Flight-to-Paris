@@ -8,6 +8,7 @@ define ( 'PARIS_PATH', LIB_PATH . '/paris' );
 define ( 'MARKDOWN_PATH', LIB_PATH. '/php-markdown' );
 define ( 'PLAYA_PATH', LIB_PATH . '/playa' );
 define ( 'HYBRIDCACHE_PATH', LIB_PATH .'/HybridCache' );
+define ( 'FEED_WRITER_PATH', LIB_PATH .'/FeedWriter' );
 
 require FLIGHT_PATH.'/Flight.php';
 require PARIS_PATH.'/paris.php';
@@ -43,6 +44,7 @@ ORM::configure('password', '');
 
 
 define ( 'PAGESIZE', 30 );
+define ( 'MAX_PAGESIZE', 100 );
 
 
 
@@ -52,7 +54,7 @@ define ( 'SITE_URI', 'http://'.DOMAIN );
 define ( 'REPLY_URI', SITE_URI.'/reply');
 define ( 'AUTHOR_URI', 'dc:creator' );
 
-$allowed_formats = array('html','rss','json','rdf','md');
+$allowed_formats = array('html','rss','atom','json','rdf','md');
 
 ## Cache configuration
 
