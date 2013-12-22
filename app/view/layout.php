@@ -21,23 +21,25 @@
 
 <header>
 <div class="navbar navbar-inverse navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class="container">
 
-		<div class="pull-left span6">
-        <a class="brand" href="<?= View::makeUri('/') ?>"><?= htmlentities(SITE_TITLE) ?></a>
-
-		<form action="<?= View::makeUri('/') ?>" action="post" id="search" class="form-search navbar-form">
-			<div class="input-append">
-			<input type="search" name="q" class="input-largei search-query" placeholder="Que estas buscando?" />
-			<button type="submit" class="btn"><i class="icon-search"></i> Buscar</button>
-			</div>
-		</form>
-
+		<div class="navbar-header">
+        <a class="navbar-brand" href="<?= View::makeUri('/') ?>"><?= htmlentities(SITE_TITLE) ?></a>
+		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+		<span class="sr-only">Mostrar menú</span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+		</button>
 		</div>
 
-		<div class="pull-right span5">
-		<ul class="nav pull-right">
+		<form action="<?= View::makeUri('/') ?>" action="post" id="search" class="form-search navbar-form navbar-left hidden-xs" role="search">
+			<div class="form-group">
+			<input type="search" name="q" class="form-control" placeholder="Que estas buscando?" />
+			</div>
+			<button type="submit" class="btn"><i class="icon-search"></i> Buscar</button>
+		</form>
+
+		<ul class="nav navbar-nav navbar-right hidden-xs">
 		<?php if ( auth::isLoggedIn() ) : ?>
 			<li><a href="<?= View::makeUri('/score/exchange') ?>"><i class="icon-exchange"></i> exchange</a></li>
 			<li><a href="<?= View::makeUri('/f/') ?>"><i class="icon-upload-alt"></i> upload</a></li>
@@ -45,37 +47,86 @@
 			<li>
 				<div class="btn-group">
 					<a class="btn btn-success" href="<?= View::e(auth::getUser()->uri) ?>"><i class="icon-user"></i> <?= View::e(auth::getUser()->username) ?></a>
-					<a class="btn btn-success dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-caret-down"></span></a>
-					<ul class="dropdown-menu">
+					<a class="btn btn-success" id="menu-btn" data-toggle="collapse" data-target="#menu" href="#"><span class="icon-caret-down"></span></a>
+				</div>
+			</li>
+		<?php else : ?>
+			<li>
+				<div class="btn-group">
+					<a class="btn btn-danger" data-toggle="collapse" data-target="#menu" href="#"><i class="icon-signin"></i> Entrar</a>
+					<a class="btn btn-danger" id="menu-btn" data-toggle="collapse" data-target="#menu" href="#"><i class="icon-caret-down"></i></a>
+				</div>
+			</li>
+		<?php endif ?>
+		</ul>
+
+</div>
+
+<div class="collapse" id="menu">
+	<div class="container">
+		<div class="row-fluid visible-xs">
+		<form action="<?= View::makeUri('/') ?>" action="post" id="search" class="form-search form-inline" role="search">
+			<div class="form-group">
+			<input type="search" name="q" class="form-control" placeholder="Que estas buscando?" />
+			</div>
+			<button type="submit" class="btn btn-default"><i class="icon-search"></i> Buscar</button>
+		</form>
+		</div>
+		<div class="row-fluid">
+		<?php if ( auth::isLoggedIn() ) : ?>
+			<div class="col-md-4">
+			</div>
+			<div class="col-md-4">
+			</div>
+			<div class="col-md-4">
+					<ul>
 						<li><a href="<?= View::makeUri('/auth/changepassword') ?>"><i class="icon-lock"></i> Cambiar contraseña</a></li>
 						<li><a href="<?= View::makeUri('/auth/pubkey') ?>"><i class="icon-key"></i> Agregar llave</a></li>
 						<li class="divider"></li>
 						<li><a href="<?= View::makeUri('/auth/logout') ?>"><i class="icon-signout"></i> Salir</a></li>
 					</ul>
-				</div>
-			</li>
-		<?php else : ?>
-		<li>
-			<div class="btn-group">
-				<a class="btn btn-danger dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-signin"></i> Entrar</a>
-				<a class="btn btn-danger dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-caret-down"></i></a>
-				<ul class="dropdown-menu" style="padding: 10px">
-					<form action="<?= View::makeUri('/auth/login') ?>" method="post">
-					<div class="input-prepend"><span class="add-on"><i class="icon-user"></i></span> <input id="input-username" type="text" name="username" placeholder="Usuario" /></div> <br />
-					<div class="input-prepend"><span class="add-on"><i class="icon-lock"></i></span> <input type="password" name="password" placeholder="*****************" /></div> <br />
-					<button type="submit" class="btn">("\(^o^)/")</button>
-					</form>
-					<li class="divider"></>
-					<li><a href="<?= View::makeUri('/u/new') ?>"><i class="icon-plus-sign"></i> Registrate</a></li>
-				</ul>
 			</div>
-		</li>
+		<?php else : ?>
+			<form action="<?= View::makeUri('/u/new') ?>" method="post" id="register">
+			<div class="col-md-4">
+				<h2>Registrate</h2>
+					<div class="form-group">
+						<label for="input-username"><i class="icon-user"></i> Usuario</label>
+						<input id="input-username" class="form-control" type="text" name="username" placeholder="Usuario" />
+					</div>
+					<div class="form-group">
+						<label for="input-password"><i class="icon-lock"></i> Contraseña</label>
+						<input class="form-control" id="input-password" type="password" name="password" placeholder="*****************" />
+					</div>
+					<div class="form-group">
+						<label for="input-password-repeat"><i class="icon-lock"></i> Repeti la contraseña</label>
+						<input class="form-control" type="password" id="input-password-repeat" name="password-repeat" placeholder="*****************" />
+					</div>
+			</div>
+			<div class="col-md-4">
+				<?= View::markdown('Acepto que todo sera compartido bajo licencia [CC-BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) y no puede ser eliminado. **Los bots aburridos seran perseguidos**. All your base are belong to us.') ?>
+				<?php include('captcha.php') ?>
+			</div>
+			</form>
+			<div class="col-md-4">
+				<h2>Entrá</h2>
+					<form action="<?= View::makeUri('/auth/login') ?>" method="post">
+					<div class="form-group">
+						<label for="input-username"><i class="icon-user"></i> Usuario</label>
+						<input id="input-username" class="form-control" type="text" name="username" placeholder="Usuario" />
+					</div>
+					<div class="form-group">
+						<label for="input-password"><i class="icon-lock"></i> Contraseña</label>
+						<input class="form-control" type="password" name="password" placeholder="*****************" />
+					</div>
+					<button type="submit" class="btn btn-default">("\(^o^)/")</button>
+					</form>
+			</div>
 		<?php endif ?>
-		</ul>
 		</div>
     </div>
-  </div>
 </div>
+
 </header>
 
 

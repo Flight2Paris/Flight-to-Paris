@@ -16,28 +16,48 @@ header, content, footer { display:block }
 content { margin-top:60px }
 footer { padding-top: 30px }
 
+.navbar-nav { margin: 7.5px!important; } 
+.navbar-nav li a { padding-top:10px; padding-bottom:10px; }
+
 .center { margin:0 auto }
 .centerContent { text-align: center }
 .clear { clear:both }
 .red {  color: #BF3211; } 
+.inline { display:inline; }
 
 #post-content { height:28px; } 
 
 #score { font-size: 20px; }
 
+@media (min-width: 992px) { 
+		#menu { position:fixed;  }
+}
+
+@media (max-width: 991px) {
+		#menu { position:absolute; }
+}
+
+#menu { background-color: #343434; margin-top:52px; color:white; padding: 4px; width:100%; z-index:9669;  } 
+#menu a, #menu a:link, #menu a:visited, #menu a:active { color: rgb(153,153,153); }
+#menu a:hover { color: white } 
+
+#menu input[type=image] { color:white }
 form { margin:0 }
 
-.node { cursor:pointer; padding:0 2% }
+.node { cursor:pointer; padding:1.618% 2% }
 .node-hover { cursor:pointer; background-color: #f9f8eb;}
-.node-full { margin-left:0!important; }
 
+.node-full { margin-left:0!important; }
+.node-short { max-height: 300px; overflow:hidden;}
+
+.node-short img, .node-full img { max-width: 100% }
 .node .score-form { opacity:0 }
 .node .label { opacity:0 }
 .node-hover .score-form { opacity:1 }
 .node-hover .label { opacity:1 }
 
-.node-actions { text-align:right  }
-.node-actions a { font-size:10px }
+.node-actions { }
+.node-actions a { font-size:10px; line-height:20px; }
 a.label { color: white!important }
 
 .node-score { font-size:20px }

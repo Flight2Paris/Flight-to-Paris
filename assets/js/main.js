@@ -80,7 +80,7 @@ $(document).ready(function(){
 
 		} else {
 			// Show login form
-			$('.dropdown-toggle').parent().addClass('open');
+			$('#menu-btn').click();
 		}
 	}
 
@@ -115,11 +115,11 @@ $(document).ready(function(){
 			h = 0;
 		}
 
-		if ( l < 60 ) {
+		if ( l < 30 ) {
 			newh = 84;
-		} else if ( l < 120 ) {
+		} else if ( l < 60 ) {
 			newh = 150;
-		} else if ( l < 240 ) {
+		} else if ( l < 120 ) {
 			newh = 280;
 		} else {
 			newh = 560
@@ -131,6 +131,12 @@ $(document).ready(function(){
 			target.animate( {'height':newh}, 300);
 		}
 	}
+	
+	var render_preview = function ( markdown ) {
+		$.post( '/preview', {"markdown": markdown}, function(data){
+			$('#preview').html(data);
+		});
+	}
 
 	$('#post-content').focus(function(event){ 
 		postanimate($(event.target).data('height',0));
@@ -139,11 +145,15 @@ $(document).ready(function(){
 		$(event.target).animate( {'height':'28px'},300 ); 
 	});
 	$('#post-content').keyup(function(event){
-		if ( new Date().getTime() > lastanimate + 500 ) {
-			lastanimate = new Date().getTime();
+		d = new Date();
+		if ( d.getTime() > lastanimate + 800 ) {
+			lastanimate = d.getTime();
 			postanimate($(event.target));
+			render_preview($(event.target).val());
 		}
 	});
+
+
 
 	// Reload captcha
 	var captcha = $('#captcha');

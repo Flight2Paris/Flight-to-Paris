@@ -164,5 +164,14 @@ class controller_node {
 		return ($query && mb_strlen($query) > 2);
 	}
 
+	public function preview() {
+		$view = Flight::View();
+
+		$markdown = Flight::request()->data['markdown'];
+
+		$view->set('markdown',$markdown);
+	
+		Flight::render('node_preview_ajax',null,null);
+	}
 
 }

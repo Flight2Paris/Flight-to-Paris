@@ -4,8 +4,8 @@ session_start();
 
 if ( strtolower($_SERVER['REQUEST_METHOD']) == 'get' ) {
 	
-	$c_width = 580;
-	$c_height = 200;
+	$c_width = 370;
+	$c_height = 140;
 
 	// Load backgrounds
 	$files = array();
@@ -55,8 +55,8 @@ if ( strtolower($_SERVER['REQUEST_METHOD']) == 'get' ) {
 
 	$mark_x = rand(0,$c_width-imagesx($mark));
 	$mark_y = rand(0,$c_height-imagesy($mark));
-	$mark_w = imagesx($mark)+rand(-20,10);
-	$mark_h = imagesy($mark)+rand(-20,10);
+	$mark_w = imagesx($mark)+rand(-25,0);
+	$mark_h = imagesy($mark)+rand(-25,0);
 	$_SESSION['captcha']['x'] = $mark_x + $mark_w/2;
 	$_SESSION['captcha']['y'] = $mark_y + $mark_h/2;
 
