@@ -25,9 +25,9 @@ public static function playa_url($url, $w = 680, $h = NULL) {
 	}
 
 	// feeds
-	if ( preg_match('/.*\.(rss)$/',$url)) {
+/*	if ( preg_match('/.*\.(rss)$/',$url)) {
 		return ' <a title="Seguir" href="http://'.DOMAIN.'/u/follow/'.htmlspecialchars(urlencode($url)).'">'.htmlspecialchars($url).' <img src="/images/rss.png" alt="Seguir" /></a> ';
-	}
+	}*/
 
 	// youtube
 	if ( strtolower(str_ireplace('www.', '', parse_url($url, PHP_URL_HOST))) == 'youtube.com' ) {
