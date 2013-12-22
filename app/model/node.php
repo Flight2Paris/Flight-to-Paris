@@ -29,20 +29,19 @@ class model_node {
 
 	}
 
-	public static function search($query=null,$before=0,$after=0,$skip=0, $cant = null) {
+	public static function search($query=null,$before=0,$after=0,$skip=0, $count = null) {
 		$before = (int)$before;
 		$after = (int)$after;
 		$skip = abs((int)$skip);
 		$query = trim($query);
-        $cant = (int) $cant;
+        $count = (int) $count;
 
-        $cant = $cant ? $cant : PAGESIZE;
-
-        if ($cant > MAX_PAGESIZE) $cant = MAX_PAGESIZE;
+        $count = $count ? $count : PAGESIZE;
+        if ($count > MAX_PAGESIZE) $ount = MAX_PAGESIZE;
 
         $cache = new HybridCache(__METHOD__,func_get_args());
         
-        $res = $cache->getCacheOr(function ($cache) use ($before, $after, $skip, $query, $cant) {
+        $res = $cache->getCacheOr(function ($cache) use ($before, $after, $skip, $query, $count) {
 
             $q = 'SELECT node.uri FROM node JOIN score ON (score.uri = node.uri) WHERE 1';
 
@@ -58,7 +57,7 @@ class model_node {
             }
 
             $q .= ' ORDER BY UNIX_TIMESTAMP(node.created) + LOG(score.score) * 60 * 60 * 24 DESC';
-            $q .= ' LIMIT '.$skip.','.$cant;
+            $q .= ' LIMIT '.$skip.','.$count;
 
             $nodes = ORM::for_table('node')->raw_query($q)->find_many();
             $res = array();
