@@ -23,13 +23,19 @@ class controller_file {
 			$filename = self::getFreeFilename($filename);
 
 			if ( move_uploaded_file( $_FILES['userfile']['tmp_name'], UPLOAD_PATH.'/'.$filename ) ) {
-
+				// Decrease user points
 				$user = auth::getUser();
 				$user->score -= ($_FILES['userfile']['size'] / (1024 * KB_PER_POINT));
 				$user->save();
 
-				Flight::flash('message',array('type'=>'success','text'=>'Archivo subido en '.View::makeUri('/f/'.urlencode($filename)).'.'));
-				Flight::flash('post',"# \n ". View::makeUri('/f/'.urlencode($filename)) );
+				Flight::flash('message',array('type'=>'success','text'=>'Archivo subido en '.View::makeUri('/f/'.urlencode($filename))));
+				Flight::flash('uploaded-file', View::makeUri('/f/'.urlencode($filename)));
+				Flight::flash('post', "# $filename\n\n ".View::makeUri('/f/'.urlencode($filename)));
+
+				// If succesful redirect to the right place
+				$redirect = trim(Flight::request()->data['redirect']) ? trim(Flight::request()->data['redirect']) : '/';
+				Flight::redirect($redirect);
+
 			} else {
 				Flight::flash('message',array('type'=>'error','text'=>'EEERRRRRR!!!!!.'));
 			}

@@ -46,7 +46,11 @@ ORM::configure('password', '');
 define ( 'PAGESIZE', 30 );
 define ( 'MAX_PAGESIZE', 100 );
 
+## FILES
 
+define( 'MAX_UPLOAD_SIZE', 1024 * 1024 * 8 );
+define( 'KB_PER_POINT', 10 );
+define( 'UPLOAD_PATH', realpath(dirname(__FILE__).'/files') );
 
 ## LINK TYPES DON'T CHANGE IF YOU WANT TO SINC RELATIONS ##
 

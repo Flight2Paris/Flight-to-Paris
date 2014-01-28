@@ -138,13 +138,13 @@ $(document).ready(function(){
 		});
 	}
 
-	$('#post-content').focus(function(event){ 
+	$('.post-content').focus(function(event){ 
 		postanimate($(event.target).data('height',0));
 	});
-	$('#post-content').blur(function(event){ 
-		$(event.target).animate( {'height':'28px'},300 ); 
+	$('.post-content').blur(function(event){ 
+		$(event.target).animate( {'height':'32px'},300 ); 
 	});
-	$('#post-content').keyup(function(event){
+	$('.post-content').keyup(function(event){
 		d = new Date();
 		if ( d.getTime() > lastanimate + 800 ) {
 			lastanimate = d.getTime();

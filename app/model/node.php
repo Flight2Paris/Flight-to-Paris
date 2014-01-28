@@ -127,6 +127,18 @@ class node extends Model {
 		}
 		return $score;
 	}
+
+	public function increaseScore($amount = 1 ) {
+			$score = $this->getScore();
+			$score->score += $amount;
+			$score->save();
+	}
+
+	public function decreaseScore($amount = 1 ) {
+			$score = $this->getScore();
+			$score->score -= $amount;
+			$score->save();
+	}
 }
 
 /* 

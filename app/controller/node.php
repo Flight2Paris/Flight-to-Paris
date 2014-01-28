@@ -57,6 +57,7 @@ class controller_node {
 		$data = Flight::request()->data;
 		$uri = $data['uri'];
 
+		// If the user isn't logged in cant publish
 		if ( ! auth::isLoggedIn() ) {
 			Flight::redirect(View::makeUri('/'));
 			return;
@@ -68,6 +69,7 @@ class controller_node {
 			return;
 		}
 
+		// If we can use this uri
 		if ( !$uri || !model_node::getByUri($uri) ) {
 
 			$node = model_node::getByContent($data['content']);
@@ -77,7 +79,6 @@ class controller_node {
 				$node = Model::factory('node')->create();
 
 				if ( $uri ) $node->uri = $uri;
-
 
 				$node->content = $data['content'];
 				$node->save();
@@ -90,12 +91,8 @@ class controller_node {
 
 				self::saveAuthorship($node,$author->uri);
 
-				// Update author score;
-				$author->score -= 1;
-				$author->save();
-				$score = $node->getScore();
-				$score->score += 1;
-				$score->save();
+				$author->decreaseScore();
+				$node->increaseScore();
 
 				if ( $data['type'] == REPLY_URI ) {
 					self::saveResponse($node, $data['to']);
@@ -118,7 +115,6 @@ class controller_node {
 
 	private function saveResponse($node,$toURI) {
 		$response = Model::factory('link')->create();
-		// Don't change
 		$response->type = REPLY_URI;
 		$response->to = $toURI;
 		$response->from = $node->uri;
@@ -127,7 +123,6 @@ class controller_node {
 
 	private function saveAuthorship($node,$authorURI) {
 		$link = Model::factory('link')->create();
-		// Don't change
 		$link->type = AUTHOR_URI;
 		$link->to = $node->uri;
 		$link->from = $authorURI;

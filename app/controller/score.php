@@ -11,8 +11,8 @@ function fibonacci($n){
   return $b;
 }
 
-define( 'FIBOLO', 7 );
-define( 'FIBOHI', 17 );
+define( 'FIBOLO', 5 );
+define( 'FIBOHI', 13 );
 
 class controller_score {
 
@@ -23,7 +23,7 @@ class controller_score {
 
 			$user = auth::getUser();
 			$view->set('user',$user);
-			if ( strtotime($user->win_last) < time()-60*60*12 ) {
+			if ( strtotime($user->win_last) < time()-60*60*18 ) {
 				$user->fibo = FIBOLO;
 				$user->save();
 			}

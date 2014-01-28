@@ -72,4 +72,14 @@ class user extends Model {
 	public function getNodes() {
 		return model_node::getByAuthor($this);
 	}
+
+	public function decreaseScore( $amount = 1 ) {
+			$this->score -= $amount;
+			$this->save();
+	}
+
+	public function increaseScore( $amount = 1 ) {
+			$this->score += $amount;
+			$this->save();
+	}
 }

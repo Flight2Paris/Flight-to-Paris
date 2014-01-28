@@ -84,12 +84,10 @@
 			<div class="col-md-4">
 			</div>
 			<div class="col-md-4">
-					<ul>
-						<li><a href="<?= View::makeUri('/auth/changepassword') ?>"><i class="icon-lock"></i> Cambiar contraseña</a></li>
-						<li><a href="<?= View::makeUri('/auth/pubkey') ?>"><i class="icon-key"></i> Agregar llave</a></li>
-						<li class="divider"></li>
-						<li><a href="<?= View::makeUri('/auth/logout') ?>"><i class="icon-signout"></i> Salir</a></li>
-					</ul>
+					<h3>Autenticación</h3>
+					<a href="<?= View::makeUri('/auth/changepassword') ?>"><i class="icon-lock"></i> Cambiar contraseña</a><br />
+					<a href="<?= View::makeUri('/auth/pubkey') ?>"><i class="icon-key"></i> Agregar llave</a><br />
+					<a href="<?= View::makeUri('/auth/logout') ?>"><i class="icon-signout"></i> Salir</a><br />
 			</div>
 		<?php else : ?>
 			<form action="<?= View::makeUri('/u/new') ?>" method="post" id="register">
@@ -146,7 +144,8 @@
 			<?php endforeach ?>
 			<?php Flight::clearFlash('message') ?>
 
-			<p><strong><i class="icon-bitcoin"></i>  1C4GqbGnQ6aVUJvPBfYVmiWhNaJqRH83yU</strong></p>
+<?php 	//		<p><strong><i class="icon-bitcoin"></i>  1C4GqbGnQ6aVUJvPBfYVmiWhNaJqRH83yU</strong></p>
+?>
 
 			<?= $content ?>
 		</content>
