@@ -26,7 +26,7 @@
 	<div class="input-group">
 		<input type="text" name="promote" value="1000" class="form-control" style="max-width:150px" />
 		<span class="input-group-btn">
-			<button class="btn btn-default submit" type="button"><i class="icon-plus-sign"></i></button>
+			<button class="btn btn-default submit promote" type="button"><i class="icon-plus-sign"></i></button>
 		</span>
 	</div>
 	</div>

@@ -90,7 +90,11 @@ $(document).ready(function(){
 		e.stopPropagation();
 		
 		node = $(this).closest('.node');
-		amount = $(this).val();
+		if ( $(this).hasClass('btn') ) {
+			amount = $(this).parent().parent().children('input').val();
+		} else {
+			amount = $(this).val();
+		}
 
 		promote(node,amount);
 	});
