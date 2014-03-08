@@ -90,10 +90,9 @@ $(document).ready(function(){
 		e.stopPropagation();
 		
 		node = $(this).closest('.node');
-		if ( $(this).hasClass('btn') ) {
+		amount = $(this).val();
+		if ( typeof(amount) == 'undefined' || amount < 1 ) {
 			amount = $(this).parent().parent().children('input').val();
-		} else {
-			amount = $(this).val();
 		}
 
 		promote(node,amount);
