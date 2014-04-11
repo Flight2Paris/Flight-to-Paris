@@ -17,9 +17,8 @@ class controller_cron {
 				if ( ! $node ) {
 					$node = Model::factory('node')->create();
 					$node->uri = $item->get_permalink();
-					$node->content = '# '.$item->get_title()."\n\n".
-						$item->get_permalink()."\n\n"-
-						$item->get_description();
+					$node->content = '# '.$item->get_title()."\n\n".$item->get_permalink()."\n\n".$item->get_description();
+					$node->save();
 				}
 			}
 		}

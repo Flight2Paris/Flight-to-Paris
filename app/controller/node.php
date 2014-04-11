@@ -39,14 +39,8 @@ class controller_node {
             'title' => "Node feed (RSS)",
             'uri'   => $node->uri . ".rss"
         ), (object) Array(
-            'title' => "Author feed (RSS)",
-            'uri'   => $node->getAuthor()->uri . "/feed/rss"
-        ), (object) Array(
             'title' => "Node feed (ATOM)",
             'uri'   => $node->uri . ".atom"    
-        ), (object) Array(
-            'title' => "Author feed (ATOM)",
-            'uri'   => $node->getAuthor()->uri . "/feed/atom"
         )));
 
 		Flight::render($template, null, $layout);
