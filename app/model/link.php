@@ -4,24 +4,14 @@ require_once('node.php');
 
 class model_link {
 
-	public static function getByUri( $uri ) {
-		$node = Model::factory('node')->where('uri', $uri)->find_one();
-		return $node;
-	}
-
-	public static function getByContent( $content ) {
-		$node = Model::factory('node')->where('content',$content)->find_one();
-		return $node;
-	}
-
 	public static function getLatest( ) {
-		$nodes = Model::factory('node')->order_by_desc('created')->limit(50)->find_many();
-		return $nodes;
+		$links = Model::factory('link')->order_by_desc('created')->limit(50)->find_many();
+		return $links;
 	}
 
-	public static function search($query) { 
-		$nodes = Model::factory('node')->where_like('content','%'.$query.'%')->order_by_desc('created')->limit(50)->find_many();
-		return $nodes;
+	public static function getDistinctByType($type) {
+		$links = ORM::for_table('link')->distinct()->select('to')->where('type',$type)->find_many();
+		return $links;
 	}
 }
 

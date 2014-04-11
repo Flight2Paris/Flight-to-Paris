@@ -18,6 +18,10 @@ php_value max_execution_time 420
 php_value memory_limit 20M
 LimitRequestBody 20000000
 
+php_flag display_errors off
+php_flag display_startup_errors off
+php_value error_reporting -1
+
 # If file exists in the files dir show it
 RewriteRule ^f/(.*)$ files/$1 [QSA,L] 
                                                                                                                                                                  

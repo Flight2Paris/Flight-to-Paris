@@ -30,18 +30,19 @@ textarea.post-content.form-control { height:32px; margin-top:13px; }
 #score { font-size: 20px; }
 
 @media (min-width: 992px) { 
-		#menu { position:fixed;  }
+		.submenu { position:fixed;  }
 }
 
 @media (max-width: 991px) {
-		#menu { position:absolute; }
+		.submenu { position:absolute; }
 }
 
-#menu { background-color: #343434; margin-top:52px; color:white; padding: 4px; width:100%; z-index:9669;  } 
-#menu a, #menu a:link, #menu a:visited, #menu a:active { color: rgb(153,153,153); }
-#menu a:hover { color: white } 
+.submenu { background-color: #343434; margin-top:52px; color:white; padding: 4px; width:100%; z-index:9669;  } 
+.submenu a, .submenu a:link, .submenu a:visited, .submenu a:active { color: rgb(153,153,153); }
+.submenu a:hover { color: white } 
+.submenu input[type=image] { color:white }
+.submenu .form-group { margin-top: 6px }
 
-#menu input[type=image] { color:white }
 form { margin:0 }
 
 .node { cursor:pointer; padding:1.618% 2% }

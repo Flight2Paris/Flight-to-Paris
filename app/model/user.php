@@ -69,8 +69,8 @@ class user extends Model {
 		return Model::factory('auth')->where('user_id',$this->id)->find_one();
 	}
 
-	public function getNodes() {
-		return model_node::getByAuthor($this);
+	public function getNodes( $limit = 30 ) {
+		return model_node::getByAuthor($this, $limit);
 	}
 
 	public function decreaseScore( $amount = 1 ) {
@@ -81,5 +81,13 @@ class user extends Model {
 	public function increaseScore( $amount = 1 ) {
 			$this->score += $amount;
 			$this->save();
+	}
+
+	public function follow($uri) {
+		$link = Model::factory('link')->create();
+		$link->type = FOLLOW_URI;
+		$link->to = $uri;
+		$link->from = $this->uri;
+		$link->save();
 	}
 }

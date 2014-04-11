@@ -14,7 +14,7 @@
 <?php endif ?>
 
     <link rel="alternate" type="application/rss+xml"  href="<?= View::makeUri('/all.rss') ?>" title="Nodes Feed (RSS)">
-    <link rel="alternate" type="application/rss+xml"  href="<?= View::makeUri('/all.atom') ?>" title="Nodes Feed (ATOM)">
+    <link rel="alternate" type="application/atom+xml"  href="<?= View::makeUri('/all.atom') ?>" title="Nodes Feed (ATOM)">
 <?php if (isset($feeds)) foreach ($feeds as $feed) : ?>
     <link rel="alternate" type="application/rss+xml"  href="<?=$feed->uri?>"  title="<?=htmlspecialchars($feed->title)?>">
 <?php endforeach; ?>
@@ -46,8 +46,9 @@
 
 		<ul class="nav navbar-nav navbar-right hidden-xs">
 		<?php if ( auth::isLoggedIn() ) : ?>
-			<li><a href="<?= View::makeUri('/score/exchange') ?>"><i class="icon-exchange"></i> exchange</a></li>
-			<li><a href="<?= View::makeUri('/f/') ?>"><i class="icon-upload-alt"></i> upload</a></li>
+			<li><a href="#" data-toggle="collapse" data-target="#exchange-menu"><i class="icon-exchange"></i> exchange</a></li>
+			<li><a href="#" data-toggle="collapse" data-target="#follow-menu"><i class="icon-plus-sign"></i> follow</a></li>
+			<li><a href="#" data-toggle="collapse" data-target="#upload-menu"><i class="icon-upload-alt"></i> upload</a></li>
 			<li><a href="<?= View::makeUri('/score') ?>"><i class="icon-star"></i> <?= score::format(auth::getUser()->score) ?></a></li>
 			<li>
 				<div class="btn-group">
@@ -67,7 +68,7 @@
 
 </div>
 
-<div class="collapse" id="menu">
+<div class="collapse submenu" id="menu">
 	<div class="container">
 		<div class="row-fluid visible-xs">
 		<form action="<?= View::makeUri('/') ?>" action="post" id="search" class="form-search form-inline" role="search">
@@ -77,57 +78,38 @@
 			<button type="submit" class="btn btn-default"><i class="icon-search"></i> Buscar</button>
 		</form>
 		</div>
-		<div class="row-fluid">
-		<?php if ( auth::isLoggedIn() ) : ?>
-			<div class="col-md-4">
-			</div>
-			<div class="col-md-4">
-			</div>
-			<div class="col-md-4">
-					<h3>Autenticación</h3>
-					<a href="<?= View::makeUri('/auth/changepassword') ?>"><i class="icon-lock"></i> Cambiar contraseña</a><br />
-					<a href="<?= View::makeUri('/auth/pubkey') ?>"><i class="icon-key"></i> Agregar llave</a><br />
-					<a href="<?= View::makeUri('/auth/logout') ?>"><i class="icon-signout"></i> Salir</a><br />
-			</div>
-		<?php else : ?>
-			<form action="<?= View::makeUri('/u/new') ?>" method="post" id="register">
-			<div class="col-md-4">
-				<h2>Registrate</h2>
-					<div class="form-group">
-						<label for="input-username"><i class="icon-user"></i> Usuario</label>
-						<input id="input-username" class="form-control nosubmit" type="text" name="username" placeholder="Usuario" />
-					</div>
-					<div class="form-group">
-						<label for="input-password"><i class="icon-lock"></i> Contraseña</label>
-						<input id="input-password" class="form-control nosubmit" type="password" name="password" placeholder="*****************" />
-					</div>
-					<div class="form-group">
-						<label for="input-password-repeat"><i class="icon-lock"></i> Repeti la contraseña</label>
-						<input id="input-password-repeat" class="form-control nosubmit" type="password" name="password-repeat" placeholder="*****************" />
-					</div>
-			</div>
-			<div class="col-md-4">
-				<?= View::markdown('Acepto que todo sera compartido bajo licencia [CC-BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) y no puede ser eliminado. **Los bots aburridos seran perseguidos**. All your base are belong to us.') ?>
-				<?php include('captcha.php') ?>
-			</div>
-			</form>
-			<div class="col-md-4">
-				<h2>Entrá</h2>
-					<form action="<?= View::makeUri('/auth/login') ?>" method="post">
-					<div class="form-group">
-						<label for="input-username"><i class="icon-user"></i> Usuario</label>
-						<input id="input-username" class="form-control" type="text" name="username" placeholder="Usuario" />
-					</div>
-					<div class="form-group">
-						<label for="input-password"><i class="icon-lock"></i> Contraseña</label>
-						<input class="form-control" type="password" name="password" placeholder="*****************" />
-					</div>
-					<button type="submit" class="btn btn-default">("\(^o^)/")</button>
-					</form>
-			</div>
-		<?php endif ?>
-		</div>
+		<?php 
+		if ( auth::isLoggedIn() ) { 
+			include 'user_submenu.php';
+		} else {
+			include 'public_submenu.php';
+		}
+		?>
     </div>
+</div>
+
+<div class="collapse submenu" id="follow-menu">
+	<div class="container">
+		<div class="row-fluid">
+		<?php include 'user_follow.php' ?>
+		</div>
+	</div>
+</div>
+
+<div class="collapse submenu" id="exchange-menu">
+	<div class="container">
+		<div class="row-fluid">
+		<?php include 'score_exchange.php' ?>
+		</div>
+	</div>
+</div>
+
+<div class="collapse submenu" id="upload-menu">
+	<div class="container">
+		<div class="row-fluid">
+		<?php include 'fileform.php' ?>
+		</div>
+	</div>
 </div>
 
 </header>

@@ -72,8 +72,8 @@ class model_node {
 
 	}
 
-	public static function getByAuthor($author) {
-		$q = "SELECT `to` FROM `link` WHERE `type` = '".AUTHOR_URI."' AND `from` = '".$author->uri."' ORDER BY created DESC";
+	public static function getByAuthor($author, $limit = 30) {
+		$q = "SELECT `to` FROM `link` WHERE `type` = '".AUTHOR_URI."' AND `from` = '".$author->uri."' ORDER BY created DESC LIMIT $limit";
 		$nodes = ORM::for_table('node')->raw_query($q)->find_many();	
 		$res = array();
         foreach ( $nodes as $val ) {

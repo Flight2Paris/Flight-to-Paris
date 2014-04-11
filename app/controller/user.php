@@ -92,15 +92,22 @@ class controller_user {
 		Flight::render('pubkey', null, 'layout');
 	}
 
-	public function follow($url) {
-		$url = urldecode($url);
-		$view = Flight::view();
-
-		$user = auth::getUser();
-
-		$view->set('user',$user);
-		$view->set('url',$url);
-
+	public function follow_page() {
 		Flight::render('user_follow', null, 'layout');
+	}
+
+	public function follow() {
+		$data = Flight::request()->data;
+		$url = $data['url'];
+		auth::getUser()->follow($url);
+		Flight::redirect('/');
+	}
+
+	public function new_avatar() {
+		Flight::render('user_avatar', null, 'layout');
+	}
+
+	public function save_avatar() {
+		Flight::redirect('/');
 	}
 }
