@@ -3,16 +3,16 @@
 class controller_node {
 
 	// Show a single node
-	public function get($uri) {
+	public function get($path) {
 		$view = Flight::View();
 		$layout = 'layout';
 
 		// Get the requested format and URI
-		$format = Router::getFormat($uri);
+		$format = Router::getFormat($path);
 		$format = trim($format) ? trim($format) : 'html';
 
-		$uri = Router::removeFormat($uri);
-		$uri = View::makeUri($uri);
+		$path = Router::removeFormat($path);
+		$uri = View::makeUri($path);
 		$node = model_node::getByUri($uri);
 
 		if ( $node ) {
@@ -206,6 +206,15 @@ class controller_node {
 		$view->set('markdown',$markdown);
 	
 		Flight::render('node_preview_ajax',null,null);
+	}
+
+	public function getbyuri() {
+		$view = Flight::View();
+		$data = Flight::request()->data;
+		$uri = $data['uri'];
+		$node = model_node::getByUri($uri);
+		$view->set('node',$node);
+		Flight::render('node_get_ajax',null,null);
 	}
 
 }

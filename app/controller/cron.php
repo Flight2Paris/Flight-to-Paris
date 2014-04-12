@@ -35,6 +35,7 @@ class controller_cron {
 
 	public static function parseFeed ( $url ) {
 			$feed = new SimplePie();
+			$url = self::processFeedUrl($url);
 			$feed->set_feed_url($url);
 			//$feed->set_item_class();
 			$feed->enable_cache(true);
@@ -42,5 +43,10 @@ class controller_cron {
 			$feed->set_cache_location('cache');
 			$feed->init();
 			return $feed;
+	}
+
+
+	public static function processFeedUrl($url) {
+		return $url;
 	}
 }

@@ -61,8 +61,11 @@ Flight::route('GET /f/$', array('controller_file','new_file') );
 Flight::route('POST /f/$', array('controller_file','upload') );
 #Flight::route('GET /f/@id:[a-z0-9_-]+(/.*)?$', array('controller_file','get') );
 
+Flight::route('POST /getbyuri(\.('. implode('|',$allowed_formats) .'))?/?',array('controller_node','getbyuri'));
+
 Flight::route('GET /@id:[a-z0-9_-]+'.
 			'(\.('. implode('|',$allowed_formats) .'))?'.
 			'/?$',array('controller_node','get'));
+
 
 @Flight::start();

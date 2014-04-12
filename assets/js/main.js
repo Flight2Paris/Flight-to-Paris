@@ -18,13 +18,17 @@ $(document).ready(function(){
 			} else {
 				node_link = $(this).find('a.uri');
 				uri = node_link.attr('href');
-				if ( node_link[0].hostname == domain ) {
-					$(this).find('.node-short').after('<div class="node-full span12"><img src="/assets/img/loading.gif" alt="Cargando..." /></div>');
-					$(this).find('.node-short').hide();
-					$(this).find('.node-full').load(uri);
-				} else {
-					window.location.href=uri;
-				}
+				$(this).find('.node-short').after('<div class="node-full span12"><img src="/assets/img/loading.gif" alt="Cargando..." /></div>');
+				$(this).find('.node-short').hide();
+				$.ajax({
+					type: 'POST',
+					url: '/getbyuri',
+					data: {'uri': uri }, 
+					context: this,
+					success: function(data){
+						$(this).find('.node-full').html(data);
+					}
+				});
 			}
 		}
 	});
