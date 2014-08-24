@@ -17,11 +17,26 @@ class controller_cron {
 				if ( ! $node ) {
 					$node = Model::factory('node')->create();
 					$node->uri = $item->get_permalink();
-					$node->content = '# '.$item->get_title()."\n\n".$item->get_permalink()."\n\n".$item->get_description();
+					$node->content = '# '.$item->get_title()."\n\n".
+						$item->get_permalink()."\n\n".
+						self::gimmeMarkdown($item->get_description());
 					$node->save();
 				}
 			}
 		}
+	}
+
+	public static function gimmeMarkdown($html) {
+		$text = '';
+		$randomfile = self::putThisInARandomFile($html);
+		exec(HTML2TEXT_PATH.'/html2text.py -b 0 '.$randomfile, $text);
+		return implode("\n",$text);
+	}
+
+	public static function putThisInARandomFile( $text ) {
+		$name = '/tmp/'.sha1(microtime());
+		file_put_contents($name,$text);
+		return $name;
 	}
 
 	public static function getFeeds() {
@@ -49,4 +64,6 @@ class controller_cron {
 	public static function processFeedUrl($url) {
 		return $url;
 	}
+
+
 }

@@ -41,9 +41,9 @@ CREATE TABLE IF NOT EXISTS `auth` (
 
 CREATE TABLE IF NOT EXISTS `link` (
   `id` int(15) unsigned NOT NULL AUTO_INCREMENT,
-  `from` varchar(255) COLLATE utf8_bin NOT NULL,
-  `to` varchar(255) COLLATE utf8_bin NOT NULL,
-  `type` varchar(255) COLLATE utf8_bin NOT NULL,
+  `from` varchar(511) COLLATE utf8_bin NOT NULL,
+  `to` varchar(511) COLLATE utf8_bin NOT NULL,
+  `type` varchar(511) COLLATE utf8_bin NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `link` (
 
 CREATE TABLE IF NOT EXISTS `node` (
   `id` int(15) unsigned NOT NULL AUTO_INCREMENT,
-  `uri` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `uri` varchar(511) COLLATE utf8_bin DEFAULT NULL,
   `content` longtext CHARACTER SET utf8,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `node` (
 
 CREATE TABLE IF NOT EXISTS `score` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `uri` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `uri` varchar(511) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `score` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `score` (
 
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(12) unsigned NOT NULL AUTO_INCREMENT,
-  `uri` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `uri` varchar(511) COLLATE utf8_bin DEFAULT NULL,
   `username` varchar(64) COLLATE utf8_bin NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `score` decimal(20,4) unsigned NOT NULL,
