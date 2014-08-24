@@ -18,7 +18,7 @@ $(document).ready(function(){
 			} else {
 				node_link = $(this).find('a.uri');
 				uri = node_link.attr('href');
-				$(this).find('.node-short').after('<div class="node-full span12"><img src="/assets/img/loading.gif" alt="Cargando..." /></div>');
+				$(this).find('.node-short').after('<div class="node-full col-md-8 col-sm-10"><img src="/assets/img/loading.gif" alt="Cargando..." /></div>');
 				$(this).find('.node-short').hide();
 				$.ajax({
 					type: 'POST',

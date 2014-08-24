@@ -115,7 +115,7 @@
 </header>
 
 
-	<div class="container">
+	<div class="container-fluid">
 		
 		<content>
 			<?php foreach ( Flight::flash('message') as $message ) : ?>

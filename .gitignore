@@ -6,3 +6,4 @@ cache/*
 !cache/readme.md
 files/*
 !files/readme.md
+lib/captcha/.images/*

@@ -37,7 +37,7 @@ textarea.post-content.form-control { height:32px; margin-top:13px; }
 		.submenu { position:absolute; }
 }
 
-.submenu { background-color: #343434; margin-top:52px; color:white; padding: 4px; width:100%; z-index:9669;  } 
+.submenu { background-color: #343434; margin-top:-2px; color:white; padding: 4px; width:100%; z-index:9669;  } 
 .submenu a, .submenu a:link, .submenu a:visited, .submenu a:active { color: rgb(153,153,153); }
 .submenu a:hover { color: white } 
 .submenu input[type=image] { color:white }

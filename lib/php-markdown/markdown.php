@@ -646,7 +646,7 @@ class Markdown_Parser {
 		# Make links out of things like `<http://example.com/>`
 		# Must come after doAnchors, because you can use < and >
 		# delimiters in inline links like [this](<url>).
-		"doAutoLinks"         =>  30,
+		#"doAutoLinks"         =>  30,
 		"encodeAmpsAndAngles" =>  40,
 
 		"doItalicsAndBold"    =>  50,

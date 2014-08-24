@@ -23,7 +23,7 @@
 			</form>
 			<div class="col-md-4">
 				<h2>Entrá</h2>
-					<form action="<?= View::makeUri('/auth/login') ?>" method="post">
+					<form action="<?= View::makeUri('/auth/login') ?>" method="post" id="login-form">
 					<div class="form-group">
 						<label for="input-username"><i class="icon-user"></i> Usuario</label>
 						<input id="input-username" class="form-control" type="text" name="username" placeholder="Usuario" />
