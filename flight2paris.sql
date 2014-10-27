@@ -73,7 +73,8 @@ CREATE TABLE IF NOT EXISTS `score` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `uri` varchar(511) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `score` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `uri` (`uri`(333))
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

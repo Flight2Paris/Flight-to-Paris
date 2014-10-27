@@ -11,9 +11,6 @@
  Flight to Paris - Aza // http://esfriki.com GPLv3
 
 */
-/*error_reporting(0);
-ini_set('display_errors', 0);
-*/
 include 'config.php';
 mb_internal_encoding('UTF-8');
 
@@ -69,3 +66,4 @@ Flight::route('GET /@id:[a-z0-9_-]+'.
 
 
 @Flight::start();
+
