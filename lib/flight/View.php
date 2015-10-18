@@ -116,7 +116,7 @@ class View {
      * @return string Escaped string
      */
     public function e($str) {
-        echo htmlentities($str, ENT_QUOTES, "UTF-8");
+        return htmlentities($str, ENT_QUOTES, "UTF-8");
     }
 
     /**

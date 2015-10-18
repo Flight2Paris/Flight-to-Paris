@@ -17,6 +17,8 @@ mb_internal_encoding('UTF-8');
 require APP_PATH.'/model/auth.php';
 $auth = new auth;
 
+require APP_PATH.'/helpers.php';
+
 if (php_sapi_name() == 'cli-server') {
     if (preg_match('/\.(?:png|jpg|jpeg|gif|css|js)$/i', $_SERVER["REQUEST_URI"])) {
         return false; 

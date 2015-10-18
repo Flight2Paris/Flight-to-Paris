@@ -126,9 +126,6 @@
 			<?php endforeach ?>
 			<?php Flight::clearFlash('message') ?>
 
-<?php 	//		<p><strong><i class="icon-bitcoin"></i>  1C4GqbGnQ6aVUJvPBfYVmiWhNaJqRH83yU</strong></p>
-?>
-
 			<?= $content ?>
 		</content>
 		<span class="clear"></span>

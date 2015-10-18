@@ -13,7 +13,7 @@ public static function playa_url($url, $w = 680, $h = NULL) {
 	$h = is_null($h) ? (int)$w / 1.618 : $h;
 
 	// image files
-	if ( preg_match('/.*\.(jpg|gif|png|jpeg|svg|bmp)$/',$url)) {
+	if ( preg_match('/.*\.(jpg|jpe|gif|png|jpeg|svg|bmp)$/',$url)) {
 		$url = htmlspecialchars($url);
 		return '<a href="'.$url.'" target="_blank"><img style="max-width:98%" src="'.$url.'" alt="'.$url.'" /></a>';
 	}

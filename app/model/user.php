@@ -90,4 +90,8 @@ class user extends Model {
 		$link->from = $this->uri;
 		$link->save();
 	}
+
+	public function following() {
+		return model_link::getDistinctByTypeAndFrom(FOLLOW_URI, $this->uri);
+	}
 }

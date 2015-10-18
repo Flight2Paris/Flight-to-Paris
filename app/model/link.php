@@ -9,6 +9,11 @@ class model_link {
 		return $links;
 	}
 
+	public static function getDistinctByTypeAndFrom($type, $from) {
+		$links = ORM::for_table('link')->distinct()->select('to')->where('type',$type)->where('from',$from)->find_many();
+		return $links;
+	}
+
 	public static function getDistinctByType($type) {
 		$links = ORM::for_table('link')->distinct()->select('to')->where('type',$type)->find_many();
 		return $links;

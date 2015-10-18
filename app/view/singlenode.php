@@ -6,11 +6,11 @@
 		</div>
 
 		<?php if ( isset($open) && $open ) : ?>
-		<div class="col-md-8 col-sm-10 node-full">
+		<div class="col-sm-10 node-full">
 		<?= View::markdown($node->content) ?>
 		</div>
 		<?php else : ?>
-		<div class="col-md-8 col-sm-10 node-short">
+		<div class="col-sm-10 node-short">
 		<?php if ( mb_strlen($node->content) > 140 ) : ?>
 		<?= View::markdown(trim(mb_substr($node->content,0,140)).'...',false) ?>
 		<?php else : ?>
