@@ -17,7 +17,7 @@ class controller_cron {
 				if ( ! $node ) {
 					$node = Model::factory('node')->create();
 					$node->uri = $item->get_permalink();
-					$node->content = '# '.$item->get_title()."\n\n".
+					$node->content = '# '.self::gimmeMarkdown($item->get_title())."\n\n".
 						$item->get_permalink()."\n\n".
 						self::gimmeMarkdown($item->get_description());
 					$node->save();
