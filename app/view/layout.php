@@ -50,19 +50,6 @@
 			<li><a href="#" data-toggle="collapse" data-target="#follow-menu"><i class="icon-plus-sign"></i> follow</a></li>
 			<li><a href="#" data-toggle="collapse" data-target="#upload-menu"><i class="icon-upload-alt"></i> upload</a></li>
 			<li><a href="<?= View::makeUri('/score') ?>"><i class="icon-star"></i> <?= score::format(auth::getUser()->score) ?></a></li>
-			<li>
-				<div class="btn-group">
-					<a class="btn btn-success" href="<?= View::e(auth::getUser()->uri) ?>"><i class="icon-user"></i> <?= View::e(auth::getUser()->username) ?></a>
-					<a class="btn btn-success" id="menu-btn" data-toggle="collapse" data-target="#menu" href="#"><span class="icon-caret-down"></span></a>
-				</div>
-			</li>
-		<?php else : ?>
-			<li>
-				<div class="btn-group">
-					<a class="btn btn-danger" data-toggle="collapse" data-target="#menu" href="#"><i class="icon-signin"></i> Entrar</a>
-					<a class="btn btn-danger" id="menu-btn" data-toggle="collapse" data-target="#menu" href="#"><i class="icon-caret-down"></i></a>
-				</div>
-			</li>
 		<?php endif ?>
 		</ul>
 
@@ -78,13 +65,6 @@
 			<button type="submit" class="btn btn-default"><i class="icon-search"></i> Buscar</button>
 		</form>
 		</div>
-		<?php 
-		if ( auth::isLoggedIn() ) { 
-			include 'user_submenu.php';
-		} else {
-			include 'public_submenu.php';
-		}
-		?>
     </div>
 </div>
 
@@ -114,7 +94,6 @@
 
 </header>
 
-
 	<div class="container-fluid">
 		
 		<content>
@@ -126,7 +105,19 @@
 			<?php endforeach ?>
 			<?php Flight::clearFlash('message') ?>
 
+			<div class="col-md-3" id="sidebar">
+
+			<?php if (auth::isLoggedIn()) : 
+				require('user_sidebar.php');
+			else : 
+				require('public_sidebar.php'); 
+			endif ?>
+			</div>
+			<div class="col-md-9">
+
 			<?= $content ?>
+
+			</div>
 		</content>
 		<span class="clear"></span>
 	</div>
