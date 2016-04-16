@@ -14,15 +14,13 @@
 		<div class="btn-toolbar">
 			<div class="btn-group">
 				<input type="submit" name="promote" value="1" class="promote btn btn-default" />
-				<input type="submit" name="promote" value="2" class="promote btn btn-default" />
 				<input type="submit" name="promote" value="3" class="promote btn btn-default" />
-				<input type="submit" name="promote" value="5" class="promote btn btn-default" />
 				<input type="submit" name="promote" value="8" class="promote btn btn-default" />
-				<input type="submit" name="promote" value="13" class="promote btn btn-default" />
 				<input type="submit" name="promote" value="21" class="promote btn btn-default" />
-				<input type="submit" name="promote" value="34" class="promote btn btn-default" />
 				<input type="submit" name="promote" value="55" class="promote btn btn-default" />
-				<input type="submit" name="promote" value="89" class="promote btn btn-default" />
+				<input type="submit" name="promote" value="144" class="promote btn btn-default" />
+				<input type="submit" name="promote" value="377" class="promote btn btn-default" />
+				<input type="submit" name="promote" value="987" class="promote btn btn-default" />
 			</div>
 		</div>
 	</form>

@@ -19,7 +19,7 @@
 			$content = array_pop($post);
 		} 
 ?>
-		<textarea class="form-control post-content" name="content" placeholder="Compartí algo; ¡Es bueno!"><?= View::e($content) ?></textarea><br />
+		<textarea class="form-control post-content" name="content" placeholder="# Comparti algo "><?= View::e($content) ?></textarea><br />
 		<?php if ( $content ) : ?>
 			<script>
 			$(document).ready(function(){
