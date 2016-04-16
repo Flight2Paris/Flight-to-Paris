@@ -15,7 +15,7 @@ include 'config.php';
 mb_internal_encoding('UTF-8');
 
 require APP_PATH.'/model/auth.php';
-$auth = new auth;
+$auth = model_auth::getCurrent();
 
 require APP_PATH.'/helpers.php';
 

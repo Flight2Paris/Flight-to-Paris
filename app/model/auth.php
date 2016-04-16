@@ -8,7 +8,12 @@ class model_auth {
 	}
 
 	public static function getCurrent() {
-		$auth = Model::factory('auth')->where('user_id', $_SESSION['user_id'])->find_one();
+		if ( isset($_SESSION['user_id']) && $_SESSION['user_id'] > 0 ) {
+			$auth = Model::factory('auth')->where('user_id', $_SESSION['user_id'])->find_one();
+			self::updateCookie();
+		} else {
+			$auth = new auth;
+		}
 		return $auth;
 	}
 
@@ -28,7 +33,12 @@ class model_auth {
 class auth extends Model {
 	public function __construct() {
 		//@TODO use https
-		session_set_cookie_params( 45*60*60, '/', DOMAIN, false, true );
+		self::updateCookie();
+	}
+
+	// Me arrepiento de cuando decidi usar cammelCase
+	public static function updateCookie() {
+		session_set_cookie_params( 15*24*60*60, '/', DOMAIN, false, true );
 		session_start();
 	}
 
