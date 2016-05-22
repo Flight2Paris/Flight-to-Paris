@@ -11,18 +11,9 @@
 		<p>Mediante juegos, ganando badges y fluctuaciones al azar algunos de estos agujeros negros son 
 			asignados a vos y <strong>podes usarlos para darle peso a un nodo o darselos a otros usuarios</strong>.
 		</p>
-
 		<p>Publicar y subir archivos cuesta puntos pero podes ganar mas cada dia solo por friki.</p>
 
-		<?php if ( auth::isLoggedIn() ) : ?>
-			<?php if ( $user->fibo > FIBOHI ) : ?>
-				<p><strong>Volvé más tarde.</strong></p>
-			<?php else : ?>
-				<form action="<?= View::makeUri('/score/') ?>" method="post" >
-				<?php include('captcha.php') ?>
-				</form>
-			<?php endif ?>
-		<?php endif ?>
+		<?php require('scoreform.php'); ?>
 		</div>
 	<div class="span4">
 
