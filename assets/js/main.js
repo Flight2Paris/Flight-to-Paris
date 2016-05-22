@@ -17,7 +17,7 @@ $(document).ready(function(){
 			e.stopPropagation();
 		} else {
 			e.preventDefault();
-			if ( click_start && Date.now() - click_start < 1000 ) {
+			if ( e.which == 1 && click_start && Date.now() - click_start < 1000 ) {
 				if ( $(this).find('.node-full').length > 0 ) { 
 					$(this).find('.node-short').toggle();
 					$(this).find('.node-full').toggle();
