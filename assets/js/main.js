@@ -7,30 +7,40 @@ $(document).ready(function(){
 		$(this).removeClass("node-hover"); 
 	});
 
+	var click_start = false;
 	// .node click
-	$('.node').live('click',function(e){
+	$('.node').live('mousedown',function(e){
+		click_start = Date.now();
+	});
+	$('.node').live('mouseup',function(e){
 		if ( ['A','SUBMIT','INPUT','IMG','BUTTON'].indexOf(e.target.nodeName) != '-1' ) {
+			e.stopPropagation();
 		} else {
 			e.preventDefault();
-			if ( $(this).find('.node-full').length > 0 ) { 
-				$(this).find('.node-short').toggle();
-				$(this).find('.node-full').toggle();
-			} else {
-				node_link = $(this).find('a.uri');
-				uri = node_link.attr('href');
-				$(this).find('.node-short').after('<div class="node-full col-sm-10"><img src="/assets/img/loading.gif" alt="Cargando..." /></div>');
-				$(this).find('.node-short').hide();
-				$.ajax({
-					type: 'POST',
-					url: '/getbyuri',
-					data: {'uri': uri }, 
-					context: this,
-					success: function(data){
-						$(this).find('.node-full').html(data);
-					}
-				});
+			if ( click_start && Date.now() - click_start < 1000 ) {
+				if ( $(this).find('.node-full').length > 0 ) { 
+					$(this).find('.node-short').toggle();
+					$(this).find('.node-full').toggle();
+
+				} else {
+					node_link = $(this).find('a.uri');
+					uri = node_link.attr('href');
+					$(this).find('.node-short').after('<div class="node-full col-sm-10"><img src="/assets/img/loading.gif" alt="Cargando..." /></div>');
+					$(this).find('.node-short').hide();
+
+					$.ajax({
+						type: 'POST',
+						url: '/getbyuri',
+						data: {'uri': uri }, 
+						context: this,
+						success: function(data){
+							$(this).find('.node-full').html(data);
+						}
+					});
+				}
 			}
 		}
+		click_start = false;
 	});
 
 	// load new nodes

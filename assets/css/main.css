@@ -5,11 +5,11 @@ content a,content a:link,content a:active,content a:visited,content a:hover { te
 content a:hover { text-decoration:underline }
 
 em { font-style:italic }
-h1, h1 * { font-size:35px; text-shadow: 0 1px 2px white; line-height: 30px }
-h2, h2 * { font-size:28px; text-shadow: 0 1px 1px white; line-height: 25px }
+h1, h1 * { font-size:32px; text-shadow: 0 1px 2px white; line-height: 27px }
+h2, h2 * { font-size:26px; text-shadow: 0 1px 1px white; line-height: 23px }
 h3, h3 * { font-size:20px }
 h4, h4 * { font-size:16px}
-h1, h2, h3, h4, h5, h6 { margin:0; margin-bottom:14px; margin-top:7px; word-wrap: break-word; font-family: museo-slab, "Helvetica Neue", Helvetica, Arial, sans-serif; } 
+h1, h2, h3, h4, h5, h6 { margin:0; margin-bottom:12px; margin-top:5px; word-wrap: break-word; font-family: museo-slab, "Helvetica Neue", Helvetica, Arial, sans-serif; } 
 
 
 header, content, footer { display:block }
@@ -46,12 +46,12 @@ textarea.post-content.form-control { height:32px; margin-top:13px; }
 
 form { margin:0 }
 
-.node { cursor:pointer; padding:1.618% 2% }
+.node { cursor:pointer; padding:1.618% 1% 1% 1%}
 .node-hover { cursor:pointer; background-color: #f9f8eb;}
 
 .node-full { margin-left:0!important; }
 .node-short { max-height: 300px; overflow:hidden;}
-
+.node-short, .node-full { padding:0; }
 .node-short img, .node-full img { max-width: 100% }
 .node .score-form { opacity:0 }
 .node .label { opacity:0 }
