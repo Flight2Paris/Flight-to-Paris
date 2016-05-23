@@ -14,7 +14,6 @@ $(document).ready(function(){
 	});
 	$('.node').live('mouseup',function(e){
 		if ( ['A','SUBMIT','INPUT','IMG','BUTTON'].indexOf(e.target.nodeName) != '-1' ) {
-			e.stopPropagation();
 		} else {
 			e.preventDefault();
 			if ( e.which == 1 && click_start && Date.now() - click_start < 1000 ) {
