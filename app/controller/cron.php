@@ -19,7 +19,7 @@ class controller_cron {
 					if ( ! $node ) {
 						$node = Model::factory('node')->create();
 						$node->uri = $link;
-						$title = self::clean_title($item->get_title())
+						$title = self::clean_title($item->get_title());
 						$node->content = '# '.self::gimmeMarkdown($title)."\n\n".
 							$link."\n\n".
 							self::gimmeMarkdown($item->get_description());
