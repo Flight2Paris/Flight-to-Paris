@@ -43,9 +43,9 @@ class controller_cron {
 		$port = $url['port'];
 		if ($port == 80) $port = false;
 
-		$link = $url['scheme'].'://'.$url['host'];
+		$link = $url['scheme'].'://'.trim($url['host'],'/');
 		if ($port) $link .= ':'.$port;
-		$link .= '/'.$url['path'];
+		$link .= '/'.ltrim($url['path'],'/');
 		if ($qs) $link .= '?'.$qs;
 
 		return $link;
