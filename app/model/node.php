@@ -53,10 +53,15 @@ class model_node {
             }
 
             if ( $query ) {
-                $q .= ' AND content LIKE '.ORM::get_db()->quote('%'.$query.'%');
+				if ( mb_substr_count($query, '') < 5 ) {
+                	$q .= ' AND content LIKE '.ORM::get_db()->quote('%'.mb_ereg_replace('\s+','%', $query).'%');
+				} else {
+                	$q .= ' AND content LIKE '.ORM::get_db()->quote('%'.$query.'%');
+				}
             }
-
-            $q .= ' ORDER BY UNIX_TIMESTAMP(node.created) + LOG(score.score + 1) * 60 * 60 * 24 DESC';
+			$score_powa = 60*60*24*2;
+			$score = '(LOG(score.score+2)*'.$score_powa.')';
+            $q .= ' ORDER BY UNIX_TIMESTAMP(node.created)+'.$score.' DESC';
             $q .= ' LIMIT '.$skip.','.$count;
 
             $nodes = ORM::for_table('node')->raw_query($q)->find_many();

@@ -1,8 +1,21 @@
 /* copy this copy that but copy */
-html, body { background: #F8f7D9;  font-family: proxima-nova, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 16px; }
+html, body {
+	background: #F8f7D9;
+	font-family: proxima-nova, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 16px;
+}
 
-content a,content a:link,content a:active,content a:visited,content a:hover { text-decoration:none; color: #BF3211 }
+content a,
+content a:link,
+content a:active,
+content a:visited,
+content a:hover {
+	text-decoration:none;
+	color: #BF3211;
+}
 content a:hover { text-decoration:underline }
+
+.red {  color: #BF3211 } 
 
 em { font-style:italic }
 h1, h1 * { font-size:32px; text-shadow: 0 1px 2px white; line-height: 27px }
@@ -11,81 +24,47 @@ h3, h3 * { font-size:20px }
 h4, h4 * { font-size:16px}
 h1, h2, h3, h4, h5, h6 { margin:0; margin-bottom:12px; margin-top:5px; word-wrap: break-word; font-family: museo-slab, "Helvetica Neue", Helvetica, Arial, sans-serif; } 
 
-
 header, content, footer { display:block }
-content { margin-top:60px; }
-footer { padding-top: 30px }
-
-.navbar-nav { margin: 7.5px!important; } 
+.navbar-nav { margin: 7.5px!important } 
 .navbar-nav li a { padding-top:10px; padding-bottom:10px; }
+
+.submenu { background-color: #343434; margin-top:-4px; color:rgb(200,200,200); padding: 7px 0 7px; width:100%; z-index:9669;  } 
+.submenu a, .submenu a:link, .submenu a:visited, .submenu a:active { color: rgb(153,153,153); }
+.submenu a:hover { color: white } 
+.submenu input[type=image] { color:white }
+.submenu .form-control { height: 40px; line-height: 40px;}
+
+#score { font-size: 20px }
 
 .center { margin:0 auto }
 .centerContent { text-align: center }
 .clear { clear:both }
-.red {  color: #BF3211; } 
-.inline { display:inline; }
+.inline { display:inline }
 
 textarea.post-content.form-control { height:32px; margin-top:13px; } 
-
-#score { font-size: 20px; }
-
-@media (min-width: 992px) { 
-		.submenu { position:fixed;  }
-}
-
-@media (max-width: 991px) {
-		.submenu { position:absolute; }
-		#sidebar { display: none; }
-}
-
-.submenu { background-color: #343434; margin-top:-2px; color:white; padding: 4px; width:100%; z-index:9669;  } 
-.submenu a, .submenu a:link, .submenu a:visited, .submenu a:active { color: rgb(153,153,153); }
-.submenu a:hover { color: white } 
-.submenu input[type=image] { color:white }
-.submenu .form-group { margin-top: 6px }
-
 form { margin:0 }
 
 .node { cursor:pointer; padding:1.618% 1% 1% 1%}
 .node-hover { cursor:pointer; background-color: #f9f8eb;}
-
 .node-full { margin-left:0!important; }
 .node-short { max-height: 300px; overflow:hidden;}
 .node-short, .node-full { padding:0; }
 .node-short img, .node-full img { max-width: 100% }
-.node .score-form { opacity:0 }
-.node .label { opacity:0 }
-.node-hover .score-form { opacity:1 }
-.node-hover .label { opacity:1 }
-
-.node-actions { }
+.node .score-form, .node .label { opacity:0 }
+.node-hover .score-form, .node-hover .label { opacity:1 }
+.uri { float:left }
 .node-actions a { font-size:10px; line-height:20px; }
 a.label { color: white!important }
-
 .node-score { font-size:20px }
-
-.uri { float:left }
-
 .following { margin: 2px 0; }
 
-@font-face {
-  font-family: 'museo-slab';
-  src: url('../font/museo_slab_300-webfont.eot');
-  src: url('../font/museo_slab_300-webfont.eot?#iefix') format('embedded-opentype'), url('../font/museo_slab_300-webfont.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+@media (min-width: 860px) { 
+	.submenu { position:fixed }
+	content { margin-top:60px }
+	footer { padding-top: 30px }
 }
-@font-face {
-  font-family: 'museo-slab';
-  src: url('../font/museo_slab_500-webfont.eot');
-  src: url('../font/museo_slab_500-webfont.eot?#iefix') format('embedded-opentype'), url('../font/museo_slab_500-webfont.ttf') format('truetype');
-  font-weight: bold;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'proxima-nova';
-  src: url('../font/proximanova-webfont.eot');
-  src: url('../font/proximanova-webfont.eot?#iefix') format('embedded-opentype'), url('../font/proximanova-webfont.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+
+@media (max-width: 859px) {
+		.submenu { position:absolute; }
+		#sidebar { display: none; }
 }

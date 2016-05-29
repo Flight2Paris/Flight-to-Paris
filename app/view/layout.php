@@ -4,7 +4,8 @@
 	<meta charset="UTF-8" />
     <title><?= $title? htmlentities($title).' - ':'' ?><?= htmlentities(SITE_TITLE) ?></title>
     <meta name="description" content="<?= htmlspecialchars(SITE_DESCRIPTION) ?>" />
-
+	<meta name="robots" content="noindex, nofollow" />
+	<meta name="archive.org_bot" content="index, follow" />
 <?php if ( $node ) : ?>
 	<meta property="og:title" content="<?= View::e(trim($node->getTitle())) ?>" />
 	<meta property="og:type" content="article" />
@@ -12,18 +13,13 @@
 	<meta property="og:image" content="" />
     <meta property="og:site_name" content="<?= htmlspecialchars(SITE_TITLE)  ?>" />
 <?php endif ?>
-
     <link rel="alternate" type="application/rss+xml"  href="<?= View::makeUri('/all.rss') ?>" title="Nodes Feed (RSS)">
     <link rel="alternate" type="application/atom+xml"  href="<?= View::makeUri('/all.atom') ?>" title="Nodes Feed (ATOM)">
 <?php if (isset($feeds)) foreach ($feeds as $feed) : ?>
     <link rel="alternate" type="application/rss+xml"  href="<?=$feed->uri?>"  title="<?=htmlspecialchars($feed->title)?>">
 <?php endforeach; ?>
-	<link rel="stylesheet" href="<?= View::makeUri('/assets/css/bootstrap.min.css') ?>" />
-	<link rel="stylesheet" href="<?= View::makeUri('/assets/css/font-awesome.css') ?>" />
-	<link rel="stylesheet" href="<?= View::makeUri('/assets/css/main.css') ?>" />
 </head>
 <body>
-
 <header>
 <div class="navbar navbar-inverse navbar-fixed-top">
 
@@ -108,7 +104,7 @@
 			<div class="col-md-3" id="sidebar">
 
 			<?php if (auth::isLoggedIn()) : 
-				require('user_sidebar.php');
+				include 'user_sidebar.php';
 			else : 
 				require('public_sidebar.php'); 
 			endif ?>
@@ -131,10 +127,46 @@
 	</footer>
 	</div>
 
+	<noscript id="deferred-styles">
+	<link rel="stylesheet" href="<?= View::makeUri('/assets/css/bootstrap.min.css') ?>" />
+	<link rel="stylesheet" href="<?= View::makeUri('/assets/css/font-awesome.min.css') ?>" />
+	<link rel="stylesheet" href="<?= View::makeUri('/assets/css/main.css') ?>" />
+	</noscript>
+    <script>
+
+    </script>
 	<script src="<?= View::makeUri('/assets/js/jquery.js') ?>"></script>
-	<script>$(document).ready(function(){$('.dropdown-menu').find('form').click(function(e){e.stopPropagation();});});</script>
-	<script src="<?= View::makeUri('/assets/js/bootstrap.min.js') ?>"></script>
+	<script>$(document).ready(function(){
+		var loadDeferredStyles = function() {
+			var addStylesNode = document.getElementById("deferred-styles");
+			var replacement = document.createElement("div");
+			replacement.innerHTML = addStylesNode.textContent;
+			document.body.appendChild(replacement)
+			addStylesNode.parentElement.removeChild(addStylesNode);
+		};
+		loadDeferredStyles();
+		$('.dropdown-menu').find('form').click(function(e){
+			e.stopPropagation();
+		});
+	});</script>
+	<script async src="<?= View::makeUri('/assets/js/bootstrap.min.js') ?>"></script>
 	<script>var logged = <?= auth::isLoggedIn() ? 'true' : 'false' ?>, skip=<?= (int)$skip ?>, pagesize=<?= PAGESIZE ?>, query='<?= View::e($query) ?>', before=<?= (int)$before ?>, after=<?= (int)$after ?>, domain='<?= View::e(DOMAIN) ?>';</script>
-	<script src="<?= View::makeUri('/assets/js/main.js') ?>"></script>
+	<script async src="<?= View::makeUri('/assets/js/main.js') ?>"></script>
+	<style>
+	@font-face {
+		font-family: 'museo-slab';
+		src: url('<?= View::makeUri('/assets/font/museo_slab_300-webfont.eot'); ?>');
+		src: url('<?= View::makeUri('/assets/font/museo_slab_300-webfont.eot?#iefix'); ?>') format('embedded-opentype'), url('<?= View::makeUri('/assets/font/museo_slab_300-webfont.ttf'); ?>') format('truetype');
+		font-weight: normal;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: 'proxima-nova';
+		src: url('<?= View::makeUri('/assets/font/proximanova-webfont.eot'); ?>');
+		src: url('<?= View::makeUri('/assets/font/proximanova-webfont.eot?#iefix'); ?>') format('embedded-opentype'), url('<?= View::makeUri('/assets/font/proximanova-webfont.ttf'); ?>') format('truetype');
+		font-weight: normal;
+		font-style: normal;
+	}
+	</style>
 </body>
 </html>

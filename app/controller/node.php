@@ -135,8 +135,8 @@ class controller_node {
 
 		$template = 'node_search';
 
-        $format = Router::getFormat($uri);
-		$format = trim($format) ? trim($format) : 'html';
+        $format = trim(Router::getFormat($uri));
+		$format = $format ? $format : 'html';
         
 		if ( $format != 'html' ) {
     		$layout = null;
@@ -184,9 +184,8 @@ class controller_node {
 			$template = $template.'_'.$format;
 		}
 
-		$time = ORM::for_table('node')->raw_query('select unix_timestamp() as timestamp')->find_one();
-		$view->set('before',$time->timestamp);
-		$view->set('after',$time->timestamp);
+		$view->set('before',time());
+		$view->set('after',time());
 		$view->set('skip',$skip);
 		$view->set('query',$query);
 
