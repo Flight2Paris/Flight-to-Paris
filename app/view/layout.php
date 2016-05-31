@@ -10,7 +10,7 @@
 	<meta property="og:title" content="<?= View::e(trim($node->getTitle())) ?>" />
 	<meta property="og:type" content="article" />
 	<meta property="og:url" content="<?= View::e($node->uri) ?>" />
-	<meta property="og:image" content="" />
+	<meta property="og:image" content="<?= View::e(extract_image_url($node->content)) ?>" />
     <meta property="og:site_name" content="<?= htmlspecialchars(SITE_TITLE)  ?>" />
 <?php endif ?>
     <link rel="alternate" type="application/rss+xml"  href="<?= View::makeUri('/all.rss') ?>" title="Nodes Feed (RSS)">
@@ -91,7 +91,6 @@
 </header>
 
 	<div class="container-fluid">
-		
 		<content>
 			<?php foreach ( Flight::flash('message') as $message ) : ?>
 				<div class="alert alert-<?= View::e($message['type']) ?>">
@@ -117,9 +116,7 @@
 		</content>
 		<span class="clear"></span>
 	</div>
-
-
-	<div class="container">
+	<div class="container-fluid">
 	<footer>
 		<a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="nofollow"><img src="<?= View::makeUri('/assets/img/cc-by-sa.png') ?>" alt="Creative Commons Attribution-ShareAlike 3.0" title="Creative Commons Attribution-ShareAlike 3.0"/></a>
 		<a href="https://github.com/rata0071/Flight-to-Paris" target="_blank" title="Flight to Paris - github" ><img src="<?= View::makeUri('/assets/img/github.png') ?>" alt="Github" /></a>

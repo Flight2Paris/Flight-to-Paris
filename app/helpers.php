@@ -10,3 +10,13 @@ function nice_link($url, $anchor=false, $class='') {
 
 	return '<a href="'.View::e($url).'" class="'.$class.'">'.$anchor.'</a>';
 }
+
+function extract_image_url($text) {
+	$rx = '/(?<!["])((https?):(\/\/|\?)[^\s<>]+)/im';
+	$m = array();
+	if ( preg_match_all($rx, $text, $m) ) {
+		return $m[0][0];
+	} else {
+		return '';
+	}
+}
