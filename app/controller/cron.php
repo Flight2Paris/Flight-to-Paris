@@ -83,7 +83,7 @@ class controller_cron {
 			$url = self::processFeedUrl($url);
 			$feed->set_feed_url($url);
 			//$feed->set_item_class();
-			$feed->enable_cache(true);
+			$feed->enable_cache(false);
 			$feed->set_cache_duration(60*15);
 			$feed->set_cache_location('cache');
 			$feed->init();

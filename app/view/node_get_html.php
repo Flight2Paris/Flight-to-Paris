@@ -6,19 +6,14 @@ $open = 1;
 if ( $node->isReply() ) {
 	$node = $n->getReplyTo();
 	include('singlenode.php');
-	$node = $n ;
+	$node = $n;
+	?><hr /><?php
 }
 
-// Show the visited node
-include('singlenode.php');
-
-// Show the replies to the node
-foreach ( $n->getReplies() as $node ) {
-	include('singlenode.php');
-}
+include('nodewithreplies.php');
 
 // Show the comment form
-$inReplyTo = $node->uri;
+$inReplyTo = $n->uri;
 include('postform.php');
 
 ?>

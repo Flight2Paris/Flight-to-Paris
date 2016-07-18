@@ -58,6 +58,10 @@ a.label { color: white!important }
 .node-score { font-size:20px }
 .following { margin: 2px 0; }
 
+.replies .replies {
+	margin-left: 15px;
+	border-left: 2px solid #eee;
+}
 @media (min-width: 860px) { 
 	.submenu { position:fixed }
 	content { margin-top:60px }
