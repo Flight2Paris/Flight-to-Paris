@@ -11,8 +11,8 @@ function fibonacci($n){
   return $b;
 }
 
-define( 'FIBOLO', 5 );
-define( 'FIBOHI', 13 );
+define( 'FIBOLO', 3 );
+define( 'FIBOHI', 14 );
 
 class controller_score {
 
@@ -23,7 +23,7 @@ class controller_score {
 
 			$user = auth::getUser();
 			$view->set('user',$user);
-			if ( strtotime($user->win_last) < time()-60*60*18 ) {
+			if ( strtotime($user->win_last) < time()-60*15*$user->fibo ) {
 				$user->fibo = FIBOLO;
 				$user->save();
 			}
@@ -44,12 +44,12 @@ class controller_score {
 
 			} else if ( check() ) {
 				if ( $user->fibo <= FIBOHI ) {
-					$won = fibonacci($user->fibo);
+					$won = fibonacci($user->fibo)*log(date('N',time()));
 					$user->score += $won;
 					$user->fibo++;
 					$user->win_last = date('Y-m-d H:i:s');
 					$user->save();
-					Flight::flash('message',array('type'=>'success','icon'=>'plus-sign','text'=>' '.$won.' !!!'));
+					Flight::flash('message',array('type'=>'success','icon'=>'plus-sign','text'=>' '.$won.' wild * appear!'));
 				}
 
 				Flight::redirect( View::makeUri('/score') );
@@ -90,7 +90,7 @@ class controller_score {
 				$author = $node->getAuthor();
 
 				if ( $author->id != $user->id ) {
-					$author->score += $data['promote'] - $data['promote'] * 0.1 * log($score->score+$data['promote']);
+					$author->score += $data['promote'] * (0.5 / log($score->score+1));
 					$author->save();
 				}
 			}
