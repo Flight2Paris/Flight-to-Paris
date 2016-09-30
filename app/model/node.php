@@ -42,8 +42,8 @@ class model_node {
         $cache = new HybridCache(__METHOD__,func_get_args());
         
         $res = $cache->getCacheOr(function ($cache) use ($before, $after, $skip, $query, $count) {
-
-            $q = 'SELECT node.uri FROM node LEFT JOIN score ON (score.uri = node.uri) WHERE 1';
+			$score = '(LOG(COALESCE(score.score, 0)+2)*172800)';
+            $q = 'SELECT node.uri, UNIX_TIMESTAMP(node.created)+'.$score.' AS powa FROM node LEFT JOIN score ON (score.uri = node.uri) WHERE 1';
 
             if ( $before > 0 ) {
                 $q .= ' AND UNIX_TIMESTAMP(node.created) < '.$before;
@@ -59,9 +59,8 @@ class model_node {
                 	$q .= ' AND content LIKE '.ORM::get_db()->quote('%'.$query.'%');
 				}
             }
-			$score_powa = 60*60*24*2;
-			$score = '(LOG(score.score+2)*'.$score_powa.')';
-            $q .= ' ORDER BY UNIX_TIMESTAMP(node.created)+'.$score.' DESC';
+
+            $q .= ' ORDER BY powa DESC';
             $q .= ' LIMIT '.$skip.','.$count;
 
             $nodes = ORM::for_table('node')->raw_query($q)->find_many();
